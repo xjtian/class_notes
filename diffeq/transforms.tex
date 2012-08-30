@@ -1,0 +1,68 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage[retainorgcmds]{IEEEtrantools}
+\newcommand{\ud}{\, \mathrm{d}}
+
+\title{Basic Substitutions and Transformations}
+\date{}
+\author{}
+
+\begin{document}
+\maketitle
+\section{Notes}
+If a function $M(x, y)\ud x + N(x, y)\ud y = 0$ is not separable, exact, or linear, identify the proper substitution or transformation from this list, solve the differential equation, and substitute back.
+	\subsection{Homogeneous Equations}
+		If $\dfrac{\ud y}{\ud x} = f(x, y)$ can be expressed \emph{only} in terms of $\dfrac{y}{x}$, apply the following transformation:
+		\begin{IEEEeqnarray}{rCl}
+			v & = & \frac{y}{x} \\
+			\frac{\ud y}{\ud x} & = & v + x\frac{\ud v}{\ud x}
+		\end{IEEEeqnarray}
+		Solve by separating variables and substituting back for $v$.
+	\subsection{y' = G(ax + by)}
+		To solve these equations, which are in the form
+		\begin{equation}
+			y' = G(ax + by)
+		\end{equation}
+		apply the following transformation:
+		\begin{IEEEeqnarray}{rCl}
+			z & = & ax + by \\
+			\frac{\ud y}{\ud x} & = & \left(\dfrac{\dfrac{\ud z}{\ud x} - a}{b}\right)
+		\end{IEEEeqnarray}
+	\subsection{Bernoulli Equations}
+		These equations are in the form
+		\begin{equation}
+			\frac{\ud y}{\ud x} + P(x)y = Q(x)y^n
+		\end{equation}
+		To solve, substitute $v = y^{1-n}$, divide the original equation by $y^n$, and solve as linear differential equation.
+		\begin{IEEEeqnarray}{rCl}
+			\frac{\ud y}{\ud x}y^{-n} + P(x)y^{1-n} & = & Q(x) \\
+			\frac{\ud v}{\ud x} & = & (1-n)y^{-n}\frac{\ud y}{\ud x} \\
+			\frac{1}{n-1}\frac{\ud v}{\ud x} + P(x)v & = & Q(x)
+		\end{IEEEeqnarray}
+	\subsection{Linear Coefficients}
+		These equations are in the form
+		\begin{equation}
+			(a_1x + b_1y + c_1)\ud x + (a_2x + b_2y + c_2)\ud y = 0
+		\end{equation}
+		If $a_1b_2 \not= a_2b_1$ then the following will produce a solution:
+		\begin{enumerate}
+			\item Solve for h and k in
+				$\begin{cases}
+					a_1h + b_1k + c_1 =&0 \\
+					a_2h + b_2k + c_2 =&0
+				\end{cases}$
+			\item Apply the transformation
+				$\begin{cases}
+					x =&u + h \\
+					y =&v + k
+				\end{cases}$
+			\item Solve the following homogeneous differential equation in terms of $v$ and $u$:
+				\begin{equation}
+					\frac{\ud v}{\ud u} = - \dfrac{a_1 + b_1(\dfrac{v}{u})}{a_2 + b_2(\dfrac{v}{u})}
+				\end{equation}
+		\end{enumerate}
+\section{Examples}
+	\subsection{Homogenous Equations}
+	\subsection{Bernoulli Equations}
+	\subsection{Linear Coefficients}
+\end{document}

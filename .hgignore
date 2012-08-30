@@ -1,0 +1,3 @@
+syntax: regexp
+
+/(?!.*(\.tex$|\.psd$|\.png$|\.jpg$|\.eps$)).+

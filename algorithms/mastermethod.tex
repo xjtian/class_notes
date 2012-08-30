@@ -1,0 +1,145 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{marginnote}
+\usepackage{endnotes}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true
+}
+
+%Properly formatted differential 'd'
+\newcommand{\ud}{\, \mathrm{d}}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Master Method}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Definition}
+	\begin{itemize}
+		\item $T(n)$: upper-bound of function at level $n$
+		\item \textbf{Recurrance:} expression of $T(n)$ in terms of runtime of recursive calls.
+		\item \textbf{Base case:} $T(1) \leq k$
+		\item $\forall n > 1: T(n) \leq ($recursive work$) + ($current work$)$
+	\end{itemize}
+	
+	\marginnote{What is the generic form of a recurrance?}
+	For larger, non-base case sizes of n:
+	\begin{equation}
+		T(n)\leq aT\left(\frac{n}{b}\right) + O(n^d)	
+	\end{equation}
+	
+	There are $a$ recursive calls on inputs of size $n/b$, where the work done in the \emph{combination step} of the algorithm is of the magnitude $n^d$.
+	
+	\marginnote{What are the three cases of the Master Method?}
+	This leads to the generic \textbf{Master Method} for divide-and-conquer algorithms:
+	\begingroup
+	\renewcommand*{\arraystretch}{1.5}
+	\large
+	\begin{equation}
+		T(n) = \left\{
+			\begin{array}{lr}
+				O(n^d\cdot \log n) & : a = b^d\\
+				O(n^d) & : a < b^d\\
+				O(n^{\log_b a}) & : a > b^d
+			\end{array}\right.
+	\end{equation}
+	\endgroup
+	
+	Note: In case 1, the base of the logarithm doesn't matter because the difference is a constant factor.
+	
+\section{Examples}
+	\begin{enumerate}
+		\item Mergesort: 2 recursive calls on inputs that are halved, with $O(n)$ work done in merge subroutine.
+			\[a=2, b=2, d=1\] 
+			\[T(n)\leq 2T\left(\frac{n}{2}\right) + O(n)\]
+			\[T(n) = n\log n\]
+		\item Binary search: 1 recursive call on input that is halved, with $O(1)$ work done in comparison.
+			\[a=1,b=2,d=0\]
+			\[T(n)\leq T\left(\frac{n}{2}\right) + O(1)\]
+			\[T(n) = \log n\]
+		\item Strassen's Subcubic Method: 7 recursive calls on inputs that are $\frac{1}{4}$ the size with $O(n^2)$ work done in combination step (evaluating each term).
+			\[a=7,b=4,d=2\]
+			\[T(n)\leq 7T\left(\frac{n}{4}\right) + O(n^2)\]
+			\[T(n) = O\left(n^{\log_2 7}\right)\]
+			\[T(n) \approx O\left(n^{2.81}\right)\]
+	\end{enumerate}
+	
+\section{Proof}
+	Assume the following:
+	\begin{enumerate}
+		\item $T(1)\leq c$
+		\item $T(n)\leq aT\left(\dfrac{n}{b}\right) + cn^d$
+		\item $n$ is a power of $b$ (for simplicity's sake)
+	\end{enumerate}
+	
+	On the recursion tree, at any level $j$, there are $a^j$ subproblems of $\dfrac{n}{b^j}$ size each ($j\leq log_b n$). The total work done at each level is the product of the number of subproblems and the amount of work done in each subproblem.
+	\begin{equation}
+		T(j)\leq a^j\cdot c\cdot\left[\frac{n}{b^j}\right]^d = cn^d\cdot\left[\frac{a}{b^d}\right]^j
+	\end{equation}
+	
+	\marginnote{What is the exact upper-bound for total work given input size n?}
+	The total work then is the sum of the work done at each level $j$ in the recursion tree:
+	\begin{equation}
+		T(n)\leq cn^d\cdot \sum_{j=0}^{\log_b n}\left[\frac{a}{b^d}\right]^j
+	\end{equation}
+	
+	The ratio of $a$ to $b^d$ determines the final result of $T(n)$. There exist three cases:
+	
+	\begin{enumerate}
+		\item
+			\[a=b^d, \frac{a}{b^d} = 1\]
+			\[\sum_{j=0}^{\log_b n}1^j = \log_b n\]
+			\begin{equation}
+				T(n) = cn^d\cdot\log_b n
+			\end{equation}
+		\item
+			\[a<b^d, \frac{a}{b^d}<1\]
+			\[\sum_{j=0}^{\log_b n}\left[\frac{a}{b^n}\right]^j \leq \dfrac{1}{1 - \dfrac{a}{b^n}} = \text{constant}\]
+			\begin{equation}
+				T(n) = cn^d
+			\end{equation}
+		\item
+			\[a>b^d, \frac{a}{b^d} > 1\]
+			\[\sum_{j=0}^{\log_b n}\left[\frac{a}{b^n}\right]^j \leq \frac{r^k+1 -1}{r-1} = r^k\left(1 + \frac{1}{r-1}\right)\]
+			\begin{equation}
+				T(n)=O\left(n^d\cdot\left[\frac{a}{b^n}\right]^{\log_b n}\right) = O(n^{\log_b a})
+			\end{equation}
+	\end{enumerate}
+	
+	\endnotetext[1]{Complexity of an algorithm depends on the rate at which recursive calls are made at each level and the rate at which the problem shrinks at each level.}
+	\endnotetext[2]{The constants disregarded include the constant work done at the base case and the base of the logarithms}
+	\endnotetext[3]{
+	\begin{equation}
+		T(n) = \left\{
+			\begin{array}{lr}
+				O(n^d\cdot \log n) & : a = b^d\\
+				O(n^d) & : a < b^d\\
+				O(n^{\log_b a}) & : a > b^d
+			\end{array}\right.
+	\end{equation}
+	}
+	\def\enotesize{\normalsize}
+	\theendnotes
+\end{document}

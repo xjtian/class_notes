@@ -1,0 +1,111 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[noadjust]{marginnote}
+
+\usepackage{fancyhdr}
+\pagenumbering{gobble}
+
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2
+}
+
+%Properly formatted differential 'd'
+\newcommand{\ud}{\, \mathrm{d}}
+
+%Format stuff
+%\reversemarginpar
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Mergesort}}
+\lfoot{
+\begin{itemize}
+	\itemsep=-3pt
+	\item[-] Divide by halving arrays, conquer by merging
+	\item[-] $O(n\log n)$ runtime
+\end{itemize}
+}
+\rhead{}
+
+\begin{document}
+\section{Algorithm}
+	\begin{itemize}
+		\itemsep=-2pt
+		\item Input: array of $n$ numbers, unsorted.
+		\item Assume: all elements distinct
+	\end{itemize}
+	
+	\marginnote{Basic steps?}
+	
+	\textbf{Approach:}
+	\begin{lstlisting}
+		Split array in half
+		Recursively sort halves
+		Merge halves and return
+	\end{lstlisting}
+	
+	\marginnote{Runtime of Merge?}
+	
+	\textbf{Merge Subprocedure:}
+	\begin{lstlisting}
+		C = output array [n]
+		A = left array [n/2]
+		B = right array [n/2]
+		
+		i = counter for A
+		j = counter for B
+		
+		while i and j are both inside:
+			Put the smallest element in C
+			Increment counter of array that element is from
+		Append leftover elements in each array
+	\end{lstlisting}
+		
+\section{Runtime}
+	\begin{itemize}
+		\itemsep=-2pt
+		\item Merge: $O(n)$
+		\item Mergesort: $O(n\log_2 n)$
+		\marginnote{Runtime of Mergesort?}
+	\end{itemize}
+	
+	\subsection{Analysis}
+		\begin{itemize}
+			\item Maximum number of levels is $\log_2 n$
+			\item At any level $j$, there are $2^j$ subproblems
+			\item At each level $j$, the size of the subproblem is $\dfrac{n}{2^j}$
+			\item The work at level $j$ is:
+				\begin{equation}
+				2^j \times \frac{n}{2^j} = n
+				\end{equation}
+			\item $Work = Levels * work/level = n \cdot \log_2 n$
+		\end{itemize}
+		
+\section{Practical Improvements}
+
+	\begin{itemize}
+		\item Use insertion sort for small subarrays, at a cutoff of $\approx 7$. Eliminates unecessary overhead, improves $\approx 20\%$.
+		\item Stop if already sorted: is the biggest item in first half $\leq$ smallest item in second half?
+	\end{itemize}
+	
+\section{Bottom-up Mergesort}
+	Basic plan:
+		\begin{enumerate}
+			\item Pass through array, merging subarrays of size 1
+			\item Repeat for size 2, 4, 8, 16, etc\ldots
+		\end{enumerate}
+\end{document}

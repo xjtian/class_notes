@@ -1,0 +1,77 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{marginnote}
+\usepackage{endnotes}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true
+}
+
+%Properly formatted differential 'd'
+\newcommand{\ud}{\, \mathrm{d}}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Analysis of Algorithms}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Guiding Principles}
+	\begin{enumerate}
+		\item \marginnote{What are the three guiding principles?} Worst-Case Analysis: analyze algorithms by the upper-bound for \emph{all} inputs, as opposed to average-case or benchmarks, which require domain knowledge.
+		\item Disregard constant factors and lower-order terms.
+		\begin{itemize}
+			\item These factors depend on architecture, compiler, etc$\ldots$
+			\marginnote{Why can constant factors be disregarded?}
+			\item Very little predictive power is lost
+		\end{itemize}
+		\item Asymptotic Analysis: focus on running-time for very large inputs.
+	\end{enumerate}
+	
+\section{Asymptotic Analysis}
+	\textbf{Big-Oh Notation}\marginnote{What are Big-Oh, Omega, and Theta Notation?}
+	\begin{itemize}
+		\item $T(n) = O(f(n))$ if $T(n)$ is bound above by constant multiple of $f(n)$ for very large $n$.
+		\item $T(n) = O(f(n))$ if only $\exists c$ in $n_0 > 0$ such that $T(n) \leq c\cdot f(n); n\geq n_0$.
+	\end{itemize}
+	\textbf{Omega Notation}
+	\begin{itemize}
+		\item $T(n) = \Omega (f(n))$ if $\exists c$ in $n_0 > 0$ such that $T(n) \geq c\cdot f(n), \forall n\geq n_0$.
+		\item $T(n)$ is lower-bound by $f(n)$.
+	\end{itemize}
+	\textbf{Theta Notation}
+	\begin{itemize}
+		\item $T(n) = \Theta (f(n))$ if $T(n) = O(f(n))$ and $T(n)=\Omega (f(n))$.
+		\item $T(n)$ is exactly bound by $f(n)$.
+	\end{itemize}
+	\textbf{Little-Oh Notation}
+	\begin{itemize}
+		\item $T(n) = o(f(n))$ if $\forall c > 0, \exists c$ such that $T(n) \leq c\cdot f(n), \forall n\geq n_0$
+	\end{itemize}
+	
+	\line(1,0){250}
+	\endnotetext[1]{Worst-case asymptotic analysis with Big-Oh or Theta Notation.}
+	\endnotetext[2]{Big-Oh: bounded above by $f(n)$. Omega: bounded below by $f(n)$. Theta: bounded exactly by $f(n)$.}
+	\def\enotesize{\normalsize}
+	\theendnotes
+\end{document}

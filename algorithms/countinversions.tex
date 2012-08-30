@@ -1,0 +1,104 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{marginnote}
+\usepackage{endnotes}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true
+}
+
+%Properly formatted differential 'd'
+\newcommand{\ud}{\, \mathrm{d}}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Simple Divide and Conquer Algorithms}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Counting Inversions}
+	\textbf{Inversion:} a pair indices \verb|i, j| such that \verb|i < j| and \verb|A[i] > A[j]|.
+	\marginnote{How is mergesort used to count inversions?}
+	Possible to solve problem in $O(n\log n)$ time by using the Mergesort algorithm:
+	\begin{lstlisting}[autogobble=true]
+		count_and_split(A):
+			if n == 1: return A, 0
+			else:
+				(B, x) = count_and_split(left)
+				(C, y) = count_and_split(right)
+				(D, z) = merge_and_count(B, C)
+				
+				return D, x+y+z
+				
+		merge_and_count(B, C):
+			i = j = inversions = 0
+			D = []
+			while:
+				if B[i] < C[j]:
+					D += B[i++]
+				else:
+					D += C[j++]
+					inversions += (len(B) - i)
+			return D, inversions
+	\end{lstlisting}
+				
+\section{Strassen's Subcubic Matrix Multiplication}
+	Traditional matrix multiplication is done as such:
+	\marginnote{Why is Strassen's algorithm faster?}
+	\[ X = \left( \begin{array}{cc}
+	a & b\\
+	c & d	
+	\end{array} \right),
+	Y = \left( \begin{array}{cc}
+	e & f\\
+	g & h
+	\end{array} \right);
+	X\cdot Y = Z = \left( \begin{array}{cc}
+	ae+bg & af+bh\\
+	ce+dg & cf + dh
+	\end{array} \right) \]
+	
+	The na\"{i}ve implementation of this algorithm requires 8 recursive calls and runs in $O(n^3)$ time. Strassen's algorithm computes the product of two square matrices with 7 recursive calls and accomplishes a subcubic running time that is still polynomial.
+	
+	The 7 products $p_1 \ldots p_7$ are:
+	\begin{IEEEeqnarray*}{rCl}
+		p_1 & = & a(f-h)\\
+		p_2 & = & (a+b)h\\
+		p_3 & = & (c+d)e\\
+		p_4 & = & d(g-e)\\
+		p_5 & = & (a+d)(e+h)\\
+		p_6 & = & (b-d)(g+h)\\
+		p_7 & = & (a-c)(e+f)
+	\end{IEEEeqnarray*}
+	
+	And the final product is:
+	\[Z = \left(\begin{array}{cc}
+		p_5+p_4-p_2+p_6 & p_1+p_2\\
+		p_3+p_4 & p_3-p_7
+	\end{array} \right)\]
+
+	\endnotetext[1]{The merge step in Mergesort can be used to count inversions}
+	\endnotetext[2]{Strassen's algorithm improves on na\"{i}ve matrix multiplication by removing 1 recursive call}
+	\def\enotesize{\normalsize}
+	\theendnotes
+\end{document}

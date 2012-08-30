@@ -1,0 +1,75 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{marginnote}
+\usepackage{endnotes}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true
+}
+
+%Properly formatted differential 'd'
+\newcommand{\ud}{\, \mathrm{d}}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Sorting Complexity}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Introduction}
+
+	\begin{description}
+		\item[Computational complexity.] Framework to study efficiency of algorithms for solving a particular problem.
+		\item[Model of computation.] Allowable operations.
+		\item[Cost model.] Operation count(s).
+		\item[Upper bound.] Cost guarantee provided by some algorithm.
+		\item[Lower bound.] Proven limit on cost guarantee of all algorithms.
+		\item[Optimal algorithm.] Algorithm with best possible cost guarantee.
+	\end{description}
+	
+	Sorting:
+	\begin{itemize}
+		\item Model of computation: decision tree (can access information only through compares)
+		\item Cost model: number of comparisons
+		\item Upper bound: $N\log N$ from mergesort
+		\item Lower bound: $N\log N$
+	\end{itemize}
+	
+	\subsection{Proving Lower Bound}
+		
+		\textbf{Proposition:} any compare-based sorting algorithm use at least $\log (N!) \approx N\log N$ compares in the worst case.
+		\begin{itemize}
+			\item Assume array consists of $N$ distinct values $a_1$ through $a_n$.
+			\item Worst case dictated by height $h$ of decision tree.
+			\item Binary tree of height $h$ has at most $2^h$ leaves.
+			\item $N!$ different orderings $\rightarrow$ at least $N!$ leaves.
+		\end{itemize}
+		
+		\begin{IEEEeqnarray}{rCl}
+				2^h & \geq & \# leaves \geq N! \\
+				h & \geq&  \log (N!) \approx N\log N
+			\end{IEEEeqnarray}
+		
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}

@@ -1,0 +1,157 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{marginnote}
+\usepackage{endnotes}
+
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{grey},
+stepnumber=2,
+breaklines=true
+}
+
+%Properly formatted differential 'd'
+\newcommand{\ud}{\, \mathrm{d}}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Vectors}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Basics}
+	Definition: A vector $\vec{x}$ is defined as a collection of $n$ ordered numbers $(x_1, x_2,\ldots ,x_n)$.
+	
+	Basic properties:
+	\begin{itemize}
+		\item $c(\vec{x} + \vec{y}) = c\vec{x} + c\vec{y}$
+		\item $(\vec{x} + \vec{y}) + \vec{z} = \vec{x} + (\vec{y} + \vec{z})$
+		\item $(a+b)\vec{x} = a\vec{x} + b\vec{x}$
+	\end{itemize}
+	
+	Other concepts/terms:
+	\begin{itemize}
+		\item Zero vector: $\vec{0} = (0, 0,\ldots , 0) \text{ and } \vec{x} + \vec{0} = \vec{x} \ \forall \vec{x}$
+		\item The \textbf{linear combination} of vectors $\vec{x_1}, \ldots , \vec{x_k} \text{ is } c_1\vec{x_1} + c_2\vec{x_2} + \ldots + c_k\vec{x_k}$
+		\item $\mathbb{R}^n$ represents the set of all real vectors of size $n$.
+		\item Vector Basis: the set of all vectors of size $n$ such that any vector in $\mathbb{R}^n$ can be expressed as a linear combination of the set. The \textbf{standard basis} is $\vec{i}, \vec{j}, \text{ and } \vec{k}$.
+	\end{itemize}
+		
+	\subsection{Geometric Applications}
+		$\mathbb{R}^2 \text{ and } \mathbb{R}^3$ can be used to define points on a plane and in space, respectively.
+		\begin{center}
+		\begin{tikzpicture}
+			[scale=3,line cap=round,
+			%Styles
+			axes/.style=,
+			important line/.style={very thick},
+			information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+			dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+			]
+			
+			%Colors
+			\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+			
+			%The graphic
+			%\draw[help lines,step=0.5cm,loosely dashed] (-.4,-.4) grid (1.4,1.4);
+			
+			\begin{scope}[axes]
+				\draw[->] (-.2,0) -- (1.5,0) node[right] {$x$} coordinate(x axis);
+				\draw[->] (0,-.2) -- (0,1.5) node[above] {$y$} coordinate(y axis);
+			\end{scope}
+			
+			\draw[->,thick,orange] (0,0) -- node[left=3pt] {$\vec{r}$} (1.2,1.2);
+			\node [dot=P] at (1,1) {};
+			\filldraw[fill=green!20,draw=anglecolor] (0,0) -- node[right=3pt,above,black] {$\theta$}(3mm,0pt) arc (0:45:3mm);
+			
+			\draw[xshift=1.8cm] (0,.8)
+				node[right,text width=5cm,information text]
+				{
+					\begin{IEEEeqnarray}{rCl}
+						\vec{OP} & = & (x_1, x_2)\\
+						r & = & \sqrt{x_1^2 + x_2^2}\\
+						x_1 & = & r\cos\theta\\
+						x_2 & = & r\sin\theta
+					\end{IEEEeqnarray}
+				};
+			
+		\end{tikzpicture}
+		
+		\begin{tikzpicture}
+			[scale=3,line cap=round,
+			%Styles
+			axes/.style=,
+			important line/.style={very thick},
+			information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+			dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+			]
+			
+			%Colors
+			\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+			
+			%The graphic
+			\begin{scope}[axes]
+				\draw[<-] (-.5,-.5) node[right,below] {$x$} coordinate(x axis) -- (0,0);
+				\draw[->] (0,0) -- (.7,0) node[right,below] {$y$} coordinate(y axis);
+				\draw[->] (0,0) -- (0,.7) node[right,above] {$z$} coordinate(z axis);
+			\end{scope}
+			
+			\draw[->,thick,orange] (0,0) -- node[above=3pt] {$\vec{r}$} (.6,.4);
+			\node [dot=P] at (.6,.4) {};
+			
+			\filldraw[fill=green!20,draw=anglecolor] (0,0) -- (1.5mm,1mm) arc (15:120:1mm) node[above=5pt,right=2pt,black,font=\small] {$\phi$};
+			
+			\path [name path=zint] (-.25,-.25) -- (1,-.25);
+			\path [name path=dropdown] (.6,.4) -- (.6, -1);
+			\draw [name intersections={of=zint and dropdown, by=t}]
+				[dashed] (.6,.4) -- (t);
+			\draw [dashed] (-.25,-.25) -- (t);
+			\draw[->] (0,0) -- (t);
+			
+			\path [name path=oq] (0,0) -- (t);
+			\path [name path=phicircle] (0,0) circle (1mm);
+			
+			\filldraw [name intersections={of=oq and phicircle, by=u}]
+				[fill=green!20,draw=anglecolor] (0,0) -- (u) arc (-20:-135:1mm) node[right=3pt,below,black,font=\small] {$\theta$};
+				
+			\draw[xshift=1cm]
+				node[right,text width=6.5cm,information text]
+				{
+					The \textbf{spherical coordinates} defined by $(r,\phi,\theta)$, where $\theta$ is \textit{azimuth} along the equator and $\phi$ is \textit{inclination} from the meridian, can be converted to Cartesian coordinates.
+					\begin{IEEEeqnarray}{rCl}
+						r & = & \sqrt{x_1^2+x_2^2+x_3^2}\\
+						x_1 & = & r\sin\phi\cos\theta\\
+						x_2 & = & r\sin\phi\sin\theta\\
+						x_3 & = & r\cos\theta
+					\end{IEEEeqnarray}
+				};
+		
+		\end{tikzpicture}		
+		
+		
+		\end{center}
+	
+	
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
