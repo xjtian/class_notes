@@ -204,10 +204,36 @@ breaklines=true
 	
 	With the former method, given a nonzero vector $\vec{u}$, the line through the origin in the direction of $\vec{u}$ consists of all points whose position vectors are multiples of $\vec{u}$. If we translate all points by a vector $\vec{v}$, we get a generic definition for a line.
 	\begin{equation}
-		l = t\vec{u} + \vec{v} \quad \forall \ t \in \mathbb{R} \text{ and } \vec{u}\neq 0
+		l = t\vec{x_0} + \vec{v} \quad \forall \ t \in \mathbb{R} \text{ and } \vec{x_0}\neq 0
 	\end{equation}
 	
 	This is called the \textbf{parametric representation} of a line where $t$ is the \textbf{parameter}.
+	
+	\begin{center}
+		\begin{tikzpicture}
+			[scale=4,line cap=round,
+			%Styles
+			axes/.style=,
+			important line/.style={very thick},
+			information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+			dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+			]
+			
+			%Colors
+			\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+			
+			%The graphic
+			\node [dot=O] at (0,0) {};
+			\node [dot=$x_0$] at (.1,.4) {};
+			\draw[->] (0,0) -- (.1, .4);
+			
+			
+			\draw[<->,orange,very thick] (-.3,.3) -- (.9,.6) node[above] {$l$} ;
+			\draw[->,very thick] (.1, .4) -- node[above] {$\vec{v}$} (.5,.5);
+			
+			%\draw[->] (.4,.8) \node[above] {$t\vec{v}$} -- (1,1);
+		\end{tikzpicture}
+	\end{center}
 	
 	When given two position vectors $\vec{a} \text{ and } \vec{b}$, it is possible to represent the line passing through both as such:
 	
