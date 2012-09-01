@@ -7,6 +7,7 @@
 
 \usepackage{tikz}
 \usetikzlibrary{intersections}
+\usetikzlibrary{calc}
 
 \usepackage{fancyhdr}
 
@@ -253,6 +254,197 @@ breaklines=true
 	$\vec{x_0}$ is the linear shift of the origin. Note that if $\vec{x_0} = 0$, the plane is a linear combination of the vectors $\vec{u}$ and $\vec{v}$. Another condition for the plane is that $\vec{u}$ and $\vec{v}$ must be \textbf{linearly independent}, meaning neither is a scalar multiple of the other.
 	
 	A characteristic property of planes is that if the points $\mathbf{p}$ and $\mathbf{q}$ are both in the plane, the line that passes through them is entirely in the plane as well.
+	
+	In general, in the set of vectors $\mathbb{R}^n$ and an $n$-dimensional space, the equation for a $k$-dimensional hyperplane in space is as follows:
+	\begin{equation}
+		\vec{x}(t_1,\ldots ,t_k) = \vec{x_0} + t_1\vec{u_1} + t_2\vec{u_2} + \ldots + t_k\vec{u_k}
+	\end{equation}
+	
+\section{Dot Products}
+	Definition:
+	\begin{equation}
+		\vec{x} \cdot \vec{y} = x_1y_1 + x_2y_2 + \ldots + x_ny_n
+	\end{equation}
+	
+	Given this, the equation for $|\vec{x}|$ can be written as
+	\begin{equation}
+		|\vec{x}| = \sqrt{\vec{x}\cdot\vec{x}}
+	\end{equation}
+	
+	\subsection{Law of Cosines}
+		\begin{center}
+			\begin{tikzpicture}
+				[scale=.5,line cap=round,
+				%Styles
+				axes/.style=,
+				important line/.style={very thick},
+				information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+				dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+				]
+				
+				%Colors
+				\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+				
+				%The graphic
+				\coordinate (a) at (0,0);
+				\coordinate (b) at (1,3);
+				\coordinate (c) at (5,0);
+				
+				\draw[->,orange,thick] (a) -- node[below] {$\vec{x} - \vec{y}$} (c);
+				\draw[->] (b) -- node[left] {$\vec{y}$} (a);
+				\draw[->] (b) -- node[above] {$\vec{x}$} (c);				
+				
+				\filldraw[fill=green!20,draw=anglecolor] (b) -- ($(b)!5mm!(c)$) to[bend left] node[below,black] {$\theta$} ($(b)!5mm!(a)$) -- cycle;
+				
+				\draw[xshift=5.5cm] (0,2)
+					node[right,text width=8cm,information text]
+					{
+						\begin{equation}
+							|\vec{x} + \vec{y}|^2 = |\vec{x}|^2 + |\vec{y}|^2 - 2|\vec{x}||\vec{y}|\cos\theta
+							\label{eqn:law cos}
+						\end{equation} 
+					};
+			\end{tikzpicture}
+		\end{center}
+		
+		From the Law of Cosines (\ref{eqn:law cos}), it is possible to derive a second definition of the cross product.
+		\begin{IEEEeqnarray}{rCl}
+			|\vec{x} + \vec{y}|^2 & = & |\vec{x}|^2 + |\vec{y}|^2 - 2|\vec{x}||\vec{y}| \\\nonumber
+			|\vec{x} + \vec{y}|^2 & = & |\vec{x}|^2 + |\vec{y}|^2 - 2|\vec{x}||\vec{y}|\cos\theta\\
+			\vec{x}\cdot\vec{y} & = & |\vec{x}||\vec{y}|\cos\theta\label{eqn:dotp2}
+		\end{IEEEeqnarray}
+		
+		By re-arranging equation \ref{eqn:dotp2}, we get an expression for calculating the angle between two vectors.
+		\begin{equation}
+			\theta = \arccos\frac{\vec{x}\cdot\vec{y}}{|\vec{x}||\vec{y}|}
+		\end{equation}
+		
+	\subsection{Theorem of Pythagoras}
+		\begin{equation}
+			\text{If } \vec{x}\cdot\vec{y} = 0, \text{ then } |\vec{x} - \vec{y}| = |\vec{x}|^2 + |\vec{y}|^2
+		\end{equation}
+		
+		This is essentially Pythagorean's Theorem applied to vectors. Two vectors are called \textbf{orthogonal} to each other if their dot product is 0.
+		
+	\subsection{Cauchy-Schwartz Inequality}
+		\begin{equation}
+			|\vec{x}\cdot\vec{y}| = |\vec{x}||\vec{y}||\cos\theta|\leq |\vec{x}||\vec{y}|
+		\end{equation}
+		
+	\subsection{Projections}
+		The \textbf{projection} of one vector onto another is the component of the first that is in the same direction as the second. Given a unit vector $\vec{n}$, the projection of $\vec{x}$ can be expressed as $\Pr_{\vec{n}}(\vec{x}) = c\vec{n}$.
+		
+		\begin{center}
+			\begin{tikzpicture}
+				[scale=1,line cap=round,
+				%Styles
+				axes/.style=,
+				important line/.style={very thick},
+				information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+				dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+				]
+				
+				%Colors
+				\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+				
+				%The graphic
+				\coordinate (a) at (0,0);
+				\coordinate (b) at (3,0);
+				\coordinate (c) at (3,2);
+				
+				\draw[->,orange] (a) -- node[below=10pt] {$Pr_{\vec{n}}(\vec{x})$} (b);
+				\draw[->] (a) -- node[left] {$\vec{x}$} (c);
+				\draw ($(b)!3mm!(a)$) -- +(0,3mm) -- ($(b)!3mm!(c)$);			
+				
+				\draw[dashed,black!30] (c) -- (b);
+				\draw[->,very thick] (a) -- node[below] {$\vec{n}$} (1,0);
+				
+				\draw[xshift=3.5cm] (0,1)
+					node[right,text width=6cm,information text]
+					{
+						\begin{IEEEeqnarray}{rCl}
+							(\vec{x} - c\vec{x})\cdot\vec{n} & = & 0\\
+							\nonumber \vec{n}\cdot\vec{n} & = & 1\\
+							c & = & \vec{x}\cdot\vec{n}\\
+							Pr_{\vec{n}}(\vec{x}) & = & (\vec{x}\cdot\vec{n})\vec{n}\label{eqn:norm pr}
+						\end{IEEEeqnarray}
+					};
+			\end{tikzpicture}
+		\end{center}
+		
+		The vector $\vec{n}$ in equation \ref{eqn:norm pr} is called a \textbf{normalization} because it is a reduction of a vector of arbitrary length to a unit vector in the same direction.
+		
+\section{Euclidean Geometry}
+	It is possible to use the dot product to determine the equations of lines and planes and to extrapolate these equations to higher dimensions.
+	
+	\subsection{Equations of Lines and Planes}
+		Given that $\vec{x_0}$ is a fixed point on a line in $\mathbb{R}^2$ or a plane in $\mathbb{R}^3$ and $\vec{n}$ is perpendicular to the line or plane, every point $\vec{x}$ must satisfy the following equation.
+		\begin{equation}
+			\vec{n}\cdot(\vec{x}-\vec{x_0}) = 0
+			\label{eqn:plane}
+		\end{equation}
+		
+		Because $\vec{n}$ is a unit vector and $\vec{x_0}$ is a fixed point, a plane or line can also be described with the following equation.
+		\begin{equation}
+			\vec{n}\cdot\vec{x} - c = 0;
+		\end{equation}
+		
+		\begin{center}
+			\begin{tikzpicture}
+				[scale=1,line cap=round,
+				%Styles
+				axes/.style=,
+				important line/.style={very thick},
+				information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+				dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+				]
+				
+				%Colors
+				\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+				
+				%The graphic
+				\coordinate (p) at (0,0);
+				\coordinate (a) at (3,3);
+				\coordinate (b) at (6,0);
+				\coordinate (c) at (3,1);
+				\coordinate (d) at (5,1);
+				
+				\draw[->] (p) node[left] {$P$} -- (a);
+				\draw[->] (p) -- (b);
+				
+				\path [name path=x0] (1,-2)--(c);
+				\path [name path=u] (p) -- (b);
+				\draw[name intersections={of={x0 and u}, by=i}][orange,thick] (1,-2)-- node[left]{$x_0$} (i);
+				\draw[orange,thick,dashed,->] (i)--(c);
+				
+				\draw[orange,thick,->] (c) -- node[left] {$\vec{n}$} +(0,1);
+				\draw[blue,->] (c) -- node[above]{$\vec{x}-\vec{x_0}$} (d);
+				\draw[blue,thick,->] (1,-2) -- node[right]{$\vec{x}$} (d);
+				\draw ($(c)!2mm!(d)$) -- +(0,2mm) -- +(-2mm,2mm);
+				\draw(0,-4.5)
+					node[right,text width=10cm,information text]
+					{
+						\begin{IEEEeqnarray}{rCl}
+							\nonumber\vec{x} = (x,y,z);\vec{x_0} & = & (x_0,y_0,z_0);\vec{n} = (a,b,c)\\
+							(\vec{x}-\vec{x_0})\cdot\vec{n} & = & 0\\
+							(x-x_0)a+(y-y_0)b+(z-z_0)c & = & 0\\
+							ax+by+cz & = & ax_0+by_0+cz_0\\
+							ax+by=cz & = & d
+						\end{IEEEeqnarray}
+					};
+			\end{tikzpicture}
+		\end{center}
+		
+	\subsection{Distance to a Line or Plane}
+		Given a plane defined by equation \ref{eqn:plane}, the distance from a point $\vec{x_1}$ to $P$ is
+		\begin{equation}
+			\delta = \vec{n}\cdot(\vec{x_0}-\vec{x_1})
+		\end{equation}
+		
+		if $\vec{x_1}$ is on the side of $P$ with the tip of $\vec{n}$, and $-\delta$ on the other side. Since $|\vec{n}| = 1$, we can also express the normalized distance equation as follows, where $\theta$ is the angle between $\vec{n}$ and $\vec{x_1}-\vec{x_0}$.
+		\begin{equation}
+			\delta = |\vec{x_1}-\vec{x_0}|\cos\theta
+		\end{equation}
 	
 %		\def\enotesize{\normalsize}
 %		\theendnotes
