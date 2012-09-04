@@ -429,7 +429,7 @@ breaklines=true
 							(\vec{x}-\vec{x_0})\cdot\vec{n} & = & 0\\
 							(x-x_0)a+(y-y_0)b+(z-z_0)c & = & 0\\
 							ax+by+cz & = & ax_0+by_0+cz_0\\
-							ax+by=cz & = & d
+							ax+by+cz & = & d
 						\end{IEEEeqnarray}
 					};
 			\end{tikzpicture}
@@ -438,7 +438,7 @@ breaklines=true
 	\subsection{Distance to a Line or Plane}
 		Given a plane defined by equation \ref{eqn:plane}, the distance from a point $\vec{x_1}$ to $P$ is
 		\begin{equation}
-			\delta = \vec{n}\cdot(\vec{x_0}-\vec{x_1})
+			\delta = \vec{n}\cdot(\vec{x_1}-\vec{x_0})
 		\end{equation}
 		
 		if $\vec{x_1}$ is on the side of $P$ with the tip of $\vec{n}$, and $-\delta$ on the other side. Since $|\vec{n}| = 1$, we can also express the normalized distance equation as follows, where $\theta$ is the angle between $\vec{n}$ and $\vec{x_1}-\vec{x_0}$.
