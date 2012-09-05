@@ -46,14 +46,10 @@ breaklines=true
 		\item Are \textit{enumerable}, so they can be counted.
 		\item May (often) be composed to create new structures.
 		\item Effectively and naturally capture a spectrum of behaviors essential to all computing.
-		\item Allow for a certain type of constructive reasoning.
+%		\item Allow for a certain type of constructive reasoning.
 	\end{itemize}
 	
-	Mathematical structures can be abstracted to a single structure, called a ``semi-group'', the combination of a set and an operator. For example, $(\mathbb{Z}, +)$ means that the operator '+' is closed over the set of all integers ($\mathbb{Z}$). Other basic sets are $\mathbb{Q} \text{ and } \mathbb{N}$, the set of all rational and natural numbers, respectively.
-	
 \section{Definitions and Properties}
-	Modern mathematics (post-1900) is characterized by a critical re-evaluation of mathematical certainty, with a focus on structural and axiomatic approach to the subject.
-	
 	Informally, a \textbf{set} is a collection of \textit{unique} objects called ``elements'' or ``points''. Sets are named with single capital letters, and are notated as such: $S=\{1,2,3\}$, or $S = \{n, \text{where n is an even integer}\}$.
 	
 	The \textbf{cardinality} of a set is the number of elements it contains and is a property universal to all sets. The following holds true for all sets:
@@ -62,6 +58,19 @@ breaklines=true
 	\end{equation}
 	
 	The \textbf{empty set} is the set containing no elements, notated as $\{\}$ or $\emptyset$.
+	
+	\subsection{Containment}
+		Sets allow us to describe \textbf{containment relations} between collections of objects. $\in$ indicates an object is contained within a set, and $\notin$ means the opposite.
+		
+		A \textbf{subset} relation is defined as follows: The set $S$ is a subset of $T$ iff every element in $S$ is contained within $T$, notated as $S\subseteq T$. $S$ is a \textbf{proper subset} of $T$ iff $S$ is contained in $T$ but $T$ has at least one element not in $S$, notated as $S\subset T$.
+		
+		A \textbf{superset} relation is defined as such: The set $S$ is a superset iff every element of $T$ is in $S$, notated $S\supset T$. Subset and superset are \textbf{duals}.
+		
+\section{Constructions Within Sets}
+	The \textbf{Cartesian product} of two sets $S$ and $T$, written $S\times T$ and read ``$S$ cross $T$'' is defined as follows.
+	\begin{equation}
+		S\times T = \{(s,t)\mid s\in S \text{ and } t\in T\}
+	\end{equation}
 
 %	\begin{center}
 %	\begin{tikzpicture}

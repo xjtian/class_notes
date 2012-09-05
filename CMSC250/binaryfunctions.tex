@@ -1,0 +1,95 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+
+\usepackage{marginnote}
+\usepackage{endnotes}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true
+}
+
+%Properly formatted differential 'd'
+\newcommand{\ud}{\, \mathrm{d}}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Binary Relations and Functions}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Binary Relations}
+	A binary relation $R$ is a subset of $A\times B$.
+	\begin{equation}
+		R\subseteq A\times B
+	\end{equation}
+	
+	One way of ``ordering'' a set is through a binary relation defined over that set.
+	\begin{equation}
+		R\subseteq A\times A
+	\end{equation}
+	
+	\subsection{Equivalence Relations}
+		An equivalence relation is a binary relation that enforces reflexivity, transitivity, and symmetry, notated with $\equiv$.
+		\begin{itemize}
+			\item Reflexivity: $\forall a\in A, a\equiv a$
+			\item Transitivity: $\forall a,b,c\in A:a\equiv b \text{ and } b\equiv c \text{ implies } a\equiv c$
+			\item Symmetry: $\forall a,b\in A: a\equiv b \text{ implies } b\equiv a$
+		\end{itemize}
+		
+\section{Functions}
+	A \textbf{function} is a \textit{unitary} mapping from one set, called the domain, to another set, called the codomain. A \textbf{unitary mapping} is one in which each point in the domain is mapped to one in the codomain.
+	
+	Functions describe transformations among sets and are the building blocks of more complex relations. The image of the codomain that a function maps to is called the \textbf{range}. A function must map every domain element to only one codomain element.
+	
+	How many functions exist mapping a domain $S$ of size $n$ and a codomain $T$ of size $m$?
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
