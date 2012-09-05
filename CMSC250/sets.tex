@@ -62,9 +62,20 @@ breaklines=true
 	\subsection{Containment}
 		Sets allow us to describe \textbf{containment relations} between collections of objects. $\in$ indicates an object is contained within a set, and $\notin$ means the opposite.
 		
-		A \textbf{subset} relation is defined as follows: The set $S$ is a subset of $T$ iff every element in $S$ is contained within $T$, notated as $S\subseteq T$. $S$ is a \textbf{proper subset} of $T$ iff $S$ is contained in $T$ but $T$ has at least one element not in $S$, notated as $S\subset T$.
+		A \textbf{subset} relation is defined as follows: 
+		\begin{equation}
+			S\subseteq T \text{ iff } \forall x\in S, x\in T
+		\end{equation}
 		
-		A \textbf{superset} relation is defined as such: The set $S$ is a superset iff every element of $T$ is in $S$, notated $S\supset T$. Subset and superset are \textbf{duals}.
+		A \textbf{proper subset} is defined as follows:
+		\begin{equation}
+			S\subset T \text { iff } S\subseteq T \text{ and } T\not\subseteq S
+		\end{equation}
+		
+		\textbf{Superset} relations are the \textbf{dual} of subset relations.
+		\begin{equation}
+			S\supset T \text{ iff } T\subseteq S
+		\end{equation}
 		
 \section{Constructions Within Sets}
 	The \textbf{Cartesian product} of two sets $S$ and $T$, written $S\times T$ and read ``$S$ cross $T$'' is defined as follows.
