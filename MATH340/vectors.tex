@@ -50,18 +50,18 @@ breaklines=true
 		\item $(a+b)\vec{x} = a\vec{x} + b\vec{x}$
 	\end{itemize}
 	
-	Other concepts/terms:
+	Other concepts/terms:\marginnote{What is a zero vector?}
 	\begin{itemize}
 		\item Zero vector: $\vec{0} = (0, 0,\ldots , 0) \text{ and } \vec{x} + \vec{0} = \vec{x} \ \forall \vec{x}$
 		\item The \textbf{linear combination} of vectors $\vec{x_1}, \ldots , \vec{x_k} \text{ is } c_1\vec{x_1} + c_2\vec{x_2} + \ldots + c_k\vec{x_k}$ for any real constants.
-		\item $\mathbb{R}^n$ represents the set of all real vectors of size $n$.
-		\item Vector Basis: the set of all vectors of size $n$ such that any vector in $\mathbb{R}^n$ can be expressed as a linear combination of the set. The \textbf{standard basis} is $\vec{i}, \vec{j}, \text{ and } \vec{k}$. These vectors are expressed as $\mathbf{\vec{e_k}} = (0, 0, \ldots , 1, 0, \ldots ,0)$, where the lone 1 is at position $k$.
+		\item $\mathbb{R}^n$ represents the set of all real vectors of size $n$.\marginnote{Linear combination?}
+		\item Vector Basis: the set of all vectors of size $n$ such that any vector in $\mathbb{R}^n$ can be expressed as a linear combination of the set. The \textbf{standard basis} is $\vec{i}, \vec{j}, \text{ and } \vec{k}$. These vectors are expressed as $\mathbf{\vec{e_k}} = (0, 0, \ldots , 1, 0, \ldots ,0)$, where the lone 1 is at position $k$.\marginnote{Standard basis?}
 		\item Unit vector: $\vec{u}=\dfrac{\vec{x}}{|\vec{x}|}$; $\vec{u} = 1$.
 		\item Vector distance: $|\vec{x} - \vec{y}|$.
 		\item \textbf{Triangle Inequality}: $|\vec{x} + \vec{y}| \leq |\vec{x}| + |\vec{y}|$
 	\end{itemize}
 	
-	Geometric representation of vector addition and subtraction (parallelogram method):
+	\marginnote{Geometric vector add. and sub.?}Geometric representation of vector addition and subtraction (parallelogram method):
 	\begin{center}
 		\begin{tikzpicture}
 			[scale=4,line cap=round,
@@ -102,8 +102,9 @@ breaklines=true
 		\end{center}
 		
 \section{Points}
-	$\mathbb{R}^2 \text{ and } \mathbb{R}^3$ can be used to define points on a plane and in space, respectively.
+	$\mathbb{R}^2 \text{ and } \mathbb{R}^3$ can be used to define points on a plane and in space, respectively.\marginnote{Spherical coordinates?}
 	\begin{center}
+	\marginnote{Generic magnitude expression?}
 	\begin{tikzpicture}
 		[scale=2,line cap=round,
 		%Styles
@@ -140,7 +141,7 @@ breaklines=true
 			};
 		
 	\end{tikzpicture}
-	
+	\marginnote{Convert spherical coord. $\rightarrow$ Cart.?}
 	\begin{tikzpicture}
 		[scale=3,line cap=round,
 		%Styles
@@ -204,6 +205,7 @@ breaklines=true
 	There are two ways to specify a line with vectors: either as passing through a point in a direction, or as passing through 2 points.
 	
 	With the former method, given a nonzero vector $\vec{u}$, the line through the origin in the direction of $\vec{u}$ consists of all points whose position vectors are multiples of $\vec{u}$. If we translate all points by a vector $\vec{v}$, we get a generic definition for a line.
+	\marginnote{Parametric line equation?}
 	\begin{equation}
 		l = t\vec{x_0} + \vec{v} \quad \forall \ t \in \mathbb{R} \text{ and } \vec{x_0}\neq 0
 	\end{equation}
@@ -236,7 +238,7 @@ breaklines=true
 		\end{tikzpicture}
 	\end{center}
 	
-	When given two position vectors $\vec{a} \text{ and } \vec{b}$, it is possible to represent the line passing through both as such:
+	\marginnote{Equation for line through 2 points?}When given two position vectors $\vec{a} \text{ and } \vec{b}$, it is possible to represent the line passing through both as such:
 	
 	\begin{IEEEeqnarray}{rCl}
 		\vec{x} & = & t(\vec{b}-\vec{a}) + \vec{a}\\
@@ -246,7 +248,7 @@ breaklines=true
 	When $t=0, \vec{x} = \vec{a}$ and when $t=1, \vec{x} = \vec{b}$.
 	
 \section{Planes}
-	There is a unique plane that will contain any two nonzero vectors. The parametric representation of a plane is as follows:
+	\marginnote{Equation of plane?}There is a unique plane that will contain any two nonzero vectors. The parametric representation of a plane is as follows:
 	\begin{equation}
 		\mathbf{x} = \vec{x_0} + s\vec{u} + t\vec{v}
 	\end{equation}
@@ -261,7 +263,7 @@ breaklines=true
 	\end{equation}
 	
 \section{Dot Products}
-	Definition:
+	\marginnote{What are dot products?}Definition:
 	\begin{equation}
 		\vec{x} \cdot \vec{y} = x_1y_1 + x_2y_2 + \ldots + x_ny_n
 	\end{equation}
@@ -327,12 +329,12 @@ breaklines=true
 		This is essentially Pythagorean's Theorem applied to vectors. Two vectors are called \textbf{orthogonal} to each other if their dot product is 0.
 		
 	\subsection{Cauchy-Schwartz Inequality}
-		\begin{equation}
+		\marginnote{Cauchy-Schwartz?}\begin{equation}
 			|\vec{x}\cdot\vec{y}| = |\vec{x}||\vec{y}||\cos\theta|\leq |\vec{x}||\vec{y}|
 		\end{equation}
 		
 	\subsection{Projections}
-		The \textbf{projection} of one vector onto another is the component of the first that is in the same direction as the second. Given a unit vector $\vec{n}$, the projection of $\vec{x}$ can be expressed as $\Pr_{\vec{n}}(\vec{x}) = c\vec{n}$.
+		\marginnote{Projections?}The \textbf{projection} of one vector onto another is the component of the first that is in the same direction as the second. Given a unit vector $\vec{n}$, the projection of $\vec{x}$ can be expressed as $\Pr_{\vec{n}}(\vec{x}) = c\vec{n}$.
 		
 		\begin{center}
 			\begin{tikzpicture}
@@ -378,8 +380,8 @@ breaklines=true
 	It is possible to use the dot product to determine the equations of lines and planes and to extrapolate these equations to higher dimensions.
 	
 	\subsection{Equations of Lines and Planes}
-		Given that $\vec{x_0}$ is a fixed point on a line in $\mathbb{R}^2$ or a plane in $\mathbb{R}^3$ and $\vec{n}$ is perpendicular to the line or plane, every point $\vec{x}$ must satisfy the following equation.
-		\begin{equation}
+		Given that $\vec{x_0}$ is a fixed point on a line in $\mathbb{R}^2$ or a plane in $\mathbb{R}^3$ and $\vec{n}$ is perpendicular to the line or plane, every point $\vec{x}$ must satisfy the following equation, given $\vec{x_0}$ is any point on the plane.
+		\marginnote{Dot product form of lines and planes?}\begin{equation}
 			\vec{n}\cdot(\vec{x}-\vec{x_0}) = 0
 			\label{eqn:plane}
 		\end{equation}
@@ -436,16 +438,93 @@ breaklines=true
 		\end{center}
 		
 	\subsection{Distance to a Line or Plane}
-		Given a plane defined by equation \ref{eqn:plane}, the distance from a point $\vec{x_1}$ to $P$ is
+		\marginnote{Distance to line or plane?}Given a plane defined by equation \ref{eqn:plane}, the distance from a point $\vec{x_1}$ to $P$ is
 		\begin{equation}
 			\delta = \vec{n}\cdot(\vec{x_1}-\vec{x_0})
 		\end{equation}
 		
-		if $\vec{x_1}$ is on the side of $P$ with the tip of $\vec{n}$, and $-\delta$ on the other side. Since $|\vec{n}| = 1$, we can also express the normalized distance equation as follows, where $\theta$ is the angle between $\vec{n}$ and $\vec{x_1}-\vec{x_0}$.
+		\marginnote{Explain the formula}if $\vec{x_1}$ is on the side of $P$ with the tip of $\vec{n}$, and $-\delta$ on the other side. Since $|\vec{n}| = 1$, we can also express the normalized distance equation as follows, where $\theta$ is the angle between $\vec{n}$ and $\vec{x_1}-\vec{x_0}$.
 		\begin{equation}
 			\delta = |\vec{x_1}-\vec{x_0}|\cos\theta
 		\end{equation}
+		
+\section{Cross Products}
+	\begin{equation}
+		\vec{x}\times\vec{y} = (x_2y_3-x_3y_2)\hat{i}+(x_3y_1-x_1y_3)\hat{j}+(x_1y_2-x_2y_1)\hat{k}
+	\end{equation}
+	\marginnote{Cross product calculation?}\begin{equation}
+		\vec{x}\times\vec{y} = det
+		\begin{vmatrix}
+			\hat{i} & \hat{j} & \hat{k}\\
+			x_1 & x_2 & x_3\\
+			y_1 & y_2 & y_3
+		\end{vmatrix}
+	\end{equation}
+	\marginnote{Cross product magnitude?}\begin{equation}
+		|\vec{x}\times\vec{y}| = xy\sin\theta
+	\end{equation}
 	
+	\subsection{Scalar Triple Product}
+		\marginnote{Scalar triple product?}The scalar triple product of three vectors $\vec{u}, \vec{v}, \text{ and }\vec{w}$ is $\vec{u}\cdot(\vec{v}\times\vec{w})$. The scalar triple product of three vectors is equal to the volume of the \textbf{parallelepiped} defined by the three vectors (space bounded by three pairs of congruent parallelograms). 
+		
+		\marginnote{Flux?}The generic equation for flux across a parallelogram is also a scalar triple product. Given $\vec{p},\vec{q}$ are adjacent edges of a parallelogram $P$, the flux $\Phi$ is defined as follows.
+		\begin{equation}
+			\Phi = A(P)\vec{n}\cdot\vec{v} = |\vec{p}\times\vec{q}|\frac{\vec{p}\times\vec{q}}{|\vec{p}\times\vec{q}|}\cdot\vec{v} = \vec{v}\cdot(\vec{p}\times\vec{q})
+		\end{equation}
+		
+\section*{Important Concepts}
+	\subsection*{Vectors, Lines, and Planes}
+		\begin{itemize}
+			\item Spherical coordinates: $(r,\phi,\theta)$, $\phi$: inclination, $\theta$: azimuth.
+			\item \begin{IEEEeqnarray*}{rCl}
+					x_1 & = & r\sin\phi\cos\theta\\
+					x_2 & = & r\sin\phi\sin\theta\\
+					x_3 & = & r\cos\phi
+				\end{IEEEeqnarray*}
+			\item \begin{IEEEeqnarray*}{rCl}
+				\vec{x}(t) & = & \vec{x_0} + t\vec{v}\\
+				\vec{x}(t) & = & t(\vec{b}-\vec{a}) + \vec{a}
+				\end{IEEEeqnarray*}
+			\item $\mathbf{x} = \vec{x_0}+s\vec{u}+t\vec{v}$
+		\end{itemize}
+		
+	\subsection*{Dot Products}
+		\begin{itemize}
+			\item $\vec{x}\cdot\vec{y} = x_1y_1 + x_2y_2 +\ldots + x_ny_n$
+			\item $\vec{x}\cdot\vec{y} = xy\cos\theta$
+			\item $|\vec{x}|^2 = \vec{x}\cdot\vec{x}$
+		\end{itemize}
+		
+		\subsubsection*{Projections}
+			\begin{itemize}
+				\item $\vec{x}_{\vec{n}} = (\vec{x}\cdot\vec{n})\vec{n}$
+				\item Component of vector in direction of another.
+			\end{itemize}
+			
+		\subsubsection*{Lines and Planes Revisited}
+			\begin{itemize}
+				\item $\vec{n}\cdot(\vec{x}-\vec{x_0}) = 0, \vec{x_0}$ is point on plane or line, $\vec{n}$ is normal to plane or line.
+				\item $\delta = \vec{n}\cdot(\vec{x_1}-\vec{x_0})$ gives distance from a point to plane or line ($\vec{n}$ is unit vector).
+			\end{itemize}
+			
+	\subsection*{Cross Products}
+		\begin{itemize}
+			\item $\vec{x}\times\vec{y} = (x_2y_3-x_3y_2)\hat{i}+(x_3y_1-x_1y_3)\hat{j}+(x_1y_2-x_2y_1)\hat{k}$
+			\item $\vec{x}\times\vec{y} = det
+		\begin{vmatrix}
+			\hat{i} & \hat{j} & \hat{k}\\
+			x_1 & x_2 & x_3\\
+			y_1 & y_2 & y_3
+		\end{vmatrix}$
+			\item $|\vec{x}\times\vec{y}| = xy\sin\theta$
+		\end{itemize}
+		
+		\subsubsection*{Scalar Triple Product}
+			\begin{itemize}
+				\item $\vec{u}\cdot(\vec{v}\times\vec{w})$
+				\item Gives the volume of a parallelepiped bound by three vectors.
+				\item Flux: \[\Phi = A(P)\vec{n}\cdot\vec{v} = |\vec{p}\times\vec{q}|\frac{\vec{p}\times\vec{q}}{|\vec{p}\times\vec{q}|}\cdot\vec{v} = \vec{v}\cdot(\vec{p}\times\vec{q})\]
+			\end{itemize}
 %		\def\enotesize{\normalsize}
 %		\theendnotes
 \end{document}
