@@ -1,0 +1,129 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+
+\usepackage{marginnote}
+\usepackage{endnotes}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true
+}
+
+%Properly formatted differential 'd'
+\newcommand{\ud}{\, \mathrm{d}}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Propositional Logic}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Introduction}
+	\textbf{Axioms} are statements accepted without proof. The axiomatic method can be used to determine other truths by applying logic to a set of existing axioms.
+	
+	\textbf{Logic} is a formal system for expressing truth and falsity and provides a systematic, tractable method of reasoning from given axioms to \textbf{propositions} or \textbf{theorems}.
+	
+	\subsection{Propositional Statements}
+		A \textbf{statement} is a declaration that is either true or false.
+		\begin{equation}
+			s := statement::s\rightarrow\{\oslash, 1\}
+		\end{equation}
+		There are three fundamental operators for statements.
+		\begin{IEEEeqnarray}{rCl}
+			\text{(or) }& \vee & :s\times s\rightarrow\{false,true\}\\
+			\text{(and) }&\wedge & :s\times s\rightarrow\{false,true\}\\
+			\text{(not) }&\lnot &:s\rightarrow\{false, true\}
+		\end{IEEEeqnarray}
+		
+		The truth or falsity of any statement depends upon its \textbf{context}, which can be visualized as the values that are associated with each variable in a statement. For example, the context of $a\vee b$ is either $a=true$ or $b=true$, but the context of $a\wedge b$ is $a=true$ and $b=true$.
+		
+	\subsection{Logical Equivalence}
+		Can prove logical equivalence with truth tables or by induction. When using a truth table, the number of \textit{necessary rows} is determined by the number of variables. Read terminal row values as \textit{products} and columns as \textit{co-products}.
+		
+\section{Logical Implication}
+	\textbf{Logical implication} is a \textit{directional} operator that points from an antecedant, or hypothesis, to a necessary condition, or conclusion. Implication captures the notion of an action depending on the success or failure of another action (If it rains, then I bring an umbrella).
+	\begin{equation}
+		p\Rightarrow q
+	\end{equation}
+	\begin{center}
+	\begin{tabular}{cc|c}
+		p & q & $p\Rightarrow q$\\\hline
+		&&\\
+		T & T & T\\
+		F & T & T\\
+		T & F & F\\
+		F & F & T
+	\end{tabular}
+	\end{center}
+	
+	The last case is called a \textbf{vacuous truth} because we assume the implication to be true unless proved otherwise. An implication is false just in the case that its hypothesis is true, but its conclusion is false, i.e. the necessary condition is not satisfied. Analyzing the truth table gives the following.
+	\begin{equation}
+		(p\Rightarrow q) = ((\lnot p)\vee q)
+	\end{equation}
+	
+	Importantly, no relationship need exist between the antecedent and necessary condition (``If the moon is made of cheese, then $\emptyset$ is the subset of all sets'').
+	
+	\subsection{Transitivity}
+		\begin{equation}
+			p\Rightarrow q, q\Rightarrow r\vdash p\Rightarrow r
+		\end{equation}
+		
+		By derivation:
+		\begin{IEEEeqnarray*}{rCl}
+			(p\Rightarrow q)\wedge(q\Rightarrow r) & \stackrel{?}{\vdash} & p\Rightarrow r\\
+			(\lnot p\vee q)\wedge(\lnot q\vee r) & = &\\
+			\lnot p\vee(q\wedge\lnot q)\vee r & = &\\
+			(\lnot\vee c)\vee r & = &\\
+			(\lnot p)\vee r & = &\\
+			p\Rightarrow r & \equiv & p\Rightarrow r
+		\end{IEEEeqnarray*}
+	
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
