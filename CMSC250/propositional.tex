@@ -62,6 +62,15 @@ breaklines=true
 	\subsection{Logical Equivalence}
 		Can prove logical equivalence with truth tables or by induction. When using a truth table, the number of \textit{necessary rows} is determined by the number of variables. Read terminal row values as \textit{products} and columns as \textit{co-products}.
 		
+		Given any statements $p,q,\text{ and } r$, a tautology $t$, and a contradiction $c$, some logical equivalences are summarized below. Statements and operators are also commutative, associative, and distributive.
+		\begin{center}
+		\begin{tabular}{l|cc}
+			Law			&	Case 1			&	Case 2\\\hline
+			De Morgan's	& $\lnot(p\wedge q)\equiv \lnot p\vee \lnot q$ & $\lnot(p\vee q)\equiv\lnot p\wedge\lnot q$\\
+			Absorption	& $p\vee(p\wedge q)\equiv p$	& $p\wedge(p\vee q)\equiv p$
+		\end{tabular}
+		\end{center}
+		
 \section{Logical Implication}
 	\textbf{Logical implication} is a \textit{directional} operator that points from an antecedant, or hypothesis, to a necessary condition, or conclusion. Implication captures the notion of an action depending on the success or failure of another action (If it rains, then I bring an umbrella).
 	\begin{equation}
@@ -99,6 +108,16 @@ breaklines=true
 			(\lnot p)\vee r & = &\\
 			p\Rightarrow r & \equiv & p\Rightarrow r
 		\end{IEEEeqnarray*}
+		
+	\subsection{Negation}
+		\begin{equation}
+			\lnot(p\Rightarrow q)\equiv p\wedge\lnot q
+		\end{equation}
+		
+	\subsection{Contrapositive}
+		\begin{equation}
+			\lnot q\Rightarrow\lnot p
+		\end{equation}
 	
 %	\begin{center}
 %	\begin{tikzpicture}
