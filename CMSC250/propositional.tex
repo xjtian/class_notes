@@ -48,7 +48,7 @@ breaklines=true
 	\subsection{Propositional Statements}
 		A \textbf{statement} is a declaration that is either true or false.
 		\begin{equation}
-			s := statement::s\rightarrow\{\oslash, 1\}
+			s := statement::s\rightarrow\{0, 1\}
 		\end{equation}
 		There are three fundamental operators for statements.
 		\begin{IEEEeqnarray}{rCl}
@@ -67,7 +67,8 @@ breaklines=true
 		\begin{tabular}{l|cc}
 			Law			&	Case 1			&	Case 2\\\hline
 			De Morgan's	& $\lnot(p\wedge q)\equiv \lnot p\vee \lnot q$ & $\lnot(p\vee q)\equiv\lnot p\wedge\lnot q$\\
-			Absorption	& $p\vee(p\wedge q)\equiv p$	& $p\wedge(p\vee q)\equiv p$
+			Absorption	& $p\vee(p\wedge q)\equiv p$	& $p\wedge(p\vee q)\equiv p$\\
+			Distributive	&	$p\wedge(q\vee r)\equiv(p\wedge q)\vee(p\wedge r)$	&	$p\vee(q\wedge r)\equiv(p\vee q)\wedge(p\vee r)$
 		\end{tabular}
 		\end{center}
 		
@@ -115,9 +116,18 @@ breaklines=true
 		\end{equation}
 		
 	\subsection{Contrapositive}
+		If the positive is true, the contrapositive is also true.
 		\begin{equation}
 			\lnot q\Rightarrow\lnot p
 		\end{equation}
+		
+	\subsection{Biconditional}
+		In English, equivalent to "p, if and only if q." Only true when p and q are both true or both false.
+		\begin{IEEEeqnarray}{rCl}
+			p\leftrightarrow q & \equiv & [(q\Rightarrow q)\wedge(q\Rightarrow p)]\\
+			\nonumber p\leftrightarrow q &\equiv &(\lnot p\vee q) \wedge (\lnot q\vee p)\\
+			\nonumber & \equiv &(\lnot p\wedge\lnot q)\vee(p\wedge q)
+		\end{IEEEeqnarray}
 	
 %	\begin{center}
 %	\begin{tikzpicture}
