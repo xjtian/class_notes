@@ -72,14 +72,64 @@ breaklines=true
 	\end{equation}
 	
 	\subsection{Geometric Representation}
-		In $\mathbb{R}^3$, the system of equations can be thought of as solving for the intersection of 3 planes. The solution can either be a single point, a line, or nothing. If one equation reduces to $0 = 0$ or some other tautology, then assign one variable (usually $z$) to be a \textbf{free variable} - the parameter - by turning it into $t$, and adding a third equation $z = t$. Then it is possible to express the system like such.
+		In $\mathbb{R}^3$, the system of equations can be thought of as solving for the intersection of 3 planes - see Figure \ref{fig:planarint}. The solution can either be a single point, a line, or nothing. If one equation reduces to $0 = 0$ or some other tautology, then assign one variable (usually $z$) to be a \textbf{free variable} - the parameter - by turning it into $t$, and adding a third equation $z = t$. Then it is possible to express the system like such.
 		\begin{IEEEeqnarray}{rCl}
 			x & = & k_1t + c_1\\
 			y & = & k_2t + c_2\\
 			z & = & t
 		\end{IEEEeqnarray}
-
-	This is the natural parametric representation for a line.
+		
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[width=0.5\textwidth]{planarint.jpg}
+		\caption{Three cases of planes intersecting.}
+		\label{fig:planarint}
+	\end{figure}
+	
+\section{Matrix Algebra}
+	Matrix addition and subtraction works exactly like you think it does, as long as both matrices have equal dimensions. Scalar multiplication works the same way as well. The \textbf{zero matrix} is notated as $O$, and has the property $A + O = A$.
+	
+	\subsection{Matrix Multiplication}
+		If $A$ is $m-\text{by}-n$ and $b$ is $n-\text{by}-p$, the matrix product $AB$ is the $m-\text{by}-p$ matrix $C$ where $c_{ij}$ is the dot product of the $i$\textsuperscript{th} row of $A$ and the $j$\textsuperscript{th} column of $B$. In summation notation, where $k$ runs over the column index of $A$ and the row index of $B$:
+		\begin{equation}
+			AB_{ij} = \sum_{k=1}^n a_{ik}b_{kj}
+		\end{equation}
+		
+		Note that matrix multiplication is not in general commutative. There are 4 basic properties of matrix multiplication, listed below.
+		\begin{center}
+			\begin{tabular}{r|l}
+				Law							& Example\\\hline
+				Right distributive			& $(A+B)C = AC+BC$\\
+				Left distributive			& $C(A+B) = CA+CB$\\
+				Scalar commutativity		& $(tA)B=t(AB)=A(tB)$\\
+				Associative					& $A(BC)=(AB)C$
+			\end{tabular}
+		\end{center}
+		
+		\subsection{Identity Matrix}
+			An identity matrix is a square matrix with 1s on its \textbf{main diagonal} and 0s elsewhere, and has the following property.
+			\begin{equation}
+				IA=AI=A
+			\end{equation}
+			
+		\subsection{Matrix Polynomials}
+			If $A$ is a square matrix, then we can raise $A$ to powers, where $A^0$ is the identity matrix.
+			
+\section{Inverse Matrices}
+	If $A$ and $B$ are square matrices with equal dimensions and $AB = I$, then $B$ is an \textbf{inverse} of $A$ and $A$ is an \textbf{invertible} matrix.
+	\begin{equation}
+		AA^{-1} = A^{-1}A = I
+	\end{equation}
+	If $A$ is invertible, then the system of equations $A\vec{x}=b$ has a unique solution $\vec{x}=A^{-1}b$. In particular, $\vec{x}=\vec{0}$ is the only solution to $A\vec{x}=\vec{0}$.
+	
+	For a 2-by-2 matrix, it is invertible if its \textbf{determinant} $ad-bc$ is not zero.
+	\begin{equation}
+		\left(\begin{matrix}
+			a&b\\c&d
+		\end{matrix}\right)^{-1} = \frac{1}{ad-bc}\left(\begin{matrix}
+			d&-b\\-c&a
+		\end{matrix}\right)
+	\end{equation}
 %	\begin{center}
 %	\begin{tikzpicture}
 %		[scale=3,line cap=round,
