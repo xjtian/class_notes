@@ -130,6 +130,24 @@ breaklines=true
 			d&-b\\-c&a
 		\end{matrix}\right)
 	\end{equation}
+	
+	For larger matrices, use basic row operations and \textbf{row rearrangement} to transform the matrix $A$ into the identity matrix $I$, while performing the exact same sequence of steps on $I$ to get $A^{-1}$.
+	
+	\textbf{Diagonal matrices} and \textbf{upper triangular matrices} are invertible only if there are no zeroes on the main diagonal. In the latter case, it is easier to reduce the columns working from right to left.
+	\begin{equation}
+		\begin{pmatrix}
+			b_1 & 0 & 0\\
+			0 & b_2 & 0\\
+			0 & 0 & b_3
+		\end{pmatrix}
+	\end{equation}
+	\begin{equation}
+		\begin{pmatrix}
+			b_11 & b_12 & b_13\\
+			0 & b_22 & b_23\\
+			0 & 0 & b_33
+		\end{pmatrix}
+	\end{equation}
 %	\begin{center}
 %	\begin{tikzpicture}
 %		[scale=3,line cap=round,
