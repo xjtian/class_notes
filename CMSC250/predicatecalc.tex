@@ -1,0 +1,102 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+
+\usepackage{marginnote}
+\usepackage{endnotes}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true
+}
+
+%Properly formatted differential 'd'
+\newcommand{\ud}{\, \mathrm{d}}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Predicate Calculus}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Predicate Translation}
+	A student of mine is wearing a blue shirt.
+	\begin{itemize}
+		\item Domain: all people $P$
+		\item Quantification: There is at least one (existential quantifier)
+		\item Predicates: "wearing a blue shirt" and "is my student"
+	\end{itemize}
+	Let $B(x)$ represent ``$x$ is wearing a blue shirt'' and $S(x)$ represent ``$x$ is my student''.
+	\begin{equation}
+		(\exists s\in P):[B(x)\wedge S(x)]
+	\end{equation}
+	
+	All good students are in class.
+	\begin{itemize}
+		\item Domain: all people $P$
+		\item Quantification: all of them (universal quantifier)
+		\item Predicates: "are in class" and "is a good student"
+	\end{itemize}
+	In this case, due to the universal quantifier, use a logical implication that goes from least specific to most specific.
+	\begin{equation}
+		(\forall s\in P):[G(s)\rightarrow C(s)]
+	\end{equation}
+	
+	\subsection{Negation}
+		\begin{IEEEeqnarray}{rCl}
+			(\forall s\in X:[P(s)]) & \equiv & P(s_1)\wedge P(s_2)\wedge\ldots\wedge P(s_n)\\
+			\lnot\forall s\in S:[P(s)] &\equiv & \exists s_i\in S:\lnot[P(s)]
+		\end{IEEEeqnarray}
+		\begin{IEEEeqnarray}{rCl}
+			(\exists s\in X:[P(s)]) & \equiv & P(s_1)\vee P(s_2)\vee\ldots\vee P(s_n)\\
+			\lnot\exists s\in S:[P(s)] & \equiv & \forall s\in S:\lnot[P(s)]
+		\end{IEEEeqnarray}
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
