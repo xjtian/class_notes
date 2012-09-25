@@ -1,0 +1,142 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+
+\usepackage{marginnote}
+\usepackage{endnotes}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true
+}
+
+%Properly formatted differential 'd'
+\newcommand{\ud}{\, \mathrm{d}}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Randomized Contraction}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Introduction}
+	\marginnote{Min Cut?}The \textbf{minimum cut} problem is defined as follows: Given an undirected graph $G=(V,E)$ possibly containing parallel edges, compute the cut with the fewest number of crossing edges, called the minimum cut.
+	
+\section{Algorithm}
+	\marginnote{Algorithm?}\begin{lstlisting}[autogobble=true]
+		def MinCut(G):
+			while len(V) > 2:
+				randomly select remaining (u,v) edge
+				merge/contract into single vertex
+				remove self loops
+			return cut represented by remaining 2 vertices.
+	\end{lstlisting}
+	
+	It is important to note that this is a randomized algorithm that has a non-negligible chance of failure - thus, it is necessary to run the algorithm many times with different RNG seeds to guarantee a correct result.
+	
+\section{Analysis}
+	To analyze the success rate and runtime of the randomized contraction algorithm, we need to start with three givens. First, fix a graph $G=(V,E)$ with $n$ vertices and $m$ edges, with a min-cut $(A,B)$, and let $k$ be the number of crossing edges forming the set $F$. Two important observations arise immediately:
+	\begin{enumerate}
+		\item If we contract an edge in $F$, the algorithm will not return the correct result.
+		\item If we only contract edges contained within $A$ and $B$, we will get the min-cut of the graph.
+	\end{enumerate}
+	
+	Let $S_i$ represent the event that an edge in $F$ is contracted in iteration $i$. Observing that the degree of each vertex is at least $k$,\marginnote{$m\geq ?$}
+	\begin{IEEEeqnarray}{rCl}
+		\sum_v degree(v) & = & 2m\\
+		\sum_v degree(v) & \geq & kn\\
+		m &\geq & \frac{kn}{2}\\\nonumber\\
+		Pr[S_1] & = & \frac{2}{n}
+	\end{IEEEeqnarray}
+	
+	For the second iteration:
+	\begin{IEEEeqnarray}{rCl}
+		Pr[\lnot S_1\wedge\lnot S_2] & = & Pr[\lnot S_1 | \lnot S_2]\times Pr[\lnot S_1]\\
+		Pr[\lnot S_1\wedge\lnot S_2] & \geq & 1 - \frac{k}{\text{remaining edges}}\times (1 - \frac{2}{n})
+	\end{IEEEeqnarray}
+	
+	Remember that $m \geq \frac{kn}{2}$.
+	\begin{equation}
+		Pr[\lnot S_1 | \lnot S_2] = 1 - \frac{2}{n - 1}
+	\end{equation}
+	
+	Now we can generalize for all iterations.
+	\begin{IEEEeqnarray}{rCl}
+		Pr[\lnot S_1\wedge\ldots\wedge\lnot S_{n-2}] & = & \left(1 - \frac{2}{n}\right)\left(1 - \frac{2}{n - 1}\right)\ldots\left(1-\frac{2}{n-(n-3)}\right)\\\nonumber\\
+		& = & \frac{n-2}{n}\cdot\frac{n-3}{n-1}\cdot\frac{n-4}{n-2}\cdots\frac{2}{4}\cdot\frac{1}{3}\\\nonumber\\
+		& = & \frac{2}{n(n-1)}\\\nonumber\\
+		&\geq & \frac{1}{n^2}
+	\end{IEEEeqnarray}
+	
+	\marginnote{Success rate?}Thus, the chance of success on a single attempt with randomized selection is very unlikely.
+	
+	\subsection{Repeated Trials}
+		Due to the significant failure rate, finding the minimum cut actually involves running the algorithm many times and remembering the smallest cut. Let $T_i$ be the event that $(A,B)$ is found on the $i\textsuperscript{th}$ try and $N$ be the number of times the algorithm is run.
+		\begin{IEEEeqnarray}{rCl}
+			Pr[fail] & = & Pr[\lnot T_1\wedge\lnot T_2\wedge\ldots\wedge\lnot T_N]\\\nonumber\\
+			& = & \prod_{i=1}^N Pr[\lnot T_i] \leq \left(1 - \frac{1}{n^2}\right)^N
+		\end{IEEEeqnarray}
+		
+		\marginnote{How many trials?}Using the fact that $\forall x\in\mathbb{R}, 1+x\leq e^x$:
+		\begin{itemize}
+			\item For $N = n^2, Pr[fail]\leq e\left(e^{-\dfrac{1}{n^2}}\right)^{n^2} = \dfrac{1}{e} \approx 30\%$
+			\item For $N=n^2\cdot\ln (n), Pr[fail]\leq\dfrac{1}{n}$
+		\end{itemize}
+		
+		\marginnote{Runtime?}Runtime is therefore $\Omega(n^2 m)$ with slow constants.
+		
+\section*{Important Ideas}
+	\begin{itemize}
+		\item Contract random edges until graph has only 2 vertices, which possibly represent minimum cuts.
+		\item Success rate is $\approx\frac{1}{n^2}$
+		\item Running algorithm $n^2\cdot\ln (n)$ times almost guarantees success.
+	\end{itemize}
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
