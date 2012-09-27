@@ -35,13 +35,13 @@ breaklines=true
 \headheight 35pt
 
 %Header info
-\chead{\Large \textbf{Equations and Matrices}}
+\chead{\Large \textbf{Linear Algebra}}
 \lhead{}
 \rhead{}
 
 \begin{document}
 \section{Gaussian Elimination}
-	Given a linear system of equations represented by $\mathbf{A}\vec{x} = \vec{b}$, where the matrix $\mathbf{A}$ represents the coefficients of the unknowns or variables in $\vec{x}$, it is possible with a series of basic manipulations to come up with a solution.
+	\marginnote{Guassian elimination?}Given a linear system of equations represented by $\mathbf{A}\vec{x} = \vec{b}$, where the matrix $\mathbf{A}$ represents the coefficients of the unknowns or variables in $\vec{x}$, it is possible with a series of basic manipulations to come up with a solution.
 	
 	\begin{equation}
 		\left(\begin{matrix}
@@ -72,7 +72,7 @@ breaklines=true
 	\end{equation}
 	
 	\subsection{Geometric Representation}
-		In $\mathbb{R}^3$, the system of equations can be thought of as solving for the intersection of 3 planes - see Figure \ref{fig:planarint}. The solution can either be a single point, a line, or nothing. If one equation reduces to $0 = 0$ or some other tautology, then assign one variable (usually $z$) to be a \textbf{free variable} - the parameter - by turning it into $t$, and adding a third equation $z = t$. Then it is possible to express the system like such.
+		\marginnote{Geometry of equation system?}In $\mathbb{R}^3$, the system of equations can be thought of as solving for the intersection of 3 planes - see Figure \ref{fig:planarint}. The solution can either be a single point, a line, or nothing. If one equation reduces to $0 = 0$ or some other tautology, then assign one variable (usually $z$) to be a \textbf{free variable} - the parameter - by turning it into $t$, and adding a third equation $z = t$. Then it is possible to express the system like such.
 		\begin{IEEEeqnarray}{rCl}
 			x & = & k_1t + c_1\\
 			y & = & k_2t + c_2\\
@@ -91,11 +91,11 @@ breaklines=true
 		A \textbf{Linear Map} is a function between two vector spaces that preserves addition and scalar multiplication. If $A$ is an $m\times n$ matrix, $T_A(\vec{x})$ maps $\vec{x}$ from $\mathbb{R}^n$ to $\mathbb{R}^m$.
 		
 	\subsection{Column and Null Spaces}
-		The column and null spaces of a matrix $A$ are \textbf{subspaces} - sets $\in \mathbb{R}^m$ that are closed under vector addition and scalar multiplication. It is possible to find a basis for these subspaces of $A$ with elementary row operations.
+		\marginnote{Subspace?}The column and null spaces of a matrix $A$ are \textbf{subspaces} - sets $\in \mathbb{R}^m$ that are closed under vector addition and scalar multiplication. It is possible to find a basis for these subspaces of $A$ with elementary row operations.
 		
-		To find a basis for the \textbf{column space} of $A$, or the subspace of all vectors that can be created through any linear combination of the columns of $A$, first express $A$ in row-reduced echelon form. The columns of the pivot elements in the original $A$ form the basis for the column space, and the pivot columns themselves form the basis for the \textbf{null space}.
+		\marginnote{Column space?}To find a basis for the \textbf{column space} of $A$, or the subspace of all vectors that can be created through any linear combination of the columns of $A$, first express $A$ in row-reduced echelon form. The columns of the pivot elements in the original $A$ form the basis for the column space, and the pivot columns themselves form the basis for the \textbf{null space}.
 		
-		The null space of $A$ is the solution to $rref(A) = 0$. The number of free variables represents the \textbf{nullity} of $A$, or the size of the vector basis of $ker(A)$, and the \textbf{rank} of $A$ is the number of non-zero rows in $rref(A)$.
+		\marginnote{Null space?}The null space of $A$ is the solution to $rref(A) = 0$ and is the set of all vectors that when mapped by $A$ yield $\vec{0}$. The number of free variables represents the \textbf{nullity} of $A$, or the size of the vector basis of $ker(A)$, and the \textbf{rank} of $A$ is the number of non-zero rows in $rref(A)$.
 		
 	\subsection{Transpose Matrices}
 		\begin{equation}
@@ -105,12 +105,12 @@ breaklines=true
 		\subsubsection{Fundamental Theorem of Linear Algebra}
 			$ker(A)\in\mathbb{R}^n, C(A)\in\mathbb{R}^m, ker(A^T)\in\mathbb{R}^m,C(A^T)\in\mathbb{R}^n$.
 			
-			These are the four fundamental subspaces. All vectors in $C(A)$ are orthogonal to all vectors in $ker(A^T)$ and all vectors in $ker(A)$ are orthogonal to all vectors in $C(A^T)$.
+			\marginnote{Fundamental subspaces?}These are the four fundamental subspaces. All vectors in $C(A)$ are orthogonal to all vectors in $ker(A^T)$ and all vectors in $ker(A)$ are orthogonal to all vectors in $C(A^T)$.
 			
 			Thus, the solvability of any system $A\vec{x} = \vec{b}$ requires that $\vec{b}\in C(A)$, or, in other words, $\vec{b}\perp ker(A^T)$ (Fredhold Alternative).
 	
 	\subsection{Matrix Multiplication}
-		If $A$ is $m\times n$ and $b$ is $n\times p$, the matrix product $AB$ is the $m\times p$ matrix $C$ where $c_{ij}$ is the dot product of the $i$\textsuperscript{th} row of $A$ and the $j$\textsuperscript{th} column of $B$. In summation notation, where $k$ runs over the column index of $A$ and the row index of $B$:
+		\marginnote{Matrix multiplication?}If $A$ is $m\times n$ and $b$ is $n\times p$, the matrix product $AB$ is the $m\times p$ matrix $C$ where $c_{ij}$ is the dot product of the $i$\textsuperscript{th} row of $A$ and the $j$\textsuperscript{th} column of $B$. In summation notation, where $k$ runs over the column index of $A$ and the row index of $B$:
 		\begin{equation}
 			AB_{ij} = \sum_{k=1}^n a_{ik}b_{kj}
 		\end{equation}
@@ -170,7 +170,7 @@ breaklines=true
 	\end{equation}
 	
 	\subsection{Projections}
-		Given two linearly independent vectors $\vec{a}_1, \vec{a}_2$ and a plane defined by their span, we can find the projection $\vec{p}$ of a vector $\vec{b}$.
+		\marginnote{Project vector to plane?}Given two linearly independent vectors $\vec{a}_1, \vec{a}_2$ and a plane defined by their span, we can find the projection $\vec{p}$ of a vector $\vec{b}$.
 		\begin{IEEEeqnarray}{rCl}
 			\nonumber\vec{p} & = & c_1\vec{a}_1 + c_2\vec{a}_2\\
 			\nonumber\vec{b} - \vec{p} & \perp & \vec{a}_1, \vec{a}_2\\
@@ -181,10 +181,10 @@ breaklines=true
 		\end{IEEEeqnarray}
 	
 \section{Determinants}
-	\begin{equation}
+	\marginnote{Determinant equation?}\begin{equation}
 		\text{det} A = \sum_{j=1}^n (-1)^{i+j}A_{ij}\cdot \text{det} M_{ij}
 	\end{equation}
-	$M_{ij}$ represents the $ij\textsuperscript{th}$ \textbf{minor} of the $n\times n$ matrix $A$ obtained by removing the $i\textsuperscript{th}$ row and $j\textsuperscript{th}$ column. This is a recursive solution to determinants.
+	\marginnote{Matrix minor?}$M_{ij}$ represents the $ij\textsuperscript{th}$ \textbf{minor} of the $n\times n$ matrix $A$ obtained by removing the $i\textsuperscript{th}$ row and $j\textsuperscript{th}$ column. This is a recursive solution to determinants.
 	\begin{lstlisting}[autogobble=true]
 		determinant(A):
 			if n == 2:
@@ -205,23 +205,65 @@ breaklines=true
 		\begin{itemize}
 			\item The formula works for any value $i$ between 1 and $n$.
 			\item It is also fine to use $i$ as the controlling variable in the sum.
-			\item The determinant is \textbf{multilinear} in rows and columns.
+			\marginnote{Multilinearity?}\item The determinant is \textbf{multilinear} in rows and columns.
 			\item If any row or column is multiplied by a scalar $\lambda$, $\text{det} A = \lambda\text{det} A$.
-			\item Alternating: switching any two rows or columns flips the sign of the determinant.
+			\marginnote{Alternating?}\item Alternating: switching any two rows or columns flips the sign of the determinant.
 			\item $\text{det} A = 0$ if row or columns are linearly dependent.
-			\item $\text{det} AB = \text{det} A\cdot\text{det} B$
-			\item $\text{det} A^{-1} = \dfrac{1}{\text{det} A}$
+			\marginnote{$detAB=?$}\item $\text{det} AB = \text{det} A\cdot\text{det} B$
+			\marginnote{$detA^{-1}=?$}\item $\text{det} A^{-1} = \dfrac{1}{\text{det} A}$
 		\end{itemize}
 		Multilinearity: if $A=\{\vec{u_1}, \vec{u_2},\ldots,\vec{u_n}\}$ and $\vec{v}\in\mathbb{R}^n$:
 		\begin{equation}
 			det\{\vec{u_1}, \vec{u_2},\ldots\vec{u_k}+\vec{v},\ldots,\vec{u_n}\} = det A + det\{\vec{u_1},\ldots,\vec{u_{k-1}},\vec{v},\vec{u_{k+1}},\ldots\vec{u_n}\}
 		\end{equation}
 		
+		Note also that the determinant is equal to the scalar triple product of a $3\times 3$ matrix and the cross product of the column vectors of a $2\times 2$ matrix. In general, the determinant represents the volume of the hypercube bound by the column vectors of $A$.
+		
 	\subsection{Cramer's Rule}
-		If $det A\neq 0$, and where $\tilde{A}_{ij} = -1^{i+j}\cdot detM_{ij}$
+		\marginnote{Cramer's Rule?}If $det A\neq 0$, and where $\tilde{A}_{ij} = -1^{i+j}\cdot detM_{ij}$
 		\begin{equation}
 			A^{-1} = \frac{1}{det A}\cdot \tilde{A}^T
 		\end{equation}
+		
+\section*{Important Concepts}
+	\subsection*{Matrix Algebra}
+		\subsubsection*{Vector Spaces}
+			\begin{itemize}
+				\item Subspaces are subsets that are closed under certain operations.
+				\item The column space is the subspace of all vectors that can be created through linear combinations of column vectors.
+				\item The pivot elements of a matrix in rref form correspond to the vector basis of its column space.
+				\item The basis for the null space is the column vectors containing pivot elements of rref(A).
+				\item Nullity is the number of pivot elements in $rref(A)$ and rank is the number of nonzero rows in $rref(A)$.
+			\end{itemize}
+			
+		\subsubsection*{Matrix Multiplication}
+			\begin{itemize}
+				\item The number of columns in $A$ must equal the number of rows in $B$.
+				\item $C_{ij}$ is given by the dot product of the $i\textsuperscript{th}$ row of $A$ and the $j\textsuperscript{th}$ column of $B$.
+			\end{itemize}
+			
+	\subsection*{Inverse Matrices}
+		Cramer's Rule: If $det A\neq 0$, and where $\tilde{A}_{ij} = -1^{i+j}\cdot detM_{ij}$
+		\begin{equation}
+			A^{-1} = \frac{1}{det A}\cdot \tilde{A}^T
+		\end{equation}
+		
+		A matrix is only invertible if its determinant is nonzero.
+		
+	\subsection*{Determinants}
+		\begin{equation}
+			\text{det} A = \sum_{j=1}^n (-1)^{i+j}A_{ij}\cdot \text{det} M_{ij}
+		\end{equation}
+		
+		$M_{ij}$ is the minor made by removing the $i\textsuperscript{th}$ row and $j\textsuperscript{th}$ column of $A$.
+		
+		\begin{itemize}
+			\item Multilinearity
+			\item Alternating 
+			\item $detAB = detA\cdot detB$
+			\item $detA^{-1}=(detA)^{-1}$.
+		\end{itemize}
+		
 %	\begin{center}
 %	\begin{tikzpicture}
 %		[scale=3,line cap=round,
