@@ -1,0 +1,117 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+
+\usepackage{marginnote}
+\usepackage{endnotes}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true
+}
+
+%Properly formatted differential 'd'
+\newcommand{\ud}{\, \mathrm{d}}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Differentiability}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Limits and Continuity}
+	The limit of a function $\lim_{x\rightarrow c} f(x) = l$ means that the function $f(x)$ is arbitrarily close to $l$ as $x$ approaches $c$. Given a function $\mathbb{R}^n \xrightarrow{f} \mathbb{R}^m$, the point $\vec{y}_0 \in \mathbb{R}^m$, $\vec{y}_0$ is the limit if $f$ at $\vec{x}_0$ if:
+	
+	\[\forall \epsilon > 0, \exists \delta > 0: (|f(\vec{x}) - \vec{y}_0 | < \epsilon \wedge 0 < |\vec{x} - \vec{x}_0| < \delta)\]
+	
+	Informally speaking, the definition says that $f(\vec{x})$ is arbitrarily close to $\vec{y}_0$ when $\vec{x}$ is sufficiently close to $\vec{x}_0$ and $\vec{x}\neq \vec{x}_0$.
+	
+	\subparagraph{Neighborhoods} A $\delta$-ball is defined as the set of all points in $\mathbb{R}^n$ that satisfy the inequality $|\vec{x}-\vec{x}_0| < \delta$. $\vec{x}$ is a \textbf{limit point} of a set of points $S$ if $\forall \delta > 0, \exists \vec{y} \in S \mid 0 < |\vec{x} - \vec{y}| < \delta$, or that there are points in $S$ other than $\vec{x}$ that are contained in an arbitrary $\delta$-ball, or \textbf{neighborhood} with $\vec{x}$ at the center.
+	
+	\subsection{Continuity}
+		A function $f$ is continuous at $\vec{x}_0$ if $\vec{x}_0$ is in the domain of $f$ and \[lim_{\vec{x} \rightarrow \vec{x}_0} f(\vec{x}) = f(\vec{x}_0)\]
+		At a nonlimit, or \textbf{isoalted} point in the domain of $f$, the limit is meaningless, so the definition of continuity is extended by defining $f$ to be continuous on a subset of its domain $S$ if it's continuous at every point in $S$.
+		\begin{itemize}
+			\item The functions $\mathbb{R}^n \xrightarrow{P_k} \mathbb{R}$, where $P_k (x_1,\ldots , x_n) = x_k$, are continuous. $P_k$ is called the $k$th coordinate projection.
+			\item The functions $S(x, y) = x + y$ and $M(x, y) = xy$ are continuous.
+			\item If $f(\vec{x})$ and $g(\vec{x})$ are continuous, then $g(f(\vec{x}))$ is continuous wherever it is defined.
+		\end{itemize}
+		
+\section{Real-Valued Functions}
+	A function $\mathbb{R}^n \xrightarrow{f} \mathbb{R}$ is differentiable at $\vec{x}_0$ if $\vec{x}_0$ is in the domain of $f$ and there exists a vector $\vec{a}$ such that
+	\begin{equation}
+		\lim_{\vec{x} \rightarrow \vec{x}_0} \frac{f(\vec{x}) - f(\vec{x}_0) - \vec{a}\cdot (\vec{x} - \vec{x}_0)}{|\vec{x} - \vec{x}_0|} = 0
+	\end{equation}
+	$\vec{\nabla}f(\vec{x}_0)$ is the only vector that satisfies the second condition, called the \textbf{gradient vector}, where the $k$th component of $\vec{\nabla}f$ is the $k$th partial of $f$. defined as If any component of $\vec{\nabla}f$ is not defined at $\vec{x}_0$, then $f$ is not differentiable at that point.
+	
+	If all of the partials of $f$ are continuous on some open subset of the domain, then $f$ is differentiable at every point in that subset as well. $f$ is \textbf{continuously differentiable} on an open set $D$ if all entries in $\vec{\nabla}f$ are continuous on $D$. Thus, \textit{differentiability of $f$ implies continuity.}
+	
+	\subparagraph{Tangent Approximations} The tangent approximation of a function $\mathbb{R} \rightarrow \mathbb{R}$ is $T(x) = f(x_0) + f'(x_0)(x - x_0)$. Generalizing to multidimensional real-value functions, it takes the form
+	\begin{equation}
+		T(\vec{x}) = f(\vec{x}_0) + \nabla f(\vec{x}_0) \cdot (\vec{x}-\vec{x}_0)
+	\end{equation}
+	
+\section{Directional Derivatives}
+	The directional derivative of a function measures the rate of change in an arbitrary direction $\vec{v}$.
+	\begin{equation}
+		\frac{\partial f}{\partial \vec{v}} (\vec{x}) = \lim_{t \rightarrow 0} \frac{f(\vec{x} + t\vec{v}) - f(\vec{x})}{t}
+	\end{equation}
+	If $f$ is differentiable at $\vec{x}$ and $\vec{v} \neq \vec{0}$,
+	\begin{equation}
+		\frac{\partial f}{\partial v} (\vec{x}) = \nabla f(\vec{x}) \cdot \vec{v}
+	\end{equation}
+	It's best to choose $|\vec{v}| = 1$ to have a standardized rate of change, in which case the derivative is notated as $\partial f / \partial \vec{u}$. 
+	
+	\subparagraph{Mean Value Theorem} In one variable, $\exists x_0 \in (x, y) \mid f(x) - f(y) = f'(x_0)(x - y)$. In multiple variables, given $\mathbb{R}^n \xrightarrow{f} \mathbb{R}$ is differentiable on an open set containing the line segment $S$ joining $\vec{x}$ and $\vec{y}$,
+	\begin{equation}
+		\exists \vec{x_0} \in S \mid f(\vec{y}) - f(\vec{x}) = \nabla f(\vec{x}_0) \cdot (\vec{y} - \vec{x})
+	\end{equation}
+	The domain of $\mathbb{R}^n \xrightarrow{f} \mathbb{R}$ is \textbf{polygonally connected} if any given pair of points in it can be joined by a polygonal path. If $f$ is differentiable on a polygonally connected domain and $\forall \vec{x} \in D, \nabla f(\vec{x}) = 0$, $f$ is constant.
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
