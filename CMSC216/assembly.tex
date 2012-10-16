@@ -90,15 +90,32 @@ breaklines=true
 	\end{tabular}
 	\end{center}
 	
-	\subparagraph{Integer Operations} There are 4 integer operations, \verb|addl|, \verb|subl|, \verb|andl|, and \verb|xorl| that only operation on register data. They set the three condition codes \verb|ZF|, \verb|SF|, and \verb|0F| (zero, sign, overflow) and are in the generic form \verb|OPl rA, rB|.
+	\subparagraph{Integer Operations} There are 4 integer operations,
+	\verb|addl|, \verb|subl|, \verb|andl|, and \verb|xorl| that only operation
+	on register data. They set the three condition codes \verb|ZF|, \verb|SF|,
+	and \verb|0F| (zero, sign, overflow) and are in the generic form \verb|OPl
+	rA, rB|. The first register is the source register and the second is the
+	destination, and the rule for applying the operation is ``dest <- dest op
+	source''.
 	
-	\subparagraph{Jump} There are seven jump instructions: \verb|jmp|, \verb|jle|, \verb|jl|, \verb|je|, \verb|jne|, \verb|jge|, and \verb|jg|. The conditions are fairly self-explanatory, and the generic command is \verb|jXX Dest|.
+	\subparagraph{Jump} There are seven jump instructions: \verb|jmp|,
+	\verb|jle|, \verb|jl|, \verb|je|, \verb|jne|, \verb|jge|, and \verb|jg|. The
+	conditions are fairly self-explanatory (compares to 0), and the generic command is \verb|jXX Dest|.
 	
 	\subparagraph{Conditional Move}6 conditional move instructions: \verb|cmovle|, \verb|cmovl|, \verb|cmove|, \verb|cmovge|, and \verb|cmovg|. They are conditional forms of \verb|rrmovl| and are called like \verb|cmovXX rA, rB|.
 	
 	\subparagraph{Call and Return} the \verb|call| instruction pushes the return address on the stack and jumps to the destination: \verb|call Dest|. The \verb|ret| instruction returns from such a call.
 	
-	\subparagraph{Stack} \verb|pushl rA| and \verb|popl rA| manipulate the stack with register values. The stack holds $2^12$ bytes of memory and starts at the top by default, growing toward lower addresses towards global and static data. 
+	\subparagraph{Stack} \verb|pushl rA| and \verb|popl rA| manipulate the stack
+	with register values. The stack holds $2^12$ bytes of memory and starts at
+	the top by default, growing toward lower addresses towards global and static
+	data. The stack begins at the location $0x1000$ and grows downwards, and the
+	location of the `top' of the stack is kept in the stack pointer, the
+	register designated by \verb|%esp|. When a register is pushed, \verb|%esp|
+	is decremented by 4 and the old location it pointed to is overwritten with
+	the register data. When the register is popped, the value on top of the
+	stack is written to the register, and \verb|%esp| increments by 4. REMEMBER
+	TO INITIALIZE WITH \verb|irmovl	$0x1000, %esp| BEFORE ANY STACK OPERATIONS.
 	
 	\subparagraph{Miscellaneous} \verb|halt| stops instruction execution, setting the status code to \verb|HLT|. \verb|nop| is no operation, and the processor sleds through it.
 	
