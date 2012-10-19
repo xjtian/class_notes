@@ -63,13 +63,20 @@ breaklines=true
 
 \section{Instructions}
 	\subsection{Operands}
+		\subparagraph{Flags} There are three bitflags set automatically by the system
+		whenever an arithmetic operation is performed: \verb|OF|, \verb|SF|, and
+		\verb|ZF|: whether an operation overflowed, returned a negative result, or
+		was zero, respectively. All conditional instructions check these flags.
+
+		\subparagraph{Program Counter} The PC points to the address of the next
+		instruction to execute.
 
 		\subparagraph{Registers} Registers are very fast memory that hold a single
 		word and  can be read or written in one cycle. In y86, e[abcd]x, e[sd]i and e[sb]p. The p's are
-		pointers to the stack, the i's are indexes (source, destination), and the
+		pointers to the stack (top/bottom), the i's are indices (source, destination), and the
 		x's are general purpose, defined by convention.
 
-		\subparagraph{Memory} take several cycles to fetch if not in cache, which is
+		\subparagraph{Memory} Memory takes several cycles to fetch if not in cache, which is
 		much faster.
 
 		\subparagraph{Immediate} These are constants in the instruction itself, in
@@ -90,20 +97,62 @@ breaklines=true
 	\end{tabular}
 	\end{center}
 	
-	\subparagraph{Integer Operations} There are 4 integer operations, \verb|addl|, \verb|subl|, \verb|andl|, and \verb|xorl| that only operation on register data. They set the three condition codes \verb|ZF|, \verb|SF|, and \verb|0F| (zero, sign, overflow) and are in the generic form \verb|OPl rA, rB|.
+	\subparagraph{Integer Operations} There are 4 integer operations,
+	\verb|addl|, \verb|subl|, \verb|andl|, and \verb|xorl| that only operation
+	on register data. The added instructions to the set are \verb|multl|,
+	\verb|divl|, and \verb|modl|. They set the three condition codes \verb|ZF|, \verb|SF|,
+	and \verb|0F| (zero, sign, overflow) and are in the generic form \verb|OPl
+	rA, rB|. The first register is the source register and the second is the
+	destination, and the rule for applying the operation is ``dest <- dest op
+	source''.
 	
-	\subparagraph{Jump} There are seven jump instructions: \verb|jmp|, \verb|jle|, \verb|jl|, \verb|je|, \verb|jne|, \verb|jge|, and \verb|jg|. The conditions are fairly self-explanatory, and the generic command is \verb|jXX Dest|.
+	\subparagraph{Jump} There are seven jump instructions: \verb|jmp|,
+	\verb|jle|, \verb|jl|, \verb|je|, \verb|jne|, \verb|jge|, and \verb|jg|. The
+	conditions are fairly self-explanatory (compares to 0), and the generic command is \verb|jXX Dest|.
 	
 	\subparagraph{Conditional Move}6 conditional move instructions: \verb|cmovle|, \verb|cmovl|, \verb|cmove|, \verb|cmovge|, and \verb|cmovg|. They are conditional forms of \verb|rrmovl| and are called like \verb|cmovXX rA, rB|.
 	
-	\subparagraph{Call and Return} the \verb|call| instruction pushes the return address on the stack and jumps to the destination: \verb|call Dest|. The \verb|ret| instruction returns from such a call.
+	\subparagraph{Call and Return} the \verb|call| instruction pushes the return
+	address on the stack and advances the PC to the destination: \verb|call
+	Dest|. The \verb|ret| instruction returns from such a call by popping the
+	first value it finds off the stack and putting in the PC. This means that
+	when doing functions, the stack has to be carefully managed to make sure the
+	PC ends up in the correct spot.
 	
-	\subparagraph{Stack} \verb|pushl rA| and \verb|popl rA| manipulate the stack with register values. The stack holds $2^12$ bytes of memory and starts at the top by default, growing toward lower addresses towards global and static data. 
+	\subparagraph{Stack} \verb|pushl rA| and \verb|popl rA| manipulate the stack
+	with register values. The stack holds $2^12$ bytes of memory and starts at
+	the top by default, growing toward lower addresses towards global and static
+	data. The stack begins at the location $0x1000$ and grows downwards, and the
+	location of the `top' of the stack is kept in the stack pointer, the
+	register designated by \verb|%esp|. When a register is pushed, \verb|%esp|
+	is decremented by 4 and the old location it pointed to is overwritten with
+	the register data. When the register is popped, the value on top of the
+	stack is written to the register, and \verb|%esp| increments by 4. REMEMBER
+	TO INITIALIZE WITH \verb|irmovl	$0x1000, %esp| AND \verb|irmovl $0x1000,
+	%ebp| BEFORE ANY STACK OPERATIONS.
 	
 	\subparagraph{Miscellaneous} \verb|halt| stops instruction execution, setting the status code to \verb|HLT|. \verb|nop| is no operation, and the processor sleds through it.
 	
 	\subparagraph{Input/Output} \verb|rdch|, \verb|rdint|, \verb|wrch|, and \verb|wrint| are added commands to Y86 for input/output from standard input, and read/write an integer/character from/to standard input from/to the specified register.
 	
+\section{Calling Functions}
+	When calling functions with arguments, use the C calling style, pushing
+	arguments right to left (``backwards'').
+
+	\begin{lstlisting}[autogobble=true]
+			push all args
+		call	//pushes PC
+			push ebp	//The caller needs this back
+			rrmovl %esp to %ebp
+				access arguments at (8+4*i)(%ebp)
+			pop ebp
+			ret
+	\end{lstlisting}
+
+	After the return, you can either pop all the arguments into a junk register,
+	or just add the argument length to \verb|%esp|, which effectively pops them
+	into nothingness. Convention is typically that \verb|%eax| contains the
+	returned value as well.
 
 %	\begin{center}
 %	\begin{tikzpicture}
