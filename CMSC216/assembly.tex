@@ -101,8 +101,7 @@ breaklines=true
 	\verb|addl|, \verb|subl|, \verb|andl|, and \verb|xorl| that only operation
 	on register data. The added instructions to the set are \verb|multl|,
 	\verb|divl|, and \verb|modl|. They set the three condition codes \verb|ZF|, \verb|SF|,
-	and \verb|0F| (zero, sign, overflow) and are in the generic form \verb|OPl
-	rA, rB|. The first register is the source register and the second is the
+	and \verb|0F| (zero, sign, overflow) and are in the generic form \verb|OPl rA, rB|. The first register is the source register and the second is the
 	destination, and the rule for applying the operation is ``dest <- dest op
 	source''.
 	
@@ -113,23 +112,16 @@ breaklines=true
 	\subparagraph{Conditional Move}6 conditional move instructions: \verb|cmovle|, \verb|cmovl|, \verb|cmove|, \verb|cmovge|, and \verb|cmovg|. They are conditional forms of \verb|rrmovl| and are called like \verb|cmovXX rA, rB|.
 	
 	\subparagraph{Call and Return} the \verb|call| instruction pushes the return
-	address on the stack and advances the PC to the destination: \verb|call
-	Dest|. The \verb|ret| instruction returns from such a call by popping the
+	address on the stack and advances the PC to the destination: \verb|call Dest|. The \verb|ret| instruction returns from such a call by popping the
 	first value it finds off the stack and putting in the PC. This means that
 	when doing functions, the stack has to be carefully managed to make sure the
 	PC ends up in the correct spot.
 	
-	\subparagraph{Stack} \verb|pushl rA| and \verb|popl rA| manipulate the stack
-	with register values. The stack holds $2^12$ bytes of memory and starts at
-	the top by default, growing toward lower addresses towards global and static
-	data. The stack begins at the location $0x1000$ and grows downwards, and the
-	location of the `top' of the stack is kept in the stack pointer, the
-	register designated by \verb|%esp|. When a register is pushed, \verb|%esp|
-	is decremented by 4 and the old location it pointed to is overwritten with
-	the register data. When the register is popped, the value on top of the
-	stack is written to the register, and \verb|%esp| increments by 4. REMEMBER
-	TO INITIALIZE WITH \verb|irmovl	$0x1000, %esp| AND \verb|irmovl $0x1000,
-	%ebp| BEFORE ANY STACK OPERATIONS.
+	\subparagraph{Stack} \verb|pushl rA| and \verb|popl rA| manipulate the stack with register values. The stack holds $2^{12}$ bytes of memory and starts at the top by default at \verb|0x1000|, growing toward lower addresses. The location of the `top' of the stack is kept in the stack pointer, the register designated by \verb|%esp|. 
+	
+	When a register is pushed, \verb|%esp| is decremented by 4 and the old location it pointed to is overwritten with the register data. When the register is popped, the value on top of the stack is written to the register, and \verb|%esp| increments by 4. 
+	
+	REMEMBER TO INITIALIZE WITH \verb|irmovl $0x1000, %esp| AND \verb|irmovl $0x1000, %ebp| BEFORE ANY STACK OPERATIONS.
 	
 	\subparagraph{Miscellaneous} \verb|halt| stops instruction execution, setting the status code to \verb|HLT|. \verb|nop| is no operation, and the processor sleds through it.
 	
@@ -141,7 +133,8 @@ breaklines=true
 
 	\begin{lstlisting}[autogobble=true]
 			push all args
-		call	//pushes PC
+			
+			call	//pushes PC
 			push ebp	//The caller needs this back
 			rrmovl %esp to %ebp
 				access arguments at (8+4*i)(%ebp)
@@ -149,10 +142,7 @@ breaklines=true
 			ret
 	\end{lstlisting}
 
-	After the return, you can either pop all the arguments into a junk register,
-	or just add the argument length to \verb|%esp|, which effectively pops them
-	into nothingness. Convention is typically that \verb|%eax| contains the
-	returned value as well.
+	After the return, you can either pop all the arguments into a junk register, or just add the argument length to \verb|%esp|, which effectively pops them into nothingness. Convention is typically that \verb|%eax| contains the returned value as well.
 
 %	\begin{center}
 %	\begin{tikzpicture}
