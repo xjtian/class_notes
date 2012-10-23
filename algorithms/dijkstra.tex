@@ -43,7 +43,50 @@ breaklines=true
 \section{Introduction}
 	Dijkstra's algorithm computes the shortest path to all other vertices in a directed graph from a given source vertex, given that each edge has a non-negative length. For sake of convenience, it is also fine to assume that there exists a path to each vertex from the source vertex.
 	
+\section{Algorithm}
+	\begin{lstlisting}[autogobble=true]
+		def Dijkstra(G, s):
+			#Initialize
+			X = {s}	#processed vertices
+			dist[s] = 0	#computed distances
+			B[s] = null	#computed path (not actually necessary)
 
+			while X != V:
+				(v*, w*) = min(dist[v] + length(v, w)) for (v, w) in E
+				X += w*
+				dist[w*] = dist[v*] + length(v*, w*)
+				B[w*] += w*
+
+			return dist
+	\end{lstlisting}
+
+	The principle of always choosing an edge to minimize the value \verb|dist[v] + length(v, w)| is called \textbf{Dijkstra's greedy criterion}. 
+
+\section{Heap Implementation}
+	Dijkstra's algorithm can be speeded up considerably by using a heap to keep track of vertices. There are two possible invariants, of which the second is considerably better.
+	\begin{itemize}
+		\item Heap = V - X
+		\item Heap: for each vertex not processed, \verb|key[v]| is the lowest greedy score of an edge \verb|(u, v)| with $u\in X$, with a score of $\infty$ if no such edge exists.
+	\end{itemize}
+	
+	So, on initialization, the heap contains all vertices directly neighboring the source vertex with the corresponding key equal to the length of the direct path from the source vertex. On each iteration, simply extract the top of the heap to get the lowest greedy score. Because greedy scores can change after a node is removed from the heap, there are some recalculations necessary after each iteration. Whenever a vertex $w$ is extracted from the heap:
+	\begin{lstlisting}[autogobble]
+		for (w, v) in e:
+			if v not in X:
+				heap.delete(v)
+				key[v] = min[key[v], A[w] + length(w, v)]
+				heap.insert(v)
+	\end{lstlisting}
+
+	Basically, update the keys of each child node of \verb|w*| not in $X$.
+
+	\subsection{Running Time}
+		\begin{itemize}
+			\item $(n-1)$ extract-min operations
+			\item Each edge triggers at most 1 delete/insert combination
+			\item Number of heap operations is $O(n + m)$ = $O(m)$ given a dense graph
+			\item Runtime is therefore $O(m\log n)$.
+		\end{itemize}
 %	\begin{center}
 %	\begin{tikzpicture}
 %		[scale=3,line cap=round,
