@@ -1,0 +1,106 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+
+\usepackage{marginnote}
+\usepackage{endnotes}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true
+}
+
+%Properly formatted differential 'd'
+\newcommand{\ud}{\, \mathrm{d}}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Binary Search Trees}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Binary Search Trees}
+	Binary search trees are binary trees that satisfies the search tree property that left children are less than or equal to the parent and right children are greater than the parent. Note that because root choice is arbitrary, the height of an unbalanced BST can be anywhere from $\approx \log_2 n \rightarrow \approx n$, which means any algorithms operating on binary search trees have to take into account average-case and worst-case runtimes.
+
+	\begin{tabular}{cc}
+		Operation	&	Time\\\hline
+		   Select	&	$O(\log n)$\\
+		   Search	&	$O(\log n)$\\
+		  Min/Max	&	$O(\log n)$\\
+ Pred-/Succ-essor	&	$O(\log n)$\\
+		   Rank		&	$O(\log n)$\\
+		   Output	&	$O(n)$\\
+		   Insert	&	$O(\log n)$\\
+		   Delete	&	$O(\log n)$
+	\end{tabular}
+
+\section{Operations}
+	\subparagraph{Minimum} Traverse the tree going left every time until a leaf node.
+	\subparagraph{Maximum} Traverse the tree going right every time until a leaf node.
+	\subparagraph{Predecessor} Called on node \verb|k|, if \verb|k| has a successor, return \verb|max(left)|. Otherwise, follow parent pointers until reaching a node where \verb|key <= cur|.
+	\subparagraph{Successor} Called on node \verb|k|, if \verb|k| has a successor, return \verb|min(right)|. Otherwise, follow parent pointers until reaching a node where \verb|key > cur|.
+	\subparagraph{In-Order Traversal} Recursively, at the parameter node, recurse on the left subtree, append the current node, then recurse on the right subtree.
+	\subparagraph{Deletion}
+		\begin{lstlisting}[autogobble=true]
+			def delete(key):
+				k = find(key)
+				if k.left is NULL and k.right is NULL:
+					remove(k)
+				else if k.left is NULL xor k.right is NULL:
+					k = child
+					remove(old_k)
+				else:
+					l = predecessor(k)
+					swap(k, l)
+					remove(k)
+		\end{lstlisting}
+	\subparagraph{Selection and Rank} Notes to come
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
