@@ -54,6 +54,41 @@ breaklines=true
 	\end{equation}
 	In strong induction, prove (possibly) multiple base cases in the basis step and the inductive hypothesis becomes the supposition that $P(i)$ for all integers $i$ from $a$ to $k$.
 
+\section{Second-Order Recurrences}
+	A second-order linear homogeneous recurrence relation with constant coefficients is a recurrence relation of the form
+	\begin{equation}
+		a_k = A a_{k-1} + B a_{k-2} \quad \forall k \geq n, B \neq 0
+	\end{equation}
+	This kind of recurrence is satisfied by the sequence
+	\begin{equation}
+		1, t, t^2, \ldots, t^n, \ldots,
+	\end{equation}
+	where $t$ is z nonzero real number, if and only if $t$ satisfies the \textbf{characteristic equation} of the relation,
+	\begin{equation}
+		t^2 - At - B = 0
+	\end{equation}
+	
+	\subparagraph{Distinct-Roots Theorem} Given a second-order homogeneous linear recurrence for all $k \geq 2$, if the characteristic equation has two distinct roots $r$ and $s$, then the recurrence is given by 
+	\begin{equation}
+		a_n = Cr^n + Ds^n
+	\end{equation}
+	where $C$ and $D$ are determined by plugging in the values $a_0$ and $a_1$.
+	
+	\subparagraph{Single-Root theorem} If the characteristic equation has a single real root $r$, then the explicit formula is given by
+	\begin{equation}
+		a_n = Cr^n + Dnr^n
+	\end{equation}
+	
+\section{General Recursion and Structural Induction}
+	\subparagraph{Recursively Defined Sets} To define a set recursively, there are 3 necessary components:
+	\begin{enumerate}
+		\item Base: A statement that certain objects belong to the set.
+		\item Recursion: A collection of rules indicating how to form new set objects from those already known to be in the set.
+		\item Restriction: A statement that no objects belong to the set other than those coming from 1 and 2.
+	\end{enumerate}
+	Given a finite non-empty set $S$, a \textbf{string over S} is a finite sequence of elements called \textbf{characters}. The \textbf{null string} is defined to be the string with no characters, denoted by $\epsilon$.
+	
+	\subparagraph{Structural Induction} to prove that every object in $S$ satisfies some property, prove all the base cases then show that the objects obtained from the recursion satisfy the property if all inputs do.
 %	\begin{center}
 %	\begin{tikzpicture}
 %		[scale=3,line cap=round,
