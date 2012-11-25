@@ -1,0 +1,197 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+\usepackage{esint}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+
+\usepackage{marginnote}
+\usepackage{endnotes}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true
+}
+
+%Properly formatted differential 'd'
+\newcommand{\ud}{\, \mathrm{d}}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Vector Field Theory}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Green's Theorem}
+	Green's Theorem is defined for unions of \textbf{simple} regions - that is, the boundary of $D$ bounded by a curve $\gamma$ is crossed at most twice by a line parallel to an axis. When there are multiple boundaries, trace them so that $D$ is always to the left.
+	
+	If the curve $\gamma$ traced in the clockwise direction is denoted $\gamma -$, then
+	\begin{equation}
+		\int_{\gamma -} \vec{F} \cdot d\vec{x} = - \int_\gamma \vec{F} \cdot d\vec{x}
+	\end{equation}
+	
+	\subparagraph{Green's Theorem} Let $D$ be a bounded plane that is a union of simple regions, each with a boundary consisting of a piecewise smooth curve. Let $F$ and $G$ be continuously differentiable real-vaued functions on $D$ and $\gamma$. Then
+	\begin{equation}
+		\int_D \left( \frac{\partial G}{\partial x} - \frac{\partial F}{\partial y} \right) dxdy = \ointctrclockwise_\gamma F\ dx + G\ dy
+	\end{equation}
+	
+	\subparagraph{Changing Paths}
+		Given a region between two closed curves $\gamma$ and $\delta$ that are traced in the same direction,
+		\begin{equation}
+			\frac{\partial G}{\partial x} - \frac{\partial F}{\partial y} = 0 \rightarrow \int_\gamma F\ dx + G\ dy = \int_\delta F\ dx + G\ dy
+		\end{equation}
+		
+	\subparagraph{Path Independence Principle} If a plane vector field $\vec{F}(x, y) = ( F(x, y), G(x, y) )$ satisfies $\partial G / \partial x - \partial F / \partial y = 0$ in a region whose boundary is the union of two paths $\gamma_1$ and $\gamma_2$ with common start and end points, then
+		\begin{equation}
+			\int_{\gamma_1} \vec{F} \cdot d\vec{x} = \int_{\gamma_2} \vec{F} \cdot d\vec{x}
+		\end{equation}
+		
+	\subparagraph{Physical Interpretations} If $\gamma$ has a smooth parametrization $g(t) = (g_1(t), g_2(t))$, $a \leq t \leq b$, and has a nonzero derivative, then the unit tangent and normal vectors (Figure \ref{fig:greens})  are
+		\begin{equation}
+			\vec{t}(t) = \frac{g'(t)}{|g'(t)|} = (\left( \frac{g'_1(t)}{|g'(t)|}, \frac{g'_2(t)}{|g'(t)|} \right)
+		\end{equation}
+		
+		\begin{equation}
+			\vec{n}(t) = \left( \frac{g'_2(t)}{|g'(t)|}, \frac{-g'_1(t)}{|g'(t)|} \right)
+		\end{equation}
+		
+		\begin{figure}[htb]
+			\centering
+			\includegraphics[width=0.4\textwidth]{greens.png}
+			\caption{Tangent and normal vectors of $\gamma$}
+			\label{fig:greens}
+		\end{figure}
+		
+	\subparagraph{Stokes's Theorem in the Plane} If $\vec{F} = (F, G)$ is a continuously differentiable vector field in a region containing $D$ and $\gamma$, then Green's theorem becomes Stokes's Theorem.
+		\begin{equation}
+			\int_D \text{curl} \vec{F}dA = \ointctrclockwise_\gamma \vec{F} \cdot \vec{t} ds
+		\end{equation}
+		Remember that $|g'(t)|dt = ds$, as defined in the last chapter. The line integral is the \textbf{circulation} of the flow around $\gamma$.
+		
+	\subparagraph{Gauss's Theorem in the Plane} Applying Green's theorem to the vector field $\vec{H} = (-G, F)$, we get Gauss's Theorem.
+		\begin{equation}
+			\int_D \text{div} \vec{F} dA = \ointctrclockwise_\gamma \vec{F} \cdot \vec{n} ds
+		\end{equation}
+		Note $\vec{n} = (b, -a)$ given a unit tangent vector $\vec{t} = (a,b)$.
+		
+\section{Conservative Vector Fields}
+	\subparagraph{Potentials} Given $\vec{F}$ is a continuous vector field defined in $D$, if the integral of $\vec{F}$ along $\gamma$ is independent of the path from $\vec{x}_0$ to $\vec{x}$ in $D$, then
+		\[f(\vec{x}) = \int_{\vec{x}_0}^{\vec{x}} \vec{F} \cdot d\vec{x}\]
+		is continuously differentiable and satisfies $\nabla f = \vec{F}$. In this case, $\vec{F}$ is called a \textbf{conservative field} or \textbf{gradient field} and $f$ is called the \textbf{field potential} of $\vec{F}$.
+		
+	\subparagraph{Path Independence} Independence of path in a line integral means that
+		\begin{equation}
+			\int_{\gamma[\vec{x}_1, \vec{x}_2]} \vec{F} \cdot d\vec{x} = \int_{\delta[\vec{x}_1, \vec{x}_2]} \vec{F} \cdot d\vec{x}
+		\end{equation}
+		An alternative form is to say that for every piecewise smooth closed curve,
+		\begin{equation}
+			\int_\gamma \vec{F} \cdot d\vec{x} = 0
+		\end{equation}
+		Thus, each of these three statements implies all others:
+		\begin{enumerate}
+			\item The integral of $\vec{F}$ over every piecewise smooth path from $\vec{x}_1$ to $\vec{x}_2$ is equal, so the integral can just have $\vec{x}_1$ and $\vec{x}_2$ as limits.
+			\item The integral over every piecewise smooth closed path is 0.
+			\item There is a continuously differentiable field potential $f$.
+		\end{enumerate}
+		
+	\subparagraph{Derivative Criterion} There are two ways to determine if a vector field is actually a gradient field.
+		\begin{enumerate}
+			\item If $\vec{F}'$, the Jacobian of $\vec{F}$ is symmetric, then $\vec{F}$ is a gradient field.
+			\item Given an open coordinate rectangle $R$, if $\vec{F}'(\vec{x})$ satisfies
+				\[\frac{\partial F_i}{\partial x_j} = \frac{\partial F_j}{\partial x_i}\]
+				then $\vec{F}$ is a gradient field.
+		\end{enumerate}
+		
+\section{Surface Integrals}
+	\subparagraph{Normal Vectors} Given a surface $S$ parametrized by $\mathbb{R}^2 \xrightarrow{g} \mathbb{R}^3$, the tangent vectors $g_u$ and $g_v$ define a tangent plane to $S$. If the two tangents are linearly independent and $g$ is continuously differentiable then $S$ is a \textbf{smooth surface}. A one-to-one parametrization determines a \textbf{standard normal vector}.
+		\begin{equation}
+			\frac{\partial g}{\partial u}(u, v) \times \frac{\partial g}{\partial v}(u, v)
+		\end{equation}
+		
+	\subparagraph{Area and Mass} The length of the cross product of the tangent plane is the area of the plane.
+		\begin{equation}
+			A = \left| \frac{\partial g}{\partial u}(u, v) \times \frac{\partial g}{\partial v}(u, v) \right|
+		\end{equation}
+		If we scale down the parallelogram by factors $du$ and $dv$, then the area of the surface $S$ is
+		\begin{equation}
+			\sigma (S) = \int_D \left| \frac{\partial g}{\partial u}(u, v) \times \frac{\partial g}{\partial v}(u, v) \right| du\ dv
+		\end{equation}
+		The expression
+		\begin{equation}
+			d\sigma = |g_u (u, v) \times g_v (u, v)| du\ dv
+		\end{equation}
+		is called the \textbf{area element differential} for $S$. If $\mu (\vec{x})$ is a continuous real-valued function, then
+		\begin{equation}
+			\int_D \mu d\sigma
+		\end{equation}
+		represents the total mass due to the density $\mu$ if $\mu \geq 0$.
+		
+	\subparagraph{Integrating Vector Fields} If $\vec{n}$ is a unit normal to $S$ at $g(u, v)$ and there exists a vector field $\vec{F}$ around $S$, then the \textbf{surface integral} of $\vec{F}$ over $S$ is
+		\begin{equation}
+			\int_D \vec{F}(g(u, v)) \cdot \left( \frac{\partial g}{\partial u}(u, v) \times \frac{\partial g}{\partial v}(u, v) \right) du\ dv
+		\end{equation}
+		This is often denoted as \[\int_S \vec{F} \cdot d\vec{S}\] or \[\int_S \vec{F} \cdot \vec{n} d\sigma\]
+		
+	\subparagraph{Flux} The flux, or rate of flow across a smooth surface $S$ is defined as
+		\begin{equation}
+			\Phi (\vec{F}, S) = \vec{F} \cdot \vec{n} \sigma(S)
+		\end{equation}
+		If $\vec{F}$ is continuously differentiable on the domain $D$ that contains $S$, then the flux of $\vec{F}$ across $S$ is given by
+		\begin{equation}
+			\Phi (\vec{F}, S) = \int_S \vec{F} \cdot d\vec{S} = \int_S \vec{F} \cdot \vec{n} d\sigma
+		\end{equation}
+		
+	\subparagraph{Orientation} The edge of $S$ corresponding to $g$ under the boundary of $D$ is called its \textbf{border}. As a point moves around the boundary of $D$ counterclockwise, $g$ traces the border of $S$ with its \textbf{positive orientation}. $\partial S$ is used to denote the \textbf{positively oriented border} of $S$. The \textbf{vector surface differential},
+		\begin{equation}
+			d\vec{S} = \left( \frac{\partial g}{\partial u} \times \frac{\partial g}{\partial v} \right) du\ dv
+		\end{equation}
+		changes sign when $u$ and $v$ are interchanged to orient a surface. Note that it can also be written as
+		\begin{equation}
+			d\vec{S} = \vec{n} d\sigma
+		\end{equation}
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
