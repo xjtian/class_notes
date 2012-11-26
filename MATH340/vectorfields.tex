@@ -168,6 +168,17 @@ breaklines=true
 		\begin{equation}
 			d\vec{S} = \vec{n} d\sigma
 		\end{equation}
+		
+\section{Gauss's Theorem}
+	Given a region $R$ with a piecewise smooth boundary $S$ parametrized by $\mathbb{R}^2 \xrightarrow{g} \mathbb{R}^3$ such that the normal vector $g_u \times g_v$ always points away, $S$ has \textbf{positive orientation} and the positively oriented boundary of $R$ is denoted by $\partial R$. Gauss's theorem states that if $\vec{F}$ is a continuously differentiable vector field on $R$ and $\partial R$, then
+	\begin{equation}
+		\int_R \text{div} \vec{F} dV = \int_{\partial R} \vec{F} \cdot d\vec{S}
+	\end{equation}
+	
+	\subparagraph{Surface Independence Principle} If div$\vec{F} = 0$ in $R$ whose entire boundary consists of $S_1$ and $S_2$, one with inward-oriented normal and the other with outward-oriented normal, then
+		\begin{equation}
+			\int_{S_1} \vec{F} \cdot d\vec{S} = \int_{S_2} \vec{F} \cdot d\vec{S}
+		\end{equation}
 %	\begin{center}
 %	\begin{tikzpicture}
 %		[scale=3,line cap=round,
