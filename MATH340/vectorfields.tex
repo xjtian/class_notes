@@ -194,6 +194,42 @@ breaklines=true
 			\text{curl}(\textbf{grad } f)(\vec{x}) = \vec{0}
 		\end{equation}
 		\marginnote{Simple connectedness?}Only the partial converse is true, in that a \textbf{curl-free field}, one for which curl$\vec{F} = \vec{0}$, is only guaranteed to be a gradient field locally on some rectangle. Define a \textbf{simply connected} set $B$ in $\mathbb{R}^n$ as one in which every piecewise smooth curve $\gamma$ is the border of some piecewise smooth orientable surface. If this is the case, then curl$\vec{F}$ is identically 0 in $B$.
+		
+\section{Gradient Operators}
+	The gradient operator is defined as
+	\begin{equation}
+		\nabla = \left( \frac{\partial}{\partial x} \mathbf{i}, \frac{\partial}{\partial y} \mathbf{j}, \frac{\partial}{\partial z} \mathbf{k} \right)
+	\end{equation}
+	Thus, curl$\vec{F}$ = $\nabla \times \vec{F}$ and div$\vec{F}$ = $\nabla \cdot \vec{F}$. Stokes's formula becomes
+	\begin{equation}
+		\int_S (\nabla \times \vec{F})\cdot \vec{n} d\sigma = \int_{\partial S} \vec{F} \cdot \vec{t} ds
+	\end{equation}
+	and Gauss's formula becomes
+	\begin{equation}
+		\int_R \nabla \cdot \vec{F} dV = \int_{\partial R} \vec{F} \cdot \vec{n} d\sigma
+	\end{equation}
+	Some properties are defined in figure \ref{fig:grad}
+	
+	\begin{figure}[htb]\marginnote{Gradient operator properties?}
+		\centering
+		\includegraphics[width=0.8\textwidth]{gradproperties.jpg}
+		\caption{Properties of $\nabla$}
+		\label{fig:grad}
+	\end{figure}
+	
+	\subparagraph{Green's Identities} If \marginnote{Green's identities?}$\vec{F}$ is assumed to be a gradient field or a multiple $f\nabla g$ of a gradient, then Gauss's formula yields \textbf{Green's first identity}:
+		\begin{equation}
+			\int_R f\nabla^2 gdV + \int_R \nabla f \cdot \nabla g dV = \int_S f \frac{\partial g}{\partial \vec{n}} d\sigma
+		\end{equation}
+		From which it is possible to derive \textbf{Green's second identity}:
+		\begin{equation}
+			\int_R (f\nabla^2 g - g\nabla^2 f)dV = \int_S \left(f \frac{\partial g}{\partial \vec{n}} - g \frac{\partial f}{\partial \vec{n}} \right)d\sigma
+		\end{equation}
+		
+	\subparagraph{Changing Coordinates} If \marginnote{Change of variable and differentials?}$\vec{v}(\vec{x})$ is continuously differentiable and $\vec{x} = T(\vec{u})$ is a coordinate transformation, and $\bar{\mathbf{v}} = \vec{v}(T(\vec{u})$,
+		\begin{equation}
+			\vec{v}'(\vec{x}) = (\bar{\mathbf{v}} (T^{-1}(\vec{x}))) = \bar{\mathbf{v}}(T^{-1}(\vec{x}))(T^{-1})'(\vec{x})
+		\end{equation}
 %	\begin{center}
 %	\begin{tikzpicture}
 %		[scale=3,line cap=round,
