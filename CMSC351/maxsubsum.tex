@@ -1,0 +1,108 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+
+\usepackage{marginnote}
+\usepackage{endnotes}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true
+}
+
+%Properly formatted differential 'd'
+\newcommand{\ud}{\, \mathrm{d}}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Maximum Subsequence Sum}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Problem}
+	\begin{description}
+		\item[Input:] An array \verb|A[1...n]| of integers. Negative values are allowed.
+		\item[Output:] The maximum sum among all subsequences in the array, or 0 if all values are negative.
+	\end{description}
+	
+\section{Algorithm}
+	\subsection{Naive Implementation}
+		A naive implementation is to sum every possible subsequence and keep a running maximum. This approach is $O(n^3)$.
+		\begin{lstlisting}[autogobble=true]
+			for i in [1, n]:
+				for j in [i, n]:
+					for k in [i, j]:
+						sum += A[k]
+					max = max(max, sum)
+			return max
+		\end{lstlisting}
+		
+		\subsubsection{Runtime}
+			The runtime is upper-bounded by $O(n^3)$, but it is possible to derive the constants. Note the changes of variables to simplify the sums.
+			\begin{IEEEeqnarray}{rCl}
+				\sum_{i=1}^n \sum_{j=i}^n \sum_{k=i}^j 1 & = & \sum_{i=1}^n \sum_{j=i}^n (j - i + 1)\\
+				& = & \sum_{i=1}^n \sum_{j=1}^{n-i+1} j\\
+				& = & \frac{1}{2} \sum_{i=1}^n [(n - i + 1)(n - i + 2)]\\
+				& = & \frac{1}{2} \sum_{i=1}^n i(i + 1)\\
+				& = & \frac{1}{2} n(n+1)(n+2)
+			\end{IEEEeqnarray}
+			
+	\subsection{Improved Naive Implementation}
+		We can eliminate the innermost loop by keeping a running sum within the j-loop. This sum represents the sum of the i-j subarray. This approach runs in $O(n^2)$.
+		\begin{lstlisting}[autogobble=true]
+			for i in [1, n]:
+				for j in [i, n]:
+					sum += A[j]
+					max = max(max, sum)
+			return max
+		\end{lstlisting}
+	
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
