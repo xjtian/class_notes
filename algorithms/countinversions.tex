@@ -2,9 +2,6 @@
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage[retainorgcmds]{IEEEtrantools}
 
-\usepackage{marginnote}
-\usepackage{endnotes}
-
 \usepackage{fancyhdr}
 
 %Listings stuff
@@ -23,9 +20,6 @@ stepnumber=2,
 breaklines=true
 }
 
-%Properly formatted differential 'd'
-\newcommand{\ud}{\, \mathrm{d}}
-
 %Format stuff
 \pagestyle{fancy}
 \headheight 35pt
@@ -38,7 +32,6 @@ breaklines=true
 \begin{document}
 \section{Counting Inversions}
 	\textbf{Inversion:} a pair indices \verb|i, j| such that \verb|i < j| and \verb|A[i] > A[j]|.
-	\marginnote{How is mergesort used to count inversions?}
 	Possible to solve problem in $O(n\log n)$ time by using the Mergesort algorithm:
 	\begin{lstlisting}[autogobble=true]
 		count_and_split(A):
@@ -64,7 +57,6 @@ breaklines=true
 				
 \section{Strassen's Subcubic Matrix Multiplication}
 	Traditional matrix multiplication is done as such:
-	\marginnote{Why is Strassen's algorithm faster?}
 	\[ X = \left( \begin{array}{cc}
 	a & b\\
 	c & d	
@@ -96,9 +88,4 @@ breaklines=true
 		p_5+p_4-p_2+p_6 & p_1+p_2\\
 		p_3+p_4 & p_3-p_7
 	\end{array} \right)\]
-
-	\endnotetext[1]{The merge step in Mergesort can be used to count inversions}
-	\endnotetext[2]{Strassen's algorithm improves on na\"{i}ve matrix multiplication by removing 1 recursive call}
-	\def\enotesize{\normalsize}
-	\theendnotes
 \end{document}

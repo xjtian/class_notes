@@ -2,29 +2,7 @@
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage[retainorgcmds]{IEEEtrantools}
 
-\usepackage{marginnote}
-\usepackage{endnotes}
-
 \usepackage{fancyhdr}
-
-%Listings stuff
-\usepackage{listings}
-\usepackage{lstautogobble}
-\usepackage{color}
-
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\lstset{
-basicstyle={\small\ttfamily},
-tabsize=3,
-numbers=left,
-numbersep=5pt,
-numberstyle=\tiny\color{gray},
-stepnumber=2,
-breaklines=true
-}
-
-%Properly formatted differential 'd'
-\newcommand{\ud}{\, \mathrm{d}}
 
 %Format stuff
 \pagestyle{fancy}
@@ -44,7 +22,6 @@ breaklines=true
 		\item $\forall n > 1: T(n) \leq ($recursive work$) + ($current work$)$
 	\end{itemize}
 	
-	\marginnote{What is the generic form of a recurrance?}
 	For larger, non-base case sizes of n:
 	\begin{equation}
 		T(n)\leq aT\left(\frac{n}{b}\right) + O(n^d)	
@@ -52,7 +29,6 @@ breaklines=true
 	
 	There are $a$ recursive calls on inputs of size $n/b$, where the work done in the \emph{combination step} of the algorithm is of the magnitude $n^d$.
 	
-	\marginnote{What are the three cases of the Master Method?}
 	This leads to the generic \textbf{Master Method} for divide-and-conquer algorithms:
 	\begingroup
 	\renewcommand*{\arraystretch}{1.5}
@@ -99,7 +75,6 @@ breaklines=true
 		T(j)\leq a^j\cdot c\cdot\left[\frac{n}{b^j}\right]^d = cn^d\cdot\left[\frac{a}{b^d}\right]^j
 	\end{equation}
 	
-	\marginnote{What is the exact upper-bound for total work given input size n?}
 	The total work then is the sum of the work done at each level $j$ in the recursion tree:
 	\begin{equation}
 		T(n)\leq cn^d\cdot \sum_{j=0}^{\log_b n}\left[\frac{a}{b^d}\right]^j
@@ -127,19 +102,4 @@ breaklines=true
 				T(n)=O\left(n^d\cdot\left[\frac{a}{b^n}\right]^{\log_b n}\right) = O(n^{\log_b a})
 			\end{equation}
 	\end{enumerate}
-	
-	\endnotetext[1]{Complexity of an algorithm depends on the rate at which recursive calls are made at each level and the rate at which the problem shrinks at each level.}
-	\endnotetext[2]{The constants disregarded include the constant work done at the base case and the base of the logarithms}
-	\endnotetext[3]{
-	\begin{equation}
-		T(n) = \left\{
-			\begin{array}{lr}
-				O(n^d\cdot \log n) & : a = b^d\\
-				O(n^d) & : a < b^d\\
-				O(n^{\log_b a}) & : a > b^d
-			\end{array}\right.
-	\end{equation}
-	}
-	\def\enotesize{\normalsize}
-	\theendnotes
 \end{document}

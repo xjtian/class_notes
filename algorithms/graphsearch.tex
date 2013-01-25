@@ -1,13 +1,5 @@
 \documentclass[11pt]{article}
 \usepackage{amsmath, amssymb, amsthm}
-\usepackage[retainorgcmds]{IEEEtrantools}
-
-\usepackage[pdftex]{graphicx}
-\usepackage{tikz}
-\usetikzlibrary{intersections}
-
-\usepackage{marginnote}
-\usepackage{endnotes}
 
 \usepackage{fancyhdr}
 
@@ -27,9 +19,6 @@ stepnumber=2,
 breaklines=true
 }
 
-%Properly formatted differential 'd'
-\newcommand{\ud}{\, \mathrm{d}}
-
 %Format stuff
 \pagestyle{fancy}
 \headheight 35pt
@@ -41,7 +30,7 @@ breaklines=true
 
 \begin{document}
 \section{Generic Search}
-	\marginnote{Generic search?}\begin{lstlisting}[autogobble=true]
+	\begin{lstlisting}[autogobble=true]
 		def GenericSearch(G, start_vertex):
 			mark all G unexplored, S explored
 			while unexplored exist:
@@ -54,7 +43,7 @@ breaklines=true
 	BFS explores nodes in "layers", exploring all of a vertex's neighbors before moving another level away. DFS explores aggressively, going as deep as possible before backtracking if necessary. BFS is often implemented with a queue (FIFO) structure, while DFS is implemented with a stack (FILO) or recursively. Both algorithms are $O(m+n)$.
 	
 \section{BFS}
-	\marginnote{BFS structure?}\begin{lstlisting}[autogobble=true]
+	\begin{lstlisting}[autogobble=true]
 		def BFS(G, start):
 			mark start explored
 			enqueue(start)
@@ -67,10 +56,10 @@ breaklines=true
 						enqueue(w)
 	\end{lstlisting}
 	
-	\marginnote{BFS runtime?}Runtime is actually $O(m_s + n_s)$, where $s$ means the edges and nodes reachable from the starting vertex.
+	Runtime is actually $O(m_s + n_s)$, where $s$ means the edges and nodes reachable from the starting vertex.
 	
 	\subsection{Shortest Path Problem}
-		\marginnote{Shortest path with BFS?}Given an undirected graph with equally-weighted edges, it is simple to adapt BFS to compute the shortest possible path between two vertices. Initialize all vertices with distance $\infty$ except the starting vertex with distance 0, and conduct BFS except if \verb|w| is unexplored, then \verb|dist(w) = dist(v) + 1|.
+		Given an undirected graph with equally-weighted edges, it is simple to adapt BFS to compute the shortest possible path between two vertices. Initialize all vertices with distance $\infty$ except the starting vertex with distance 0, and conduct BFS except if \verb|w| is unexplored, then \verb|dist(w) = dist(v) + 1|.
 		
 	\subsection{Undirected Connectivity}
 		A connected component is an undirected subgraph where any two vertices are connected. They are the "pieces" of an undirected grpah, and there does not exist a path between two connected components. BFS can be adapted to find these subgraphs.
@@ -82,7 +71,7 @@ breaklines=true
 		\end{lstlisting}
 		
 \section{DFS}
-	\marginnote{Recursive DFS?}\begin{lstlisting}[autogobble=true]
+	\begin{lstlisting}[autogobble=true]
 		def DFS(G, start):
 			start explored
 			for (s, v) in G:
@@ -94,13 +83,13 @@ breaklines=true
 	It is also possible to implement DFS with a stack if the recursive version busts the call stack.
 	
 	\subsection{Topological Sort}
-		\marginnote{Topological order?}\textbf{Topological ordering} of a directed graph $G$ is a labeling function $f$ of $G$'s nodes such that
+		\textbf{Topological ordering} of a directed graph $G$ is a labeling function $f$ of $G$'s nodes such that
 		\begin{equation}
 			\forall (u,v)\in G, f(u) < f(v)
 		\end{equation}
-		\marginnote{DAG?}Note that this is only possible if there are no cycles present in $G$, as topological sorting turns $G$ into a \textbf{directed acyclic graph}, or DAG.
+		Note that this is only possible if there are no cycles present in $G$, as topological sorting turns $G$ into a \textbf{directed acyclic graph}, or DAG.
 		
-		\marginnote{DFS adaptation for top. order?}\begin{center}
+		\begin{center}
 		\begin{tabular}{ll}
 			\begin{lstlisting}[autogobble=true]
 				def DFS-Loop(G):
@@ -122,15 +111,6 @@ breaklines=true
 		\end{center}
 		
 		If we order the graph by increasing $f(v)$, then $G$ is clearly a DAG. This algorithm runs in $O(m+n)$ time if there are no cycles in $G$.
-		
-\section*{Important Concepts}
-	\begin{itemize}
-		\item BFS and DFS only differ basically in data structure used to pick next node.
-		\item Both run in $O(m+n)$
-		\item BFS can be used to compute shortest path, where distance is number of iterations it takes to reach target.
-		\item Iterative BFS finds connected components of undirected graphs.
-		\item DFS can compute the topological ordering of a directed graph.
-	\end{itemize}
 
 %	\begin{center}
 %	\begin{tikzpicture}

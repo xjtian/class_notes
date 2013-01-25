@@ -1,13 +1,9 @@
 \documentclass[11pt]{article}
 \usepackage{amsmath, amssymb, amsthm}
-\usepackage[retainorgcmds]{IEEEtrantools}
 
 \usepackage[pdftex]{graphicx}
 \usepackage{tikz}
 \usetikzlibrary{intersections}
-
-\usepackage{marginnote}
-\usepackage{endnotes}
 
 \usepackage{fancyhdr}
 
@@ -27,9 +23,6 @@ stepnumber=2,
 breaklines=true
 }
 
-%Properly formatted differential 'd'
-\newcommand{\ud}{\, \mathrm{d}}
-
 %Format stuff
 \pagestyle{fancy}
 \headheight 35pt
@@ -43,10 +36,10 @@ breaklines=true
 \section{Properties}
 	A heap is a generic container for objects with comparable keys. Inserting, deleting, and extracting the minimum or maximum (depending on the heap implementation) are all $O(\log n)$ operations, and heapifying an entire list is an $O(n)$ operation.
 	
-	\subparagraph{Heapsort} Heapsort \marginnote{Heapsort?}is a very simple $O(n\log n)$ sort that heapifies a list to be sorted, then extracts the minimum from the top of the heap until the heap is empty.
+	\subparagraph{Heapsort} Heapsort is a very simple $O(n\log n)$ sort that heapifies a list to be sorted, then extracts the minimum from the top of the heap until the heap is empty.
 	
 \section{Implementation}
-	\marginnote{Efficient representation?}Conceptually, a binary heap is a rooted binary tree that is as complete as possible. In a min-heap, at every node \verb|x|, \verb|key[x]|$\leq$ all child keys.
+	Conceptually, a binary heap is a rooted binary tree that is as complete as possible. In a min-heap, at every node \verb|x|, \verb|key[x]|$\leq$ all child keys.
 	
 	\begin{center}
 	\begin{tikzpicture}
@@ -85,12 +78,12 @@ breaklines=true
 	\end{center}
 	A binary heap can be intuitively represented by an array. The above heap would be represented as \verb|[4 4 8 9 4 12 9 11 13]|. The relationship between array elements is as follows for a 0-based array.
 	\begin{itemize}
-		\item \marginnote{Parent and child indexing?}\verb|parent(i)| = $(i-1)/2$
+		\item \verb|parent(i)| = $(i-1)/2$
 		\item \verb|children(i)| = ($2i + 1$, $2i + 2$)
 	\end{itemize}
 	
 	\subsection{Command Implementation}
-		\marginnote{Bubbling?}Every basic heap manipulation depends on two basic algorithms: bubble-up and bubble-down. Apart from that, it is possible to insert an element, extract the root, delete an element, and heapify a collection.
+		Every basic heap manipulation depends on two basic algorithms: bubble-up and bubble-down. Apart from that, it is possible to insert an element, extract the root, delete an element, and heapify a collection.
 		
 		\subparagraph{Bubble Up} To bubble up, check if the heap property is violated by comparing an element with its parent. If it is, swap the two and repeat with the same element in the new position.
 		

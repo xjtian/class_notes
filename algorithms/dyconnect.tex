@@ -1,9 +1,5 @@
 \documentclass[11pt]{article}
 \usepackage{amsmath, amssymb, amsthm}
-\usepackage[retainorgcmds]{IEEEtrantools}
-
-\usepackage{marginnote}
-\usepackage{endnotes}
 
 \usepackage{fancyhdr}
 
@@ -22,9 +18,6 @@ numberstyle=\tiny\color{gray},
 stepnumber=2,
 breaklines=true
 }
-
-%Properly formatted differential 'd'
-\newcommand{\ud}{\, \mathrm{d}}
 
 %Format stuff
 \pagestyle{fancy}
@@ -84,18 +77,17 @@ breaklines=true
 		
 	\subsection{Quick-Find}
 	
-		Data structure:\marginnote{How does lazy quick-find work?}
+		Data structure:
 		\begin{itemize}
 			\item Integer array \verb|id[]| of size N that tracks connected component 	ID for every object
 			\item Interpretation: p and q are connected if the have the same id
 			\item Union: To merge p and q, change all entries with \verb|id == id[p]| to \verb|id[q]|
 		\end{itemize}
 		Problem: plain union command is O(n) complexity for a single command.
-		\marginnote{Runtime of quick-find and union?}
 		
 	\subsection{Quick-Union}
 	
-		Data structure:\marginnote{Biggest change in Quick-Union?}
+		Data structure:
 		\begin{itemize}
 			\item Integer array \verb|id[]| of size N
 			\item Interpretation: \verb|id[i]| is parent of i
@@ -103,11 +95,9 @@ breaklines=true
 		\end{itemize}
 		\begin{description}
 			\item[Find:] check if p and q have equivalent roots
-			\marginnote{How to find in quick-union?}
 			\item[Union:] Set \verb|id[p]| to \verb|root(id[q])|
 		\end{description}
 		Root is a component with \verb|id[i] == i|: is parent to itself
-		\marginnote{How to quick-union?}
 		\begin{lstlisting}[autogobble=true]
 			root(i):
 				while (i != id[i]) i = id[i];
@@ -119,7 +109,6 @@ breaklines=true
 		\subsubsection{Weighting}
 			\begin{itemize}
 				\item Modify quick-union to avoid tall trees
-				\marginnote{What add. data struct. for weights?}
 				\item Keep track of size of each tree
 				\item Balance by linking root of smaller tree to root of larger tree
 			\end{itemize}
@@ -133,14 +122,12 @@ breaklines=true
 						id[j] = i; sz[i] += sz[j];
 			\end{lstlisting}
 			Find and union are both O($\log n$)
-			\marginnote{How is runtime improved?}
 			
 			\begin{proof}
 			Find operation is O($\log n$)
 				\begin{enumerate}
 					\item Depth of x increases by 1 every merge.
 					\item Merge means tree $T_1$ containing x at least doubles since $|T_2| \geq |T_1|$
-					\marginnote{Where does this limit come from?}
 					\item Size of tree containing x can double at most $\log n$ times
 				\end{enumerate}
 			\end{proof}
@@ -148,7 +135,6 @@ breaklines=true
 		\subsubsection{Path Compression}
 		
 			Just after computing the root of p, set the id of each examined node to point to that root.
-			\marginnote{Why one-pass path compression?}
 			
 			Simpler one-pass variant: make every other node in the path point to its grandparent (halves path length)
 			
@@ -162,7 +148,6 @@ breaklines=true
 			
 		\subsubsection{Complexity}
 			No algorithm that is completely linear, although weighted, single-pass compressed algorithm is very close in practice.
-			\marginnote{Complexity of QU when weighted and compressed?}
 			
 			\begin{center}\begin{tabular}[t]{c c}
 			\hline
@@ -188,7 +173,6 @@ breaklines=true
 		A model for many physical systems:
 		\begin{itemize}
 			\item $N\times N$ grid of sites
-			\marginnote{What does it mean if a system percolates?}
 			\item Each site is open with probability $p$
 			\item System \textbf{percolates} if top and bottom are connected by open sites
 		\end{itemize}
@@ -202,25 +186,11 @@ breaklines=true
 			\item Vacancy percentage estimates $p^*$
 		\end{enumerate}
 		
-		\marginnote{What is the 'trick' needed to use QU for percolation?}	
 		To check whether an $N\times N$ system percolates, we initialize a list of structures for each site labeled $0$ to $N^2 - 1$. Sites are in the same component if they are connected by open sites, and the system percolates if any site on the bottom row is connected to any site on the top row.	
 		
 		Clever trick: Introduce 2 virtual sites, initialize them to be connected to the entire top row and bottom row, respectively. Then the system percolates if the virtual top is connected to the virtual bottom.
 		
-		\marginnote{How to 'open' a site?}
 		To open a site, connect it to all neighboring open sites (quick-union algorithm).
 		
 		With this simulation, we determine $p^* \approx 0.592746$.
-		
-		%Endnotes here
-		\endnotetext[1]{Quick-find unions by literally mutating the objects to be equivalent (same ID)}
-		\endnotetext[2]{Quick-union creates unions by adding the first element to a subtree rooted at the second element.}
-		\endnotetext[3]{Quick-find finds connected components in $O(1)$, but is $O(n)$ for a single union.}
-		\endnotetext[4]{Quick-union is $O(n)$ for find and union due to the complexity of finding roots.}
-		\endnotetext[5]{Quick-union can be balanced by weighting and linking the root of the smaller tree to the root of the larger tree.}
-		\endnotetext[6]{Quick-union paths can be compressed by making every other node in the path point to its grandparent}
-		\endnotetext[7]{Applying both of these improvements makes runtime roughly linear in practice: $O(N + M\log^* N)$}
-		
-		\def\enotesize{\normalsize}
-		\theendnotes
 \end{document}

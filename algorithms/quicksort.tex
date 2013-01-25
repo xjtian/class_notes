@@ -1,9 +1,5 @@
 \documentclass[11pt]{article}
 \usepackage{amsmath, amssymb, amsthm}
-\usepackage[retainorgcmds]{IEEEtrantools}
-
-\usepackage{marginnote}
-\usepackage{endnotes}
 
 \usepackage{fancyhdr}
 
@@ -23,9 +19,6 @@ stepnumber=2,
 breaklines=true
 }
 
-%Properly formatted differential 'd'
-\newcommand{\ud}{\, \mathrm{d}}
-
 %Format stuff
 \pagestyle{fancy}
 \headheight 35pt
@@ -37,7 +30,7 @@ breaklines=true
 
 \begin{document}
 \section{Algorithm}
-	\marginnote{How much extra memory does quicksort require?}Quicksort is an \textbf{in-place} sorting algorithm with an average running time of $O(n\log n)$. It operates by successive partitions around a random pivot, which puts the pivot element in the correct, sorted position.
+	Quicksort is an \textbf{in-place} sorting algorithm with an average running time of $O(n\log n)$. It operates by successive partitions around a random pivot, which puts the pivot element in the correct, sorted position.
 	
 	\begin{lstlisting}[autogobble=true]
 		Quicksort(A):
@@ -48,9 +41,8 @@ breaklines=true
 			Quicksort(right)
 	\end{lstlisting}
 	
-	\marginnote{What does partitioning do?}For partitioning, it is often best to assume that the pivot is the first element, which means that it will have to be pre-swapped in the main routine. A variable \verb|i| will mark the split between elements (first element larger than pivot).
+	For partitioning, it is often best to assume that the pivot is the first element, which means that it will have to be pre-swapped in the main routine. A variable \verb|i| will mark the split between elements (first element larger than pivot).
 	
-	\marginnote{Runtime of parition?}
 	\begin{lstlisting}[autogobble=true]
 		Partition(A, l, r):	//l, r define subarray
 			p = A[l]
@@ -65,12 +57,12 @@ breaklines=true
 		Quicksort goes quadratic unless partitioning stops on equal keys (imagine a uniform array). This problem can be solved by 3-way partitioning, with the middle third with all of the keys equal to the pivot.
 	
 \section{Running Time}
-	\marginnote{Best/worst way to choose pivot?}The main factor that determines the runtime of quicksort in practice is the way the pivot element is chosen.
+	The main factor that determines the runtime of quicksort in practice is the way the pivot element is chosen.
 	
 	\begin{description}
 		\item[Ideal:] choose the median every time: $O(n\log n)$
 		\item[Worst:] choose the 1\textsuperscript{st} element in a sorted array: $O(n^2)$
-		\marginnote{Average runtime of quicksort?}\item[Practical:] choose a random pivot. At worst a $25\%-75\%$ split after partition every iteration guarantees an $O(n\log n)$ running time.
+		\item[Practical:] choose a random pivot. At worst a $25\%-75\%$ split after partition every iteration guarantees an $O(n\log n)$ running time.
 	\end{description}
 	
 \section{Practical Improvements}
@@ -79,9 +71,4 @@ breaklines=true
 		\item Estimate true median as partition by taking median of a size 3 sample (median-of-3 method) for medium arrays.
 		\item Tukey's ninther for large arrays: pick 9 items, and take the median of the medians.
 	\end{itemize}
-
-	\endnotetext[1]{Quicksort is a randomized, in-place $O(n\log n)$ sort}
-	\endnotetext[2]{The partition subroutine does all the work and puts the pivot in its sorted position}
-	\def\enotesize{\normalsize}
-	\theendnotes
 \end{document}

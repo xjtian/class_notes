@@ -1,0 +1,65 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+
+\usepackage{fancyhdr}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Hashing}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Hash Tables}
+	Given a universe $U$ of objects, hash tables maintain an evolving set $S\subset U$ by keeping $n$ buckets, where $n\approx |S|$. To map objects to buckets, they use a hash function $H: U \rightarrow {0, 1, 2, \ldots , n-1}$ and an array of length $n$, storing an object $x$ in \verb|A[h(x)]|.
+	
+	\subsection{Two-Sum Problem}
+		\begin{description}
+			\item[Input:] Array of integers \verb|A[1\ldots n]|
+			\item[Output:] All pairs $(a, b)$ such that $a + b = t$.
+		\end{description}
+		
+		Reducing the problem to sorting yields an $O(n\log n)$ solution - sort the array, then binary search for $t-x$ for each $x$. Using a hash table yields an $O(n)$ solution.
+		
+\section{Hashing and Pathological Data Sets}
+	The \textbf{load} of a hash table is defined as 
+	\begin{equation}
+		\alpha = \frac{n}{|S|}
+	\end{equation}
+	$\alpha = O(1)$ is a necessary condition for constant-time hash table operations, and $\alpha << 1$ is necessary for open addressing when using a sequential hash function to deal with collisions. For good performance and efficiency with linked-list buckets, keep $\alpha$ close to 1. 
+	
+	A \textbf{pathological data set} is a data set that isolates one or very few buckets in a hash table to reduce it to linear efficiency, and exists for every hash function. Pathological data sets can paralyze real-world systems, and there are usually two ways to prevent this exploit:
+	\begin{enumerate}
+		\item Crytographic hashes are much more immune (practically completely) to pathological data sets (SHA-2, MD5, etc)
+		\item Hash randomization: pick a single hash function $h$ in a family $H$ of hash functions at runtime.
+	\end{enumerate}
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}

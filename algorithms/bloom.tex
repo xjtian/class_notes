@@ -1,0 +1,91 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true
+}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Bloom Filters}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Characteristics}
+	Bloom filters are built for fast inserts and lookups of objects, must like hash tables. However, unlike a hash table, a bloom filter can only tell the user whether or not an object exists in the collection (no storage of associated objects), can't have entries deleted once they are added, and presents a small false positive probability.
+	
+	Bloom filters are much more space-efficient than hash tables however, and are thus used for applications like spellcheckers, forbidden password lists, and network routers to block IP addresses and prevent DDoS attacks.
+	
+\section{Implementation}
+	Bloom filters are made of an array of $n$ bits \verb|A| and $k$ hash functions $h_1, \ldots , h_k$, where $k$ is some small constant. Bloom filters support two operations, insertions and lookups.
+	\begin{lstlisting}[autogobble=true]
+		insert(x):
+			for i in [1, k]:
+				A[h_i(x)] = 1
+				
+		lookup(x):
+			return all(A[h_i(x)] for i in [1, k])
+	\end{lstlisting}
+	
+\section{Heuristic Analysis}
+	Assume all $h_i(x)$ are uniformly random and independent, and a bloom filter with $n$ bits and a data set $S$ already inserted.
+	\begin{IEEEeqnarray}{rCl}
+		\forall i \in [1, n], P(A[i]) & = & 1 - (1 - \frac{1}{n})^{k|S|}\\
+		& = & O(1 - e^{-\frac{k|S|}{n}})\\
+		& = & O(1 - e^{-\frac{k}{b}}), \quad b = \frac{|S|}{n}
+	\end{IEEEeqnarray}
+	Thus the false-positive probability $\epsilon$ is given by
+	\begin{equation}
+		\epsilon \leq (1 - e^{-\frac{k}{b}})^k
+	\end{equation}
+	For a fixed ratio $b$, $\epsilon$ is minimized by $k\approx (\ln 2)\cdot b$. After some more algebra,
+	\begin{equation}
+		\epsilon \approx \frac{1}{2}^{(\ln 2)b}, \qquad b \approx 1.44\log_2 \left(\frac{1}{\epsilon}\right)
+	\end{equation}
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}

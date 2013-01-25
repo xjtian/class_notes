@@ -2,9 +2,6 @@
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage[retainorgcmds]{IEEEtrantools}
 
-\usepackage{marginnote}
-\usepackage{endnotes}
-
 \usepackage{fancyhdr}
 
 %Listings stuff
@@ -22,9 +19,6 @@ numberstyle=\tiny\color{gray},
 stepnumber=2,
 breaklines=true
 }
-
-%Properly formatted differential 'd'
-\newcommand{\ud}{\, \mathrm{d}}
 
 %Format stuff
 \pagestyle{fancy}
@@ -45,7 +39,7 @@ breaklines=true
 	\textbf{Reduction} to sorting: sort using any $O(n\log n)$ algorithm (preferably quicksort), and return \verb|A[i]|.
 	
 \section{Algorithm}
-	\marginnote{What does RSelect piggyback off?}The algorithm for randomized selection is an adaptation of the partition subroutine used in quicksort.
+	The algorithm for randomized selection is an adaptation of the partition subroutine used in quicksort.
 	
 	\begin{lstlisting}[autogobble=true]
 		RSelect(A, i):
@@ -78,7 +72,7 @@ breaklines=true
 		\end{lstlisting}
 	
 \section{Running Time}
-	\marginnote{What is the average runtime of RSelect?}The worst case running time is $O(n^2)$ when $p$ is the minimum every iteration, and the best case is $O(n)$ when $p$ is the median every iteration.
+	The worst case running time is $O(n^2)$ when $p$ is the minimum every iteration, and the best case is $O(n)$ when $p$ is the median every iteration.
 	
 	\subsection{Analysis}
 		\subsubsection{Proof 1: Tracking via Phases}
@@ -118,9 +112,4 @@ breaklines=true
 				E[T] & \leq & 8cn\\
 				E[T] & = & O(n)
 			\end{IEEEeqnarray}
-	
-	\endnotetext[1]{RSelect uses the partition subroutine}
-	\endnotetext[2]{Clever math shows it averages $O(n)$, but can be as bad as $O(n^2)$}	
-	\def\enotesize{\normalsize}
-	\theendnotes
 \end{document}

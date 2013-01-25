@@ -1,6 +1,5 @@
 \documentclass[11pt]{article}
 \usepackage{amsmath, amssymb, amsthm}
-\usepackage[retainorgcmds]{IEEEtrantools}
 
 \usepackage[pdftex]{graphicx}
 \usepackage{tikz}
@@ -26,9 +25,6 @@ numberstyle=\tiny\color{gray},
 stepnumber=2,
 breaklines=true
 }
-
-%Properly formatted differential 'd'
-\newcommand{\ud}{\, \mathrm{d}}
 
 %Format stuff
 \pagestyle{fancy}
@@ -155,7 +151,7 @@ breaklines=true
 	
 	\subparagraph{Correctness Intuition} By the above corollary, the second pass of the algorithm begins in a sink SCC, $c^*$. The first DFS uncovers $c^*$, and the rest recurses on $G-c^*$.
 	
-	\subparagraph{Runtime} Because the algorithm is really just 2 DFS loops, it runs in $)(m+n)$ time with some slow constants.
+	\subparagraph{Runtime} Because the algorithm is really just 2 DFS loops, it runs in $O(m+n)$ time with some slow constants.
 
 %	\begin{center}
 %	\begin{tikzpicture}

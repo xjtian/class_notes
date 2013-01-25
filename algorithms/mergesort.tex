@@ -1,8 +1,5 @@
 \documentclass[11pt]{article}
 \usepackage{amsmath, amssymb}
-\usepackage[retainorgcmds]{IEEEtrantools}
-
-\usepackage[noadjust]{marginnote}
 
 \usepackage{fancyhdr}
 \pagenumbering{gobble}
@@ -32,13 +29,6 @@ stepnumber=2
 
 %Header info
 \chead{\Large \textbf{Mergesort}}
-\lfoot{
-\begin{itemize}
-	\itemsep=-3pt
-	\item[-] Divide by halving arrays, conquer by merging
-	\item[-] $O(n\log n)$ runtime
-\end{itemize}
-}
 \rhead{}
 
 \begin{document}
@@ -49,16 +39,12 @@ stepnumber=2
 		\item Assume: all elements distinct
 	\end{itemize}
 	
-	\marginnote{Basic steps?}
-	
 	\textbf{Approach:}
 	\begin{lstlisting}
 		Split array in half
 		Recursively sort halves
 		Merge halves and return
 	\end{lstlisting}
-	
-	\marginnote{Runtime of Merge?}
 	
 	\textbf{Merge Subprocedure:}
 	\begin{lstlisting}
@@ -80,7 +66,6 @@ stepnumber=2
 		\itemsep=-2pt
 		\item Merge: $O(n)$
 		\item Mergesort: $O(n\log_2 n)$
-		\marginnote{Runtime of Mergesort?}
 	\end{itemize}
 	
 	\subsection{Analysis}
