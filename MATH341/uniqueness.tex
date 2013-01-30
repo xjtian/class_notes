@@ -1,0 +1,88 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true
+}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Existence and Uniqueness}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+Both the following theorems are applied on the IVP
+\begin{IEEEeqnarray}{rCl}
+	y' & = & F(x, y)\\
+	y(x_0) & = & y_0
+\end{IEEEeqnarray}
+
+\section{Classical Picard-Lindelof Theorem}
+	If on a rectangle described by $x\in[x_0 - A, x_0 + A], y\in[y_0 - B, y_0 + B]$ the following two properties hold:
+	\begin{enumerate}
+		\item $F(x, y)$ is continuous in $x$
+		\item $F(x, y)$ is Lipschitz-continuous in $y$
+	\end{enumerate}
+	Then there exists $\epsilon > 0$ such that a unique solution exists on the interval $[x_0 - \epsilon, x_0 + \epsilon]$.
+	
+	\subparagraph{Lipschitz Continuity}
+		Essentially, the slope between any two points on the graph is bounded by some real number. $f(x)$ is Lipscitz-continuous if
+			\begin{equation}
+				\exists k > 0 \mid \forall (a, b), \quad |f(a) - f(b)| \leq k|a - b|
+			\end{equation}
+	
+	For this theorem, the requirement of Lipschitz-continuity can also be replaced by the requirement that $|F_y| \leq k$, that is the partial with respect to $y$ is bounded.	
+	
+\section{Standard Uniqueness Theorem}
+	If $F$ and $F_y$ are both continuous on a rectangle $x\in[x_0 - A, x_0 + A], y\in[y_0 - B, y_0 + B]$, then there exists a unique solution somewhere in the interval. If additionally $F_y$ is bounded, then the solution exists on the entire interval.
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
