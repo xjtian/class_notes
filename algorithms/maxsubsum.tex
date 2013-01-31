@@ -67,6 +67,16 @@ breaklines=true
 					max = max(max, sum)
 			return max
 		\end{lstlisting}
+		
+	\subsection{Linear Algorithm}
+		\begin{lstlisting}[autogobble=true]
+			m = s = 0
+			for i in [1, n]:
+				s = max(s + A[i], 0)
+				m = max(m, s)
+		\end{lstlisting}
+		
+		The key idea for this version of the algorithm is that in \verb|s| we hold a running sum that gets reset to 0 whenever it becomes negative, which means that it holds the maximum sum of all subarrays that end at index \verb|i|. Then \verb|m| holds the maximum subsequence sum subsequence encountered at the current iteration of the loop.
 	
 
 %	\begin{center}

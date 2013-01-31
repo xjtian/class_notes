@@ -1,0 +1,115 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true,
+boxpos=t
+}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Insertion Sort}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Algorithm}
+	The approach is to sort the first \verb|i-1| elements, then insert element \verb|i| into its proper location in that subarray. Repeat until the array is sorted.
+	
+	There are two versions of the algorithm: first one assumes a sentinel value \verb|A[0] = -inf|, and the second one doesn't use this sentinel.
+	
+	\subparagraph{}	%hack to add a little extra padding above the table.
+	
+	\begin{tabular}{ll}
+		\begin{lstlisting}[autogobble=true]
+			A[0] = -inf
+			for i in [2, n]:
+				t, j = A[i], i-1
+				while A[j] > t:
+					A[j+1] = A[j]
+					j--
+				A[j+1] = T
+		\end{lstlisting}
+		&
+		\begin{lstlisting}[autogobble=true]
+			for i in [2, n]:
+				t, j = A[i], i-1
+				while j > 0 and A[j] > t:
+					A[j+1] = A[j]
+					j--
+				A[j+1] = t
+		\end{lstlisting}
+	\end{tabular}
+	
+\section{Analysis}
+	\subsection{Comparisons}
+		The following calculations are for the sentinel version. They can be redone for the non-sentinel version pretty simply by counting how many fewer operations are done every iteration. 
+		
+		\subparagraph{Best case} In the best case, $n-1$ comparisons are done because the while loop checks once every time the for loop runs.
+		\subparagraph{Worst case} Because of the presence of the sentinel value, the worst case is a reverse-sorted array in which case there are $i$ comparisons done in each iteration of the for loop.
+			\begin{equation}
+				\sum_{i=2}^n i = \left(\sum_{i=1}^n i\right) - 1 = \frac{(n-1)(n+2)}{2}
+			\end{equation}
+		\subparagraph{Average case} Consider a snapshot of the algorithm at iteration $i,j$. \verb|t| can potentially be inserted into any of $i$ possible spots, and at the $j$\textsuperscript{th} iteration of the \verb|while|-loop there will have been $i - j + 1$ comparisons conducted.
+			\begin{IEEEeqnarray}{rCl}
+				\sum_{i=2}^n \sum_{j=1}^i \frac{1}{i}(i-j+1) & = & \sum_{i=2}^n\frac{1}{i} \cdot \sum_{j=1}^i (i-j+1)\\
+				& = & \sum_{i=2}^n\frac{1}{i} \cdot \sum_{j=1}^i j\\
+				& = & \sum_{i=2}^n \frac{1}{i} \cdot \frac{i(i+1)}{2}\\
+				& = & \frac{1}{2} \sum_{i=2}^n (i+1)\\
+				& = & \frac{(n-1)(n+4)}{4}
+			\end{IEEEeqnarray}
+			
+	\subsection{Exchanges}
+		\subparagraph{Best case} $2n-1$, with the extra $1$ being from moving the sentinel into position $0$ at the beginning of the algorithm.
+		\subparagraph{Worst case} The worst case is a reverse-sorted array, which means there will be $i+1$ exchanges done every iteration.
+		\begin{IEEEeqnarray}{rCl}
+			1 + \sum_{i=2}^n (i + 1) & = & 1 + \sum_{i=1}^{n-1} (i + 2)\\
+			& = & \frac{(n-1)(n+4)}{2} + 1
+		\end{IEEEeqnarray}
+		\subparagraph{Average case} It's not worth it to do this calculation.
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}

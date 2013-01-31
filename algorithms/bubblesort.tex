@@ -1,0 +1,91 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true
+}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Bubblesort}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Algorithm}
+	"Bubble" the largest value in the array to the top by a series of exchanges, then recurse (so to say) on the subarray \verb|A[:-1]|.
+
+	\begin{lstlisting}[autogobble=true]
+		for i in [n, 2]:
+			for j in [1, i-1]:
+				if A[j] > A[j+1]:
+					A[j], A[j+1] = A[j+1], A[j]
+	\end{lstlisting}
+	
+\section{Analysis}
+	Bubblesort is $O(n^2)$ in its best, worst, and average cases.
+	\subsection{Comparisons}
+		\begin{equation}
+			\sum_{i=2}^n \sum_{j=1}^{i-1} 1 = \sum_{i=2}^{n-1} i = \frac{n(n-1)}{2}
+		\end{equation}
+		
+	\subsection{Exchanges}
+		\subparagraph{Best case} The best case for bubblesort is a sorted array, which means $0$ exchanges.
+		\subparagraph{Worst case} The worst case for bubble sort is a reverse-sorted array, which means every element goes through the maximum number of exchanges (equal to the number of comparisons).
+			\begin{equation}
+				\frac{n(n-1)}{2}
+			\end{equation}
+		\subparagraph{Average case} Because the number of exchanges to conduct is equal to the number of transpositions in the array (reverse-sorted pairs) and all permutations are equally likely, picking a random permutation would expect to yield $max/2$ transpositions.
+			\begin{equation}
+				\frac{n(n-1)}{4}
+			\end{equation}
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
