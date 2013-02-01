@@ -4,26 +4,9 @@
 
 \usepackage[pdftex]{graphicx}
 \usepackage{tikz}
-\usetikzlibrary{intersections,decorations}
+\usetikzlibrary{intersections,decorations.pathmorphing}
 
 \usepackage{fancyhdr}
-
-%Listings stuff
-\usepackage{listings}
-\usepackage{lstautogobble}
-\usepackage{color}
-
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\lstset{
-basicstyle={\small\ttfamily},
-tabsize=3,
-numbers=left,
-numbersep=5pt,
-numberstyle=\tiny\color{gray},
-stepnumber=2,
-breaklines=true,
-boxpos=t
-}
 
 %Format stuff
 \pagestyle{fancy}
@@ -35,8 +18,64 @@ boxpos=t
 \rhead{}
 
 \begin{document}
-\section{}
-
+Assume, to be concrete, that for a forced oscillator the forcing function is itself an oscillating function of the form 
+	\begin{equation}
+		F(t) = F_0 \cos(\omega_f t)
+	\end{equation}
+\begin{center}
+\begin{tikzpicture}
+	[scale=1,line cap=round,
+	%Styles
+	axes/.style=,
+	important line/.style={very thick},
+	information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+	dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1},
+	spring/.style={decorate, draw=blue,decoration={coil,amplitude=4pt, segment length=5pt}}			
+	]
+	
+	%Colors
+	\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+	
+	%The graphic
+	\draw[black] (0,0) -- (0, 4);
+	\draw[black] (0, 0) -- (7.5, 0);	
+	
+	\draw[blue,thick] (0, 1) -- (1, 1);
+	\draw[spring] (1, 1) -- node[above=2pt,black] {$k$} (3, 1);
+	\draw[blue,thick] (3, 1) -- (3.5, 1);
+	
+	\draw[orange,thick] (3.5, 0) rectangle (5.5, 2);
+	\node (m) at (4.5, 1) {$m$};
+	
+	\draw[green!80!black, thick, ->] (5.5, 1) -- node[above,black] {$F(t)$} (7, 1);
+	
+\end{tikzpicture}
+\end{center}
+\section{Equation of Motion}
+	\begin{IEEEeqnarray}{rCl}
+		\sum F & = & -kx + F(t)\\
+		m\ddot{x} & = & -kx + F(t)\\
+		\frac{F(t)}{m} & = & \ddot{x} + \frac{k}{m}x
+	\end{IEEEeqnarray}
+	
+	\begin{equation}
+		\ddot{x} + \omega_0^2 x = \frac{F(t)}{m}
+	\end{equation}
+	
+	The solution to this differential equation is as follows.
+	\begin{IEEEeqnarray}{rCl}
+		x(t) & = & A e^{i(\omega_f t + \delta)}\\
+		A & = & \frac{F_0}{m(\omega_0^2 - \omega_f^2)}
+	\end{IEEEeqnarray}
+	
+\section{Analysis}
+	The actual value of $A$, computed by assuming both $F(t)$ and $x$ are complex, is 
+	\[\frac{F_0 e^{-i\delta}}{m(\omega_0^2 - \omega_f^2)}\]
+	But by convention, make $A$ real because we can expand it in polar form and add exponents. This means that the expression should also be real, so $e^{-i\delta} \in \mathbb{R}$ and therefore $\delta = 0$. 
+	
+	This is important because $\delta = 0$ implies that the \textbf{forcing function and $x(t)$ are in phase}. Then $t=0$ is a arbitrary starting point at a moment when the driving force is maximal, and $\delta$ is the offset (phase) from this starting position.
+	
+	If $\omega_f < \omega_0$, the force and oscillator are in-phase and motion is described by a constant amplitude. If $\omega_f > \omega_0$, the force and oscillator are out of phase by $180\deg$. If $\omega_f = \omega_0$, then the system is in \textbf{resonance} and $A$ goes to infinity.
 %	\begin{center}
 %	\begin{tikzpicture}
 %		[scale=3,line cap=round,
