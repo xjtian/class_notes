@@ -1,0 +1,137 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true,
+boxpos=t
+}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Second-Order Homogeneous ODE}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Differential Operators}
+	The differential operator $D$ is a \textbf{linear operator} $D: C^1 \rightarrow C$, where $C^1$ is the set of all continuously differentiable functions and $C$ is the set of all continuous functions.
+	\begin{equation}
+		f' = Df
+	\end{equation}
+	
+	Differential operators are necessary for finding the solution to a second-order homogeneous ODE.
+	
+	\subparagraph{Linearity} The following two equations express the linearity of $D$.
+		\begin{equation}
+			D(y_1 + y_2) = Dy_1 + Dy_2
+		\end{equation}
+		\begin{equation}
+			D(cy) = cDy
+		\end{equation}
+		
+\section{Second-Order Homogeneous ODE's}
+	\subsection{Example}
+		Consider the following problem.
+		\begin{IEEEeqnarray}{rCl}
+			y'' + 5y' + 6y & = & 0\\
+			(D^2 + 5D + 6)y & = & 0\\
+			(D+3)(D+2)y & = & 0
+		\end{IEEEeqnarray}
+		
+		At this stage, the next key step is to perform a change of variables.
+		\begin{IEEEeqnarray}{rCl}
+			(D+2)y & = & u\\
+			(D+3)u & = & 0
+		\end{IEEEeqnarray}
+		
+		Now the equation is a first-order linear ODE, which can be solved by multiplying by an integrating factor.
+		\begin{IEEEeqnarray}{rCl}
+			e^{3x}Du + 3e^{3x}u & = & 0\\
+			D(e^{3x}u) & = & 0\\
+			e^{3x}u & = & c_1\\
+			u & = & c_1e^{-3x}
+		\end{IEEEeqnarray}
+		
+		Substituting back in for $y$ after the change in variables.
+		\begin{equation}
+			(D+2)y = c_1e^{-3x}
+		\end{equation}
+		
+		This is another first-order linear ODE.
+		\begin{IEEEeqnarray}{rCl}
+			e^{2x}Dy + 2e^{2x}y & = & c_1e^{-x}\\
+			D(e^{2x}y) & = & c_1e^{-x}\\
+			e^{2x}y = -c_1e^{-x} \quad & \text{or} & \quad y = -c_1e^{-3x} + c_2e^{-2x}
+		\end{IEEEeqnarray}
+		
+		Because the constants are arbitrary, we change the sign on the first one to get
+		\begin{equation}
+			y = c_1e^{-3x} + c_2e^{-2x}
+		\end{equation}
+		
+	\subsection{Theorem}
+	Consider the \textbf{characteristic roots} of the second-order homogeneous ODE with constant coefficients $y'' + ay' + by = 0$ to be $r_1$ and $r_2$.
+		\begin{equation}
+			(D - r_1)(D - r_2)y = 0
+		\end{equation}
+		
+		If $r_1$ and $r_2$ are \textbf{unequal}, then the general solution to the ODE is of the form
+		\begin{equation}
+			y = c_1e^{r_1x} + c_2e^{r_2x}
+		\end{equation}
+		
+		If $r_1 = r_2$, then the solution is in the form
+		\begin{equation}
+			y = c_1e^{r_1x} + c_2xe^{r_1x}
+		\end{equation}
+		
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
