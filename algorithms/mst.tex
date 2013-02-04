@@ -1,0 +1,55 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+
+\usepackage{fancyhdr}
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Minimal Spanning Trees}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\begin{description}
+	\item[Informal goal:] connect a set of points as cheaply as possible
+	\item[Applications:] clustering, networks
+\end{description}
+
+The are multiple greedy algorithms for computing the MST of a given graph, most notably Prim's (1957) and Kruskal's algorithm (1956), both of which achieve $O(m\log n)$ time using suitable data structures.
+
+\section{Problem Definition}
+	\begin{description}
+		\item[Input:] undirected graph $G=(V,E)$ and a cost $c_e$ for each $e\in E$. (An ``optimal branching problem'' exists as an analog to the MST problem for directed graphs).
+		\item[Assume:] adjacency list, all edge costs are distinct (algorithms remain correct if ties exist, but proof is trickier), $G$ is connected (check in preprocessing).
+		\item[Output:] minimum cost tree $T\in E$ that spans all vertices such that $T$ has no cycles and is a fully connected subgraph (path exists to/from all vertices).
+	\end{description}
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
