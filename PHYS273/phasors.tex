@@ -1,0 +1,95 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+\usepackage{circuitikz}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true,
+boxpos=t
+}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Phasor Analysis of AC Circuits}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Basic Principles}
+	A \textbf{phasor} is a geometric vector representation of a sinusoidal function with constant amplitude multiplier, frequency, and phase. It is represented as a vector in the imaginary plane that rotates around the origin at a constant frequency. Phasors can be used in the analysis of AC circuits because power sources supply an oscillating voltage at a constant frequency.
+	
+	For the following analyses, assume that $V_S = V_0 e^{i\omega t}$, that is the voltage supplied from the source is a simple harmonic function.
+	
+	\subparagraph{Resistors} Current and voltage across a resistor are in phase as long as the resistance is real.
+		\begin{IEEEeqnarray}{rCl}
+			V_R & = & IR\\
+			I & = & \frac{V_0}{R}e^{i\omega t}
+		\end{IEEEeqnarray}
+		
+	\subparagraph{Capacitors} Current and voltage across a capacitor are exactly $\pi/4$ out of phase, with the capacitor voltage lagging behind the current.
+		\begin{IEEEeqnarray}{rCl}
+			Q & = & CV\\
+			I & = & \dot{Q} = C\frac{dV}{dt}\\
+			I & = & i\omega CV_0 e^{i\omega t}\\
+			V & = & I\left(\frac{1}{i \omega C}\right)\\
+			X_C & = & \frac{1}{i \omega C}\\\nonumber\\
+			V & = & IX_C
+		\end{IEEEeqnarray}
+		
+	\subparagraph{Inductors} Current and voltage across an inductor are exactly $\pi/4$ out of phase, with the inductor voltage ahead of the current.
+		\begin{IEEEeqnarray}{rCl}
+			V & = & L\frac{dI}{dt}\\
+			I & = & \frac{1}{i\omega L}(V_0e^{i\omega t})\\
+			V & = & I(i\omega L)\\
+			X_L & = & i\omega L\\
+			V & = & IX_L
+		\end{IEEEeqnarray}
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
