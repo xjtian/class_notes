@@ -1,0 +1,87 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true,
+boxpos=t
+}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Regular Languages}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Languages}
+	Languages are essentially concatenations of strings made from a given alphabet, denoted by $\Sigma = \{c_1, c_2, c_3, \ldots ,c_n\}$. $L^n$ describes the set of all n-letter strings that can be composed using the letters in the alphabet. Any formal language from a given alphabet is the result of concatenation of multiple equal-length languages.
+	
+\section{Finite Automata}
+	A finite automata is an abstract machine that starts in an initial state, and repeats some task until it ends up in a final state. An automata may have 0 or more end states but only a single start state. When using an automata to implement regex matching, the validity of a string is determined by whether or not the ending state of the automata after parsing is the final state.
+	
+	It is possible for an automata to have a \textbf{dead state}, that is a non-final state with no possibility of exiting. Most cases these dead states will be omitted from diagrams, so it is safe to assume that any nonexistant edges all lead to a dead state.
+	
+\section{Deterministic Finite Automata}
+	A DFA cannot have more than one transition leaving a state on the same symbol. A DFA will always produce the exact same path for any given string. A DFA formally is a 5-tuple $(Q, \Sigma, \delta, q_0, F)$.
+	\begin{itemize}
+		\item $Q$: Finite, non-empty set of states
+		\item $\Sigma$: Input alphabet
+		\item $\delta$: A transition function $\delta : Q\times \Sigma \rightarrow Q$
+		\item $q_0$: A state state $q_0 \in Q$
+		\item $F$: A set of final states $F \subset Q$
+	\end{itemize}
+	
+\section{Nondeterministic Finite Automata}
+	An NFA can have multiple multiple paths leaving a state encoded with the same symbol. An NFA will yield many possible paths for a given string, and determining the validity of a string requires a backtracking graph search. Formally, an NFA is a 5-tuple $(Q, \Sigma, \Delta, q_0, F)$ with $\Delta : Q \times \Sigma \rightarrow P(Q)$ where $P(Q)$ is the powerset of $Q$.
+	
+	\subparagraph{NFA-$\epsilon$} An NFA-$\epsilon$ has one or more paths encoded as an empty character, meaning that when reading through string it is possible to take a path without actually advancing a character.
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
