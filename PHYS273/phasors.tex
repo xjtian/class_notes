@@ -37,7 +37,7 @@ boxpos=t
 
 \begin{document}
 \section{Basic Principles}
-	A \textbf{phasor} is a geometric vector representation of a sinusoidal function with constant amplitude multiplier, frequency, and phase. It is represented as a vector in the imaginary plane that rotates around the origin at a constant frequency. Phasors can be used in the analysis of AC circuits because power sources supply an oscillating voltage at a constant frequency.
+	A \textbf{phasor} is a geometric vector representation of a sinusoidal function with constant amplitude multiplier, frequency, and phase. It is a vector in the imaginary plane that rotates around the origin at a constant frequency. Phasors can be used in the analysis of AC circuits because power sources supply an oscillating voltage at a constant frequency.
 	
 	For the following analyses, assume that the voltage supplied from the source is a simple harmonic function.
 	\begin{equation}
@@ -45,9 +45,9 @@ boxpos=t
 	\end{equation}
 	
 	\subparagraph{Resistors} Current and voltage across a resistor are in phase as long as the resistance is real.
-		\begin{IEEEeqnarray}{rCl}
-			V_R & = & IR\\
-		\end{IEEEeqnarray}
+		\begin{equation}
+			V_R = IR
+		\end{equation}
 		
 	\subparagraph{Capacitors} Current and voltage across a capacitor are exactly $\pi/4$ out of phase, with the capacitor voltage lagging behind the current.
 		\begin{IEEEeqnarray}{rCl}
@@ -71,7 +71,7 @@ boxpos=t
 \section{Driven RL Circuits}
 	\begin{center}
 	\begin{circuitikz}
-		\draw (0, 0) to[vsourcesin] (0, 3) -- (2, 3) to[R] (2, 1) to[C] (2, 0) -- (0, 0);
+		\draw (0, 0) to[vsourcesin] (0, 3) -- (2, 3) to[R] (2, 1.5) to[L] (2, 0) -- (0, 0);
 	\end{circuitikz}
 	\end{center}
 	
@@ -204,6 +204,59 @@ boxpos=t
 	\end{center}
 	
 	From Kirchoff's rules, we know that $V_S = V_R + V_L + V_C$. Because $\vec{V}_C$ and $\vec{V}_L$ are exactly $\pi$ out of phase, we can create the following phasor system:
+	
+	\begin{center}
+	\begin{tikzpicture}
+		[scale=1,line cap=round,
+		%Styles
+		axes/.style=,
+		important line/.style={very thick},
+		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+		]
+		
+		%Colors
+		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+		
+		%The graphic
+		\begin{scope}[axes]
+			\draw[<->] (0, -.5) -- (0, 3) node[right]{$Im$};
+			\draw[<->] (-.5, 0) -- (3, 0) node[below]{$Re$};
+		\end{scope}
+		
+		\coordinate (s) at (2, 3);
+		\coordinate (l) at ($(0,0)!(s)!(3,2)$);
+		
+		\draw[anglecolor,->,thick] (l) -- node[right,black]{$\vec{V}_L+\vec{V}_C$} (s);
+		\draw[blue,->,thick] (0,0) -- node[above left,black]{$\vec{V}_S$} (s);
+		\draw[orange,->,thick] (0,0) -- node[right=2pt,black]{$\vec{V}_R$}(l);
+		
+		\filldraw[fill=green!20,draw=anglecolor] (0,0) -- ($(0,0)!5mm!(l)$) to[bend left] node[right,black]{$\omega t$}(5mm, 0) -- cycle;
+		
+		\filldraw[fill=red!20,draw=red!50!black] (0,0) -- ($(0,0)!7mm!(l)$) to[bend right] node[above right,black]{$\delta$} ($(0,0)!7mm!(s)$) -- cycle;
+	\end{tikzpicture}
+	\end{center}
+	
+	\begin{IEEEeqnarray}{rCl}
+		|\vec{V}_S| & = & V_0 = \sqrt{|\vec{V}_R|^2 + |\vec{V}_L + \vec{V}_C|^2}\\
+		V_0 & = & \sqrt{(I_0 R)^2 + \left(I_0 \omega L - \frac{I_0}{\omega C}\right)^2}\\
+		V_0 & = & I_0\sqrt{R^2 + \left(\omega L - \frac{1}{\omega C}\right)^2}
+	\end{IEEEeqnarray}
+	
+	Define the \textbf{impedance} of this system to transform the final solution into a form that looks more like Ohm's law.
+	\begin{equation}
+		Z = \sqrt{R^2 + \left(\omega L - \frac{1}{\omega C}\right)^2}
+	\end{equation}
+	\begin{equation}
+		V_0 = I_0 Z
+	\end{equation}
+	
+	Note that this definition for impedance also fits the case of the driven RL circuit because removing the capacitor is equivalent to having an infinite-capacitance circuit.
+	\begin{IEEEeqnarray}{rCl}
+		\delta & = & \tan^{-1}\left(\frac{|\vec{V}_L + \vec{V}_C|}{|\vec{V}_R|}\right)\\
+		\delta & = & \tan^{-1}\left(\frac{I_0 i\omega L - (i I_0)/(\omega C)}{I_0 R}\right)\\
+		\delta & = & \tan^{-1}\left(\frac{\omega^2 - \omega_0^2}{\omega \gamma}\right)
+	\end{IEEEeqnarray}
 
 %	\begin{center}
 %	\begin{tikzpicture}
