@@ -57,9 +57,7 @@ boxpos=t
 		
 	\subsection{Particular Guess}
 		It is possible to guess a general form of a particular solution given $f(x)$, then substitute to determine the coefficients.
-		
-		\[\]
-		
+		\begin{center}
 		\begin{tabular}{c|c}
 		$f(x)$ & Guessed $y_p$\\\hline
 		$k$ & $c$\\
@@ -67,10 +65,63 @@ boxpos=t
 		$e^{\gamma x}$ & $ce^{\gamma x}$\\
 		$\cos(\alpha x + \beta)$ or $\sin(\alpha x + \beta)$ & $c_1 \cos(\alpha x + \beta) + c_2\sin(\alpha x + \beta)$
 		\end{tabular}
+		\end{center}
 		
-		By superposition, if $f(x)$ is a linear combination (addition, multiplication) of any of the above, simply combine the guessed solutions in the same way to get the particular solution and substitute back in to determine the constants.
+		By superposition, if $f(x)$ is a combination (addition, multiplication) of any of the above, simply combine the guessed solutions in the same way to get the particular solution and substitute back in to determine the constants.
 		
 		The above table only holds when \textbf{no term in the particular solution is in the homogeneous solution}. If this is not true, then multiply the the particular solution by $x$ until all terms in the solution are linearly independent again.
+		
+\section{Variation of Parameters}
+	While the method of undertermined coefficients works for general ODE's with constant coefficients, it doesn't work for ODE's with functions as coefficients.
+	
+	In the constant coefficients case, knowing a nontrivial solution $y_1$ of the associated homogeneous ODE means that the solution to the nonhomogeneous equation can be expressed $y(x) = y_1(x)u(x)$, where $u$ is an arbitrary function to solve for. Substitution will leave a linear differential equation to solve for $u(x)$.
+	
+	In the general case when there are functions as coefficents, first consider the \textbf{normalized equation}
+	\begin{equation}
+		y'' + a(x)y' + b(x)y = f(x)
+	\end{equation}
+	If $y_1$ and $y_2$ are homoegenous solutions, then form the linear combination
+	\begin{equation}
+		y_p(x) = y_1(x)u_1(x) + y_2(x)u_2(x)
+	\end{equation}
+	Substitution yields the following two functions
+	\begin{equation}
+		y_1u'_1 + y_2u'_2 = 0
+	\end{equation}
+	\begin{equation}
+		y'_1u'_1 + y'_2u'_2 = f
+	\end{equation}
+	Now define the \textbf{Wronskian determinant} of $y_1, y_2$ as
+	\begin{equation}
+	w(x) = 
+	\begin{vmatrix}
+		y_1(x) & y_2(x)\\
+		y'_1(x) & y'_2(x)
+	\end{vmatrix}
+	\end{equation}
+	With this, the particular solution is
+	\begin{equation}
+		y_p(x) = y_1(x) \int\frac{-y_2(x) f(x)}{w(x)}dx + y_2(x)\int\frac{y_1(x) f(x)}{w(x)}dx
+	\end{equation}
+	
+\section{Green's Functions}
+	A slight modification of the variation of parameters method yields a method to solve for the IVP $y(x_0) = y'(x_0) = 0$. First, convert the integrals to definite integrals.
+	\begin{equation}
+		y_p(x) = y_1(x) \int_{x_0}^x\frac{-y_2(t) f(t)}{w(t)}dt + y_2(x)\int_{x_0}^x\frac{y_1(t) f(t)}{w(t)}dt
+	\end{equation}
+	\begin{equation}
+		y_p(x) = \int_{x_0}^x \frac{y_1(t) y_2(x) - y_2(t) y_1(x)}{w(t)}f(t)dt
+	\end{equation}
+	Next, define \textbf{Green's function} to be
+	\begin{equation}
+		G(x, t) = \frac{y_1(t) y_2(x) - y_2(t) y_1(x)}{w(t)}
+	\end{equation}
+	which generates the solution
+	\begin{equation}
+		y_p(x) = \int_{x_0}^x G(x,t)f(t)dt
+	\end{equation}
+	to the IVP $y'' + a(x)y' + b(x)y = f(x), \quad y(x_0) = y'(x_0) = 0$.
+	
 
 %	\begin{center}
 %	\begin{tikzpicture}
