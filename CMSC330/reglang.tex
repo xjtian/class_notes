@@ -99,22 +99,98 @@ boxpos=t
 		\begin{tabular}{c|c}
 			Regex & Language\\\hline
 			$\emptyset$ & $\emptyset$\\
-			$\epsilon$ & $\{\epsilon\}$\\
+			$\epsilon$ (empty string) & $\{\epsilon\}$\\
 			$\forall \sigma \in \Sigma$ & $\{\sigma\}$\\
 			$AB$ & $L_AL_B$\\
 			$(A|B)$ & $L_A \cup L_B$\\
 			$A^*$ & $L_A^*$
 		\end{tabular}
 		\end{center}
-	
-		If $s \in [[RE]]$, then the string $s$ is recognized by the regular expression. The languages that can be described by regular expressions are called \textbf{regular languages}. Not all languages are regular languages, however.
 		
 \section{NFA Representation of Regex}
-	To transform a regex into an NFA (e.g. for a regex engine), define the following two recursive predicates:
+	To transform a regex into an NFA (e.g. for a regex engine), define the following two recursive predicates on a regex $e$:
 	\begin{itemize}
 		\item $e\checkmark$: Holds if $\epsilon \in [[e\checkmark]]$.
+		\item $e \xrightarrow{a} e'$: Holds if a string for $e$ can begin with an $a$ and then finish with a string for $e'$.
 	\end{itemize}
-
+	
+	\subsection{Defining $\checkmark$}
+		$\checkmark$ can be defined inductively, given the following rules:
+		\begin{itemize}
+			\item $\epsilon\checkmark$
+			\item $e^*\checkmark$
+			\item $e_1\checkmark \implies (e_1 | e_2)\checkmark$
+			\item $e_2\checkmark \implies (e_1 | e_2)\checkmark$
+			\item $e_1\checkmark \wedge e_2\checkmark \implies (e_1e_2)\checkmark$
+		\end{itemize}
+		
+		\subparagraph{Goal-Directed Proof} To prove $\checkmark$, start with the premise to prove, and work backwards. Applicable rules for a given conclusion are determined by the top-most operator in the expression, generating sub-goals until you reach axioms everywhere or you get stuck.
+		
+		\subparagraph{Algorithm} Straightforward, goal-directed recursive algorithm.
+		\begin{lstlisting}[autogobble=true,mathescape]
+			def check(e):
+				switch e:
+					case a, None: return False
+					case $\epsilon$, f*: return true
+					case e_1 | e_2:
+						return check(e_1) or check(e_2)
+					case e_1e_2:
+						return check(e_1) and check(e_2)
+		\end{lstlisting}
+		
+	\subsection{Defining $\xrightarrow{a}$}
+		Like $\checkmark$, $\xrightarrow{a}$ is defined inductively using a set of rules. The key intuition is that $e\xrightarrow{a} e'$ means that strings for $e$ can begin with an a and then finish with a string that matches $e'$.
+		\begin{itemize}
+			\item $a \xrightarrow{a} \epsilon$
+			\item $e_1 \xrightarrow{a} e'_1 \implies e_1|e_2 \xrightarrow{a} e'_1$
+			\item $e_2 \xrightarrow{a} e'_2 \implies e_1|e_2 \xrightarrow{a} e'_2$
+			\item $e_1 \xrightarrow{a} e'_1 \implies e_1e_2 \xrightarrow{a} e'_1e_2$
+			\item $e_1\checkmark \wedge e_2 \xrightarrow{a} e'_2 \implies e_1e_2 \xrightarrow{a} e'_2$
+			\item $e \xrightarrow{a} e' \implies e^* \xrightarrow{a} e'e^*$
+		\end{itemize}
+		\subparagraph{Algorithm} The algorithm for this definition is a little less straightforward than the algorithm for checks.
+		\begin{lstlisting}[autogobble=true,mathescape]
+			def trans(e):
+				switch e:
+					case None, $\epsilon$: return {}
+					case a: return {<a, $\epsilon$>}
+					case e_1|e_2:
+						return trans(e_1) $\cup$ trans(e_2)
+					case e_1e_2:
+						s = trans(e_2) if check(e_1) else {}
+						return ({<a,e'e_2> if <a,e'> in trans(e_1)} $\cup$ s)
+					case f*:
+						return ({<a,f'f*> if <a,f'> in trans(f)})
+		\end{lstlisting}
+		
+	\subsection{Algorithm}
+		Given a regex $e$, the NFA of e, $<e>$, is defined as the following tuple:
+		\begin{itemize}
+			\item States: RE's reachable from $e$ via $\xrightarrow{a}$ sequences
+			\item Start state: $e$
+			\item Transitions: $\xrightarrow{a}$
+			\item Final States: $\checkmark$
+		\end{itemize}
+		
+		\begin{lstlisting}[autogobble=true,mathescape]
+			def reduce(e):
+				$\delta$, $\Sigma$ = {}		# Initialize transitions, alphabet
+				Q = N = {e}		# Initialize state sets
+				q_0 = e		# Create initial state
+				
+				while N != {}:		# Until no states need processing
+					choose d in N
+					N -= {d}
+					if check(d):
+						F += {d}	# Final state
+					for <a,d'> in trans(d):	# Compute transitions
+						if d' not in Q:		# New target
+							Q += {d'}
+							N += {d'}
+						$\Sigma$ += {a}
+						$\delta$ += {<d, a, d'>}		# Update transition
+				return <$\Sigma$, Q, q_0, F, $\delta$>
+		\end{lstlisting}
 %	\begin{center}
 %	\begin{tikzpicture}
 %		[scale=3,line cap=round,
