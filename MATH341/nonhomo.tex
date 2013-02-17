@@ -105,7 +105,7 @@ boxpos=t
 	\end{equation}
 	
 \section{Green's Functions}
-	A slight modification of the variation of parameters method yields a method to solve for the IVP $y(x_0) = y'(x_0) = 0$. First, convert the integrals to definite integrals.
+	A slight modification of the variation of parameters method yields a method to determine $y_p$ for an initial value problem. First, convert the integrals to definite integrals.
 	\begin{equation}
 		y_p(x) = y_1(x) \int_{x_0}^x\frac{-y_2(t) f(t)}{w(t)}dt + y_2(x)\int_{x_0}^x\frac{y_1(t) f(t)}{w(t)}dt
 	\end{equation}
@@ -120,7 +120,17 @@ boxpos=t
 	\begin{equation}
 		y_p(x) = \int_{x_0}^x G(x,t)f(t)dt
 	\end{equation}
-	to the IVP $y'' + a(x)y' + b(x)y = f(x), \quad y(x_0) = y'(x_0) = 0$.
+	for $y'' + a(x)y' + b(x)y = f(x)$. By construction, $y_p(x_0) = y_p'(x_0) = 0$.
+	
+	For second-order ODE's with constant coefficients, the homogeneous solutions reduce to three types. Because Green's functions are constructed from the solutions to these equations, $G(x, t)$ also has three types:
+	\begin{enumerate}
+		\item
+			\[G(x,t) = \frac{1}{r_1 - r_2}(e^{r_1(x-t)} - e^{r_2(x-t)}), \quad r_1 \neq r_2\]
+		\item
+			\[G(x,t) = (x-t)e^{r(x-t)}, \quad r_1 = r_2\]
+		\item
+			\[G(x,t) = \frac{1}{\beta}e^{\alpha(x-t)} \sin\beta(x-t), \quad r = \alpha \pm i\beta\]
+	\end{enumerate}
 	
 
 %	\begin{center}
