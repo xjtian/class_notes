@@ -63,43 +63,80 @@
 	\end{enumerate}
 	
 \section{Proof}
-	Assume the following:
-	\begin{enumerate}
-		\item $T(1)\leq c$
-		\item $T(n)\leq aT\left(\dfrac{n}{b}\right) + cn^d$
-		\item $n$ is a power of $b$ (for simplicity's sake)
-	\end{enumerate}
-	
-	On the recursion tree, at any level $j$, there are $a^j$ subproblems of $\dfrac{n}{b^j}$ size each ($j\leq log_b n$). The total work done at each level is the product of the number of subproblems and the amount of work done in each subproblem.
-	\begin{equation}
-		T(j)\leq a^j\cdot c\cdot\left[\frac{n}{b^j}\right]^d = cn^d\cdot\left[\frac{a}{b^d}\right]^j
-	\end{equation}
-	
-	The total work then is the sum of the work done at each level $j$ in the recursion tree:
-	\begin{equation}
-		T(n)\leq cn^d\cdot \sum_{j=0}^{\log_b n}\left[\frac{a}{b^d}\right]^j
-	\end{equation}
-	
-	The ratio of $a$ to $b^d$ determines the final result of $T(n)$. There exist three cases:
-	
-	\begin{enumerate}
-		\item
-			\[a=b^d, \frac{a}{b^d} = 1\]
-			\[\sum_{j=0}^{\log_b n}1^j = \log_b n\]
-			\begin{equation}
-				T(n) = cn^d\cdot\log_b n
-			\end{equation}
-		\item
-			\[a<b^d, \frac{a}{b^d}<1\]
-			\[\sum_{j=0}^{\log_b n}\left[\frac{a}{b^n}\right]^j \leq \dfrac{1}{1 - \dfrac{a}{b^n}} = \text{constant}\]
-			\begin{equation}
-				T(n) = cn^d
-			\end{equation}
-		\item
-			\[a>b^d, \frac{a}{b^d} > 1\]
-			\[\sum_{j=0}^{\log_b n}\left[\frac{a}{b^n}\right]^j \leq \frac{r^k+1 -1}{r-1} = r^k\left(1 + \frac{1}{r-1}\right)\]
-			\begin{equation}
-				T(n)=O\left(n^d\cdot\left[\frac{a}{b^n}\right]^{\log_b n}\right) = O(n^{\log_b a})
-			\end{equation}
-	\end{enumerate}
+	\subsection{Exact Analysis}
+		Given the following recurrence:
+		\begin{IEEEeqnarray}{rCl}
+			T(n) & = & aT\left(\frac{n}{b}\right) + cn^d\\
+			T(1) & = & f
+		\end{IEEEeqnarray}
+		expanding it out a few iterations for $T(n)$ reveals the pattern.
+		
+		\begin{IEEEeqnarray}{rCl}
+			T(n) & = & aT\left(\frac{n}{b}\right) + cn^d\\
+			& = & a\left[aT\left(\frac{n}{b^2}\right) + c\left(\frac{n}{b}\right)^d\right] + cn^d\\
+			& = & a\left[a\left[aT\left(\frac{n}{b^3}\right) + c\left(\frac{n}{b^2}\right)^d\right] + c\left(\frac{n}{b}\right)^d \right] + cn^d\\
+			& = & a^3T\left(\frac{n}{b^3}\right) + a^2c\left(\frac{n}{b^2}\right)^d + cn^d
+		\end{IEEEeqnarray}
+		
+		Let $k = \log_b n$ be the number of iterations in the recurrence before $T$ reaches its base case.
+		
+		\begin{IEEEeqnarray}{rCl}
+			T(n) & = & a^k f + \sum_{i=0}^{k-1} a^i c \left(\frac{n}{b^i}\right)^d\\
+			& = & a^k f + cn^d \sum_{i=0}^{k-1} \frac{a^i}{b^{i^d}}\\
+			& = & a^k f + cn^d \sum_{i=0}^{k-1} \left(\frac{a}{b^d}\right)^i\\
+			& = & a^k f + cn^d \left(\frac{\displaystyle \left(\frac{a}{b^d}\right)^k - 1}{\displaystyle \frac{a}{b^d} - 1}\right)\\
+			& = & n^{\log_b a}f + cn^d\left(\frac{\displaystyle \frac{a^{\log_b n}}{n^d} - 1}{\displaystyle \frac{a}{b^d} - 1}\right)\\
+			& = & n^{\log_b a}f + \frac{\displaystyle ca^{\log_b n} - cn^d}{\displaystyle \frac{a}{b^d} - 1}\\
+			T(n) & = & \left( \frac{\displaystyle c}{\displaystyle \frac{a}{b^d} - 1} + f \right)n^{\log_b a} - \frac{\displaystyle cn^d}{\displaystyle \frac{a}{b^d} - 1}
+		\end{IEEEeqnarray}
+		
+		Note that because the geometric sum formula is not valid when $a/b^d = 1$ so the final formula doesn't work for that case. It's trivial to expand the summation in this case, however.
+		
+		For the three cases:
+		\begin{enumerate}
+			\item $a > b^d: \theta(n^{\log_b a})$ because the first term dominates and the coefficient of the second term is negative.
+			\item $a < b^d: \theta(n^d)$ because the sign of the second term flips and the first term becomes negligible.
+			\item $a = b^d: \theta(n^d \log_b n)$
+		\end{enumerate}
+		
+		\subparagraph{Superposition} If the work done in each recursive call isn't perfectly modeled by $cn^d$ because there are extra terms, do the analysis for each part of the function separately and then add them together, ignoring the $fn^{\log_b a}$ term until the very end.
+	\subsection{Inexact Analysis}
+		Assume the following:
+		\begin{enumerate}
+			\item $T(1)\leq c$
+			\item $T(n)\leq aT\left(\dfrac{n}{b}\right) + cn^d$
+		\end{enumerate}
+		
+		On the recursion tree, at any level $j$, there are $a^j$ subproblems of $\dfrac{n}{b^j}$ size each ($j\leq log_b n$). The total work done at each level is the product of the number of subproblems and the amount of work done in each subproblem.
+		\begin{equation}
+			T(j)\leq a^j\cdot c\cdot\left[\frac{n}{b^j}\right]^d = cn^d\cdot\left[\frac{a}{b^d}\right]^j
+		\end{equation}
+		
+		The total work then is the sum of the work done at each level $j$ in the recursion tree:
+		\begin{equation}
+			T(n)\leq cn^d\cdot \sum_{j=0}^{\log_b n}\left[\frac{a}{b^d}\right]^j
+		\end{equation}
+		
+		The ratio of $a$ to $b^d$ determines the final result of $T(n)$. There exist three cases:
+		
+		\begin{enumerate}
+			\item
+				\[a=b^d, \frac{a}{b^d} = 1\]
+				\[\sum_{j=0}^{\log_b n}1^j = \log_b n\]
+				\begin{equation}
+					T(n) = cn^d\cdot\log_b n
+				\end{equation}
+			\item
+				\[a<b^d, \frac{a}{b^d}<1\]
+				\[\sum_{j=0}^{\log_b n}\left[\frac{a}{b^n}\right]^j \leq \dfrac{1}{1 - \dfrac{a}{b^n}} = \text{constant}\]
+				\begin{equation}
+					T(n) = cn^d
+				\end{equation}
+			\item
+				\[a>b^d, \frac{a}{b^d} > 1\]
+				\[\sum_{j=0}^{\log_b n}\left[\frac{a}{b^n}\right]^j \leq \frac{r^k+1 -1}{r-1} = r^k\left(1 + \frac{1}{r-1}\right)\]
+				\begin{equation}
+					T(n)=O\left(n^d\cdot\left[\frac{a}{b^n}\right]^{\log_b n}\right) = O(n^{\log_b a})
+				\end{equation}
+		\end{enumerate}
 \end{document}
