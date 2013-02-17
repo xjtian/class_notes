@@ -99,7 +99,8 @@
 			\item $a = b^d: \theta(n^d \log_b n)$
 		\end{enumerate}
 		
-		\subparagraph{Superposition} If the work done in each recursive call isn't perfectly modeled by $cn^d$ because there are extra terms, do the analysis for each part of the function separately and then add them together, ignoring the $fn^{\log_b a}$ term until the very end.
+		\subparagraph{Superposition} If the work done in each recursive call isn't perfectly modeled by $cn^d$ because there are extra terms, use the theorem on each part of the recurrence letting $f=0$, add the solutions together, and then finally add $fn^{\log_b a}$.
+		
 	\subsection{Inexact Analysis}
 		Assume the following:
 		\begin{enumerate}
