@@ -45,23 +45,6 @@
 	
 	Note: In case 1, the base of the logarithm doesn't matter because the difference is a constant factor.
 	
-\section{Examples}
-	\begin{enumerate}
-		\item Mergesort: 2 recursive calls on inputs that are halved, with $O(n)$ work done in merge subroutine.
-			\[a=2, b=2, d=1\] 
-			\[T(n)\leq 2T\left(\frac{n}{2}\right) + O(n)\]
-			\[T(n) = n\log n\]
-		\item Binary search: 1 recursive call on input that is halved, with $O(1)$ work done in comparison.
-			\[a=1,b=2,d=0\]
-			\[T(n)\leq T\left(\frac{n}{2}\right) + O(1)\]
-			\[T(n) = \log n\]
-		\item Strassen's Subcubic Method: 7 recursive calls on inputs that are $\frac{1}{4}$ the size with $O(n^2)$ work done in combination step (evaluating each term).
-			\[a=7,b=4,d=2\]
-			\[T(n)\leq 7T\left(\frac{n}{4}\right) + O(n^2)\]
-			\[T(n) = O\left(n^{\log_2 7}\right)\]
-			\[T(n) \approx O\left(n^{2.81}\right)\]
-	\end{enumerate}
-	
 \section{Proof}
 	\subsection{Exact Analysis}
 		Given the following recurrence:
@@ -90,14 +73,20 @@
 			T(n) & = & \left( \frac{\displaystyle c}{\displaystyle \frac{a}{b^d} - 1} + f \right)n^{\log_b a} - \frac{\displaystyle cn^d}{\displaystyle \frac{a}{b^d} - 1}
 		\end{IEEEeqnarray}
 		
-		Note that because the geometric sum formula is not valid when $a/b^d = 1$ so the final formula doesn't work for that case. It's trivial to expand the summation in this case, however.
+		Note that the geometric sum formula is not valid when $a/b^d = 1$ so the final formula doesn't work for that case, but it is a special case that makes the original summation trivial to solve. The full definition of the Master Theorem, accounting for all 3 possible cases, is as follows:
 		
-		For the three cases:
-		\begin{enumerate}
-			\item $a > b^d: \theta(n^{\log_b a})$ because the first term dominates and the coefficient of the second term is negative.
-			\item $a < b^d: \theta(n^d)$ because the sign of the second term flips and the first term becomes negligible.
-			\item $a = b^d: \theta(n^d \log_b n)$
-		\end{enumerate}
+		\begin{equation}
+			T(n) = \left\lbrace
+			\begin{array}{ll}
+				\left( f + \frac{\displaystyle c}{\displaystyle ab^{-d} - 1}\right) n^{\log_b a} - \frac{\displaystyle cn^d}{\displaystyle ab^{-d} - 1} = & \left\lbrace
+				\begin{array}{ll}
+					\Theta(n^{\log_b a}) & a > b^d\\
+					\Theta(n^d) & a < b^d
+				\end{array}\right.
+				\\
+				n^d(f + c\log_b n) = \Theta(n^d \log_b n) & a = b^d
+			\end{array}\right.
+		\end{equation}
 		
 		\subparagraph{Superposition} If the work done in each recursive call isn't perfectly modeled by $cn^d$ because there are extra terms, use the theorem on each part of the recurrence letting $f=0$, add the solutions together, and then finally add $fn^{\log_b a}$.
 		
@@ -123,15 +112,14 @@
 		\begin{enumerate}
 			\item
 				\[a=b^d, \frac{a}{b^d} = 1\]
-				\[\sum_{j=0}^{\log_b n}1^j = \log_b n\]
 				\begin{equation}
-					T(n) = cn^d\cdot\log_b n
+					T(n) \approx cn^d\cdot\log_b n
 				\end{equation}
 			\item
 				\[a<b^d, \frac{a}{b^d}<1\]
-				\[\sum_{j=0}^{\log_b n}\left[\frac{a}{b^n}\right]^j \leq \dfrac{1}{1 - \dfrac{a}{b^n}} = \text{constant}\]
+				\[\sum_{j=0}^{\log_b n}\left[\frac{a}{b^n}\right]^j \leq \text{constant}\]
 				\begin{equation}
-					T(n) = cn^d
+					T(n) \approx cn^d
 				\end{equation}
 			\item
 				\[a>b^d, \frac{a}{b^d} > 1\]
