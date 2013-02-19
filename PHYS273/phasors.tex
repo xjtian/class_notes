@@ -49,23 +49,22 @@ boxpos=t
 			V_R = IR
 		\end{equation}
 		
-	\subparagraph{Capacitors} Current and voltage across a capacitor are exactly $\pi/4$ out of phase, with the capacitor voltage lagging behind the current.
+	\subparagraph{Capacitors} Current and voltage across a capacitor are exactly $\pi/2$ out of phase, with the capacitor voltage lagging behind the current. Note that $Z_C$ is the impedance of the capacitor.
 		\begin{IEEEeqnarray}{rCl}
-			Q & = & CV\\
 			I & = & \dot{Q} = C\frac{dV}{dt}\\
 			I & = & i\omega CV_0 e^{i\omega t}\\
 			V & = & I\left(\frac{1}{i \omega C}\right)\\
-			X_C & = & \frac{1}{i \omega C}\\\nonumber\\
-			V & = & IX_C
+			Z_C & = & \frac{1}{i \omega C}\\\nonumber\\
+			V & = & IZ_C
 		\end{IEEEeqnarray}
 		
-	\subparagraph{Inductors} Current and voltage across an inductor are exactly $\pi/4$ out of phase, with the inductor voltage ahead of the current.
+	\subparagraph{Inductors} Current and voltage across an inductor are exactly $\pi/2$ out of phase, with the inductor voltage ahead of the current. Note that $Z_L$ is the impedance of the inductor.
 		\begin{IEEEeqnarray}{rCl}
 			V & = & L\frac{dI}{dt}\\
 			I & = & \frac{1}{i\omega L}(V_0e^{i\omega t})\\
 			V & = & I(i\omega L)\\
-			X_L & = & i\omega L\\
-			V & = & IX_L
+			Z_L & = & i\omega L\\
+			V & = & IZ_L
 		\end{IEEEeqnarray}
 		
 \section{Driven RL Circuits}
