@@ -1,0 +1,103 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usepackage{circuitikz}
+\usetikzlibrary{intersections}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true,
+boxpos=t
+}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Electrical Impedance}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+Remember that in deriving the voltage equations for resistors, capacitors, and inductors, all were in the general form $V = IZ$, with $Z$ as the impedance of the component.
+
+\section{Series Impedance}
+	Combining components in series means that each has a different voltage drop but share the same current.
+	\begin{IEEEeqnarray}{rCl}
+		V_{total} & = & I\sum_i Z\\
+		Z_{series} & = & \sum_i Z
+	\end{IEEEeqnarray}		
+
+\section{Parallel Impedance}
+	Combining components in parallel means that each share the same voltage drop but the branches have different current.
+	
+	\begin{IEEEeqnarray}{rCl}
+		I_{total} & = & \sum_i I = V \sum_i \frac{1}{Z}\\
+		Z_{parallel} & = & \frac{1}{\sum_i (Z^{-1})}
+	\end{IEEEeqnarray}
+	
+\section{Driven RL Parallel}
+	\begin{center}
+	\begin{circuitikz}
+		\draw (0,0) to[vsourcesin] (0,3) -- (2,3) to[R] (2,0) -- (0,0);
+		\draw (2,3) -- (4,3) to[L] (4,0) -- (2,0);
+	\end{circuitikz}
+	\end{center}
+	
+	\begin{IEEEeqnarray}{rCl}
+		Z_{total} & = & \frac{1}{Z_R^{-1} + Z_L^{-1}}\\
+		& = & \frac{1}{R^{-1} + (i\omega L)^{-1}}\\
+		& = & \frac{(R\omega L)(\omega L + iR)}{(\omega L - iR)(\omega L + iR)}\\
+		& = & \frac{R\omega L^2}{(\omega L)^2 + R^2} \left(\omega + i\frac{R}{L}\right)\\
+		Z_{total} & = & \frac{R\omega L^2}{(\omega L)^2 + R^2} (\omega + i\gamma)
+	\end{IEEEeqnarray}
+	
+	Given that the current is a real number and $\vec{V} = \vec{I} Z$, the phase difference between $\vec{V}_S$ and $\vec{I}$ is a fairly simple calculation because the impedance cancels out between the numerator and denominator:
+	\begin{equation}
+		\delta = \tan^{-1}\left(\frac{\gamma}{\omega}\right)
+	\end{equation}
+	This means that for a very high $\omega$, the phase difference approaches 0 and the system acts like a resistor (current oscillates too fast for inductor to charge), and for a very low $\omega$, the system acts like an inductor.
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
