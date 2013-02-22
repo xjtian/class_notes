@@ -141,7 +141,7 @@ boxpos=t
 			return {q for q in NFA if <p, a, q> $\in \delta$}
 			
 		def reduction(NFA($\Sigma$, Q, q_0, F_n, $\delta$)):
-			r_0 = {q_0}, R = {r_0}
+			r_0 = {q_0}, R = {{r_0}}
 			while unvisited state r in R:
 				visit(r)
 				for a in $\Sigma$:
@@ -151,7 +151,48 @@ boxpos=t
 					$\delta$ += {<r, a, S>}
 			F_d = {r for r in R if (s in r for s in F_n)}
 	\end{lstlisting}
-	DFA states are sets of NFA states, which is why line 10 is valid.
+	
+\section{DFA Minimization}
+	Hopcroft's algorithm for DFA minimization is based on partition refinement, where DFA states are grouped into partitions by behavior. Partitions represent equivalence classes such that for any word $w$, following the transitions from two partitions $p_1, p_2$ should lead to an accepting or non-accepting state for both starting points.
+	
+	Partitions are split if members have transitions to different partitions for the same input word. States in the same partition should transition to the same partition for all symbols in $\Sigma$.
+	
+	\begin{lstlisting}[autogobble=true,mathescape]
+		def minimize(DFA($\Sigma$, Q, q_0, F_n, $\delta$)):
+			p_0 = F_n, p_1 = Q - F_n	# Initial partitions
+			R = {p if p in (p_0 + p_1) and not p.empty}
+			P = {}
+			
+			while P != R:
+				P, R = R, {}	# P<-prev partition, R<-current
+				for p in P:
+					{p_0, p_1} = split(p, P)
+					R += {p if p in (p_0 + p_1) and not p.empty}
+					
+			r_0 = R.each{|p| q_0 in p}
+			F_d = {p if p in R and any([s in p for s in F_n])}
+			d = q if ($\delta$(s,c) = r for s in p) and r in q
+			
+			return <$\Sigma$, R, r_0, F_d, d>
+			
+		def split(p, P):
+			choose r from p
+			q = p - {r}, m = {}
+			
+			for s in q:
+				for c in $\Sigma$:
+					if ($\delta$(r,c) = q_0 and $\delta$(s,c) = q_1) and 
+						not any(
+							(q_0 in p_1 and q_1 in p_1) for p_1 in P)
+						m += {s}
+			
+			# m are states that behave differently than r
+			# p-m are states that behave the same as r
+			return p-m, m 
+	\end{lstlisting}
+	
+\section{DFA Complement}
+	Given a DFA accepting a language $L$, the DFA accepting its complement is simply the DFA with every accepting state flipped to a non-accepting state and every non-accepting state to an accepting state. Note that this \textbf{only} works with DFA's.
 
 %	\begin{center}
 %	\begin{tikzpicture}
