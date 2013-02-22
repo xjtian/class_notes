@@ -1,0 +1,167 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true,
+boxpos=t
+}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Regular Expressions}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Languages}
+	A language $L$ is a set of strings defined over an alphabet $\Sigma$ which is a finite set of symbols. There are three operations defined on languages:
+	\begin{itemize}
+		\item Concatenation: $L_1L_2 = \{xy \mid x \in L_1,  y \in L_2\}$
+		\item Union: $L_1 \cup  L_2 = \{x \mid x \in L_1 \text{ or } x \in L_2\}$
+		\item Kleene Closure: $L^* = \cup_{i\in N} L^i$, concatenate 0 or more strings from $L$.
+	\end{itemize}
+	Thus, the language $L^n$, a language consisting of n-length strings, can be built inductively as $LL^{n-1}$.
+	
+	\subsection{Regular Expressions}
+		Regular expressions over $\Sigma$ are representations of languages, and are defined inductively as such:
+		\begin{center}
+		\begin{tabular}{c|c}
+			Regex & Language\\\hline
+			$\emptyset$ & $\emptyset$\\
+			$\epsilon$ (empty string) & $\{\epsilon\}$\\
+			$\forall \sigma \in \Sigma$ & $\{\sigma\}$\\
+			$AB$ & $L_AL_B$\\
+			$(A|B)$ & $L_A \cup L_B$\\
+			$A^*$ & $L_A^*$
+		\end{tabular}
+		\end{center}
+		
+\section{NFA Representation of Regex}
+	To transform a regex into an NFA (e.g. for a regex engine), define the following two recursive predicates on a regex $e$:
+	\begin{itemize}
+		\item $e\checkmark$: Holds if $\epsilon \in [[e\checkmark]]$.
+		\item $e \xrightarrow{a} e'$: Holds if a string for $e$ can begin with an $a$ and then finish with a string for $e'$.
+	\end{itemize}
+	
+	\subsection{Defining $\checkmark$}
+		$\checkmark$ can be defined inductively, given the following rules:
+		\begin{itemize}
+			\item $\epsilon\checkmark$
+			\item $e^*\checkmark$
+			\item $e_1\checkmark \implies (e_1 | e_2)\checkmark$
+			\item $e_2\checkmark \implies (e_1 | e_2)\checkmark$
+			\item $e_1\checkmark \wedge e_2\checkmark \implies (e_1e_2)\checkmark$
+		\end{itemize}
+		
+		\subparagraph{Goal-Directed Proof} To prove $\checkmark$, start with the premise to prove, and work backwards. Applicable rules for a given conclusion are determined by the top-most operator in the expression, generating sub-goals until you reach axioms everywhere or you get stuck.
+		
+		\subparagraph{Algorithm} Straightforward, goal-directed recursive algorithm.
+		\begin{lstlisting}[autogobble=true,mathescape]
+			def check(e):
+				switch e:
+					case a, None: return False
+					case $\epsilon$, f*: return true
+					case e_1 | e_2:
+						return check(e_1) or check(e_2)
+					case e_1e_2:
+						return check(e_1) and check(e_2)
+		\end{lstlisting}
+		
+	\subsection{Defining $\xrightarrow{a}$}
+		Like $\checkmark$, $\xrightarrow{a}$ is defined inductively using a set of rules. The key intuition is that $e\xrightarrow{a} e'$ means that strings for $e$ can begin with an a and then finish with a string that matches $e'$.
+		\begin{itemize}
+			\item $a \xrightarrow{a} \epsilon$
+			\item $e_1 \xrightarrow{a} e'_1 \implies e_1|e_2 \xrightarrow{a} e'_1$
+			\item $e_2 \xrightarrow{a} e'_2 \implies e_1|e_2 \xrightarrow{a} e'_2$
+			\item $e_1 \xrightarrow{a} e'_1 \implies e_1e_2 \xrightarrow{a} e'_1e_2$
+			\item $e_1\checkmark \wedge e_2 \xrightarrow{a} e'_2 \implies e_1e_2 \xrightarrow{a} e'_2$
+			\item $e \xrightarrow{a} e' \implies e^* \xrightarrow{a} e'e^*$
+		\end{itemize}
+		\subparagraph{Algorithm} The algorithm for this definition is a little less straightforward than the algorithm for checks.
+		\begin{lstlisting}[autogobble=true,mathescape]
+			def trans(e):
+				switch e:
+					case None, $\epsilon$: return {}
+					case a: return {<a, $\epsilon$>}
+					case e_1|e_2:
+						return trans(e_1) $\cup$ trans(e_2)
+					case e_1e_2:
+						s = trans(e_2) if check(e_1) else {}
+						return ({<a,e'e_2> if <a,e'> in trans(e_1)} $\cup$ s)
+					case f*:
+						return ({<a,f'f*> if <a,f'> in trans(f)})
+		\end{lstlisting}
+		
+	\subsection{Algorithm}
+		Given a regex $e$, the NFA of e, $<e>$, is defined as the following tuple:
+		\begin{itemize}
+			\item States: RE's reachable from $e$ via $\xrightarrow{a}$ sequences
+			\item Start state: $e$
+			\item Transitions: $\xrightarrow{a}$
+			\item Final States: $\checkmark$
+		\end{itemize}
+		
+		\begin{lstlisting}[autogobble=true,mathescape]
+			def reduce(e):
+				$\delta$, $\Sigma$ = {}		# Initialize transitions, alphabet
+				Q = N = {e}		# Initialize state sets
+				q_0 = e		# Create initial state
+				
+				while N != {}:		# Until no states need processing
+					choose d in N
+					N -= {d}
+					if check(d):
+						F += {d}	# Final state
+					for <a,d'> in trans(d):	# Compute transitions
+						if d' not in Q:		# New target
+							Q += {d'}
+							N += {d'}
+						$\Sigma$ += {a}
+						$\delta$ += {<d, a, d'>}		# Update transition
+				return <$\Sigma$, Q, q_0, F, $\delta$>
+		\end{lstlisting}
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}

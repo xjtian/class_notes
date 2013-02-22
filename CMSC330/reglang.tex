@@ -30,7 +30,7 @@ boxpos=t
 \headheight 35pt
 
 %Header info
-\chead{\Large \textbf{Automata and Regex}}
+\chead{\Large \textbf{Automata}}
 \lhead{}
 \rhead{}
 
@@ -61,8 +61,8 @@ boxpos=t
 		
 		\path 	(S0)	edge [bend left,->,thick] node[above]{$1$}	(S1)
 							edge [loop below,->,thick] node[below]{$0$} (S0)
-					(S1)	edge [bend left,->,thick] node[below]{$0$} (S0)
-							edge [loop below,->,thick] node[below]{$1$} (S1);
+				(S1)	edge [bend left,->,thick] node[below]{$0$} (S0)
+						edge [loop below,->,thick] node[below]{$1$} (S1);
 							
 		\draw[xshift=1.5cm]
 			node[information text,right,text width=4cm] {For an alphabet $\Sigma = \{0,1\}$, this state machine represents the regex \verb|(.*1)|};
@@ -84,113 +84,116 @@ boxpos=t
 	
 	\subparagraph{NFA-$\epsilon$} An NFA-$\epsilon$ has one or more paths encoded as an empty character, meaning that when reading through string it is possible to take a path without actually advancing a character.
 	
-\section{Languages}
-	A language $L$ is a set of strings defined over an alphabet $\Sigma$ which is a finite set of symbols. There are three operations defined on languages:
-	\begin{itemize}
-		\item Concatenation: $L_1L_2 = \{xy \mid x \in L_1,  y \in L_2\}$
-		\item Union: $L_1 \cup  L_2 = \{x \mid x \in L_1 \text{ or } x \in L_2\}$
-		\item Kleene Closure: $L^* = \cup_{i\in N} L^i$, concatenate 0 or more strings from $L$.
-	\end{itemize}
-	Thus, the language $L^n$, a language consisting of n-length strings, can be built inductively as $LL^{n-1}$.
+\section{NFA - DFA Reduction}
+	An NFA may be reduced to a DFA by explicitly tracking the set of NFA states. Intuitively, build a DFA where each DFA state represents a set of NFA states.
+	\begin{center}
+	\begin{tabular}{cc}
+		NFA & DFA\\\hline
+		\begin{tikzpicture}
+			[scale=1,line cap=round,
+			%Styles
+			axes/.style=,
+			important line/.style={very thick},
+			information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+			dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1},
+			main node/.style={circle,fill=blue!20,draw}
+			]
+			
+			%Colors
+			\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+			
+			%The graphic
+			\node[main node] (S1) at (0,0) {$S1$};
+			\node[main node] (S2) at (2,0) {$S2$};
+			
+			\path	(S1)	edge[->] node[above]{a} (S2)
+							edge[->,loop above] node[above right] {a} (S1);
+			\draw[->] (-1,0) -- (-.5,0);
+		\end{tikzpicture}
+		&
+		\begin{tikzpicture}
+			[scale=1,line cap=round,
+			%Styles
+			axes/.style=,
+			important line/.style={very thick},
+			information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+			dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1},
+			main node/.style={circle,fill=blue!20,draw}			
+			]
+			
+			%Colors
+			\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+			
+			%The graphic
+			\node[main node] (S1) at (0,0) {$S1$};
+			\node[rectangle,fill=blue!20,draw] (S2) at (2,0) {$S1,S2$};
+			
+			\draw[->] (-1,0) -- (-.5,0);
+			\path	(S1)	edge[->] node[above] {a} (S2)
+					(S2)	edge[->,loop above] node[above right] {a} (S2);
+		\end{tikzpicture}
+	\end{tabular}
+	\end{center}
 	
-	\subsection{Regular Expressions}
-		Regular expressions over $\Sigma$ are representations of languages, and are defined inductively as such:
-		\begin{center}
-		\begin{tabular}{c|c}
-			Regex & Language\\\hline
-			$\emptyset$ & $\emptyset$\\
-			$\epsilon$ (empty string) & $\{\epsilon\}$\\
-			$\forall \sigma \in \Sigma$ & $\{\sigma\}$\\
-			$AB$ & $L_AL_B$\\
-			$(A|B)$ & $L_A \cup L_B$\\
-			$A^*$ & $L_A^*$
-		\end{tabular}
-		\end{center}
-		
-\section{NFA Representation of Regex}
-	To transform a regex into an NFA (e.g. for a regex engine), define the following two recursive predicates on a regex $e$:
-	\begin{itemize}
-		\item $e\checkmark$: Holds if $\epsilon \in [[e\checkmark]]$.
-		\item $e \xrightarrow{a} e'$: Holds if a string for $e$ can begin with an $a$ and then finish with a string for $e'$.
-	\end{itemize}
+	\begin{lstlisting}[autogobble=true,mathescape]
+		def move(p, a):
+			# p is an NFA state and a is a symbol transition
+			return {q for q in NFA if <p, a, q> $\in \delta$}
+			
+		def reduction(NFA($\Sigma$, Q, q_0, F_n, $\delta$)):
+			r_0 = {q_0}, R = {{r_0}}
+			while unvisited state r in R:
+				visit(r)
+				for a in $\Sigma$:
+					new_state = {s for s in (move(q, a) for q in r)}
+					if S not in R:
+						R += {S}
+					$\delta$ += {<r, a, S>}
+			F_d = {r for r in R if (s in r for s in F_n)}
+	\end{lstlisting}
 	
-	\subsection{Defining $\checkmark$}
-		$\checkmark$ can be defined inductively, given the following rules:
-		\begin{itemize}
-			\item $\epsilon\checkmark$
-			\item $e^*\checkmark$
-			\item $e_1\checkmark \implies (e_1 | e_2)\checkmark$
-			\item $e_2\checkmark \implies (e_1 | e_2)\checkmark$
-			\item $e_1\checkmark \wedge e_2\checkmark \implies (e_1e_2)\checkmark$
-		\end{itemize}
-		
-		\subparagraph{Goal-Directed Proof} To prove $\checkmark$, start with the premise to prove, and work backwards. Applicable rules for a given conclusion are determined by the top-most operator in the expression, generating sub-goals until you reach axioms everywhere or you get stuck.
-		
-		\subparagraph{Algorithm} Straightforward, goal-directed recursive algorithm.
-		\begin{lstlisting}[autogobble=true,mathescape]
-			def check(e):
-				switch e:
-					case a, None: return False
-					case $\epsilon$, f*: return true
-					case e_1 | e_2:
-						return check(e_1) or check(e_2)
-					case e_1e_2:
-						return check(e_1) and check(e_2)
-		\end{lstlisting}
-		
-	\subsection{Defining $\xrightarrow{a}$}
-		Like $\checkmark$, $\xrightarrow{a}$ is defined inductively using a set of rules. The key intuition is that $e\xrightarrow{a} e'$ means that strings for $e$ can begin with an a and then finish with a string that matches $e'$.
-		\begin{itemize}
-			\item $a \xrightarrow{a} \epsilon$
-			\item $e_1 \xrightarrow{a} e'_1 \implies e_1|e_2 \xrightarrow{a} e'_1$
-			\item $e_2 \xrightarrow{a} e'_2 \implies e_1|e_2 \xrightarrow{a} e'_2$
-			\item $e_1 \xrightarrow{a} e'_1 \implies e_1e_2 \xrightarrow{a} e'_1e_2$
-			\item $e_1\checkmark \wedge e_2 \xrightarrow{a} e'_2 \implies e_1e_2 \xrightarrow{a} e'_2$
-			\item $e \xrightarrow{a} e' \implies e^* \xrightarrow{a} e'e^*$
-		\end{itemize}
-		\subparagraph{Algorithm} The algorithm for this definition is a little less straightforward than the algorithm for checks.
-		\begin{lstlisting}[autogobble=true,mathescape]
-			def trans(e):
-				switch e:
-					case None, $\epsilon$: return {}
-					case a: return {<a, $\epsilon$>}
-					case e_1|e_2:
-						return trans(e_1) $\cup$ trans(e_2)
-					case e_1e_2:
-						s = trans(e_2) if check(e_1) else {}
-						return ({<a,e'e_2> if <a,e'> in trans(e_1)} $\cup$ s)
-					case f*:
-						return ({<a,f'f*> if <a,f'> in trans(f)})
-		\end{lstlisting}
-		
-	\subsection{Algorithm}
-		Given a regex $e$, the NFA of e, $<e>$, is defined as the following tuple:
-		\begin{itemize}
-			\item States: RE's reachable from $e$ via $\xrightarrow{a}$ sequences
-			\item Start state: $e$
-			\item Transitions: $\xrightarrow{a}$
-			\item Final States: $\checkmark$
-		\end{itemize}
-		
-		\begin{lstlisting}[autogobble=true,mathescape]
-			def reduce(e):
-				$\delta$, $\Sigma$ = {}		# Initialize transitions, alphabet
-				Q = N = {e}		# Initialize state sets
-				q_0 = e		# Create initial state
-				
-				while N != {}:		# Until no states need processing
-					choose d in N
-					N -= {d}
-					if check(d):
-						F += {d}	# Final state
-					for <a,d'> in trans(d):	# Compute transitions
-						if d' not in Q:		# New target
-							Q += {d'}
-							N += {d'}
-						$\Sigma$ += {a}
-						$\delta$ += {<d, a, d'>}		# Update transition
-				return <$\Sigma$, Q, q_0, F, $\delta$>
-		\end{lstlisting}
+\section{DFA Minimization}
+	Hopcroft's algorithm for DFA minimization is based on partition refinement, where DFA states are grouped into partitions by behavior. Partitions represent equivalence classes such that for any word $w$, following the transitions from two partitions $p_1, p_2$ should lead to an accepting or non-accepting state for both starting points.
+	
+	Partitions are split if members have transitions to different partitions for the same input word. States in the same partition should transition to the same partition for all symbols in $\Sigma$.
+	
+	\begin{lstlisting}[autogobble=true,mathescape]
+		def minimize(DFA($\Sigma$, Q, q_0, F_n, $\delta$)):
+			p_0 = F_n, p_1 = Q - F_n	# Initial partitions
+			R = {p if p in (p_0 + p_1) and not p.empty}
+			P = {}
+			
+			while P != R:
+				P, R = R, {}	# P<-prev partition, R<-current
+				for p in P:
+					{p_0, p_1} = split(p, P)
+					R += {p if p in (p_0 + p_1) and not p.empty}
+					
+			r_0 = R.each{|p| q_0 in p}
+			F_d = {p if p in R and any([s in p for s in F_n])}
+			d = q if ($\delta$(s,c) = r for s in p) and r in q
+			
+			return <$\Sigma$, R, r_0, F_d, d>
+			
+		def split(p, P):
+			choose r from p
+			q = p - {r}, m = {}
+			
+			for s in q:
+				for c in $\Sigma$:
+					if ($\delta$(r,c) = q_0 and $\delta$(s,c) = q_1) and 
+						not any(
+							(q_0 in p_1 and q_1 in p_1) for p_1 in P)
+						m += {s}
+			
+			# m are states that behave differently than r
+			# p-m are states that behave the same as r
+			return p-m, m 
+	\end{lstlisting}
+	
+\section{DFA Complement}
+	Given a DFA accepting a language $L$, the DFA accepting its complement is simply the DFA with every accepting state flipped to a non-accepting state and every non-accepting state to an accepting state. Note that this \textbf{only} works with DFA's.
+
 %	\begin{center}
 %	\begin{tikzpicture}
 %		[scale=3,line cap=round,
