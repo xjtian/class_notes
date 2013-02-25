@@ -37,13 +37,26 @@
 		\Lagr[y^{(n)}](s) = -y^{(n-1)}(0) - sy^{(n-2)}(0) - \ldots -s^{n-2}y(0) + s^n\Lagr[y](s)
 	\end{equation}
 	
-	When a Laplace transform is applied to a differential equation, you can separate terms to get $\Lagr[y](s)$ on one side and all the other s-based terms and initial conditions on the other. Partial fraction decomposition will allow you to take the inverse Laplace, which is described below.
+	When a Laplace transform is applied to a differential equation, you can separate terms to get $\Lagr[y](s)$ on one side and all the other s-based terms and initial conditions on the other. Partial fraction decomposition will allow you to take the inverse Laplace.
 	
-\section{Inverse}
-	Use a lookup table. Simple.
 	\begin{figure}[htb]
 		\centering
 		\includegraphics[width=\textwidth]{laplace.png}
+	\end{figure}
+	
+\section{Convolution}
+	The convolution of two functions $f$ and $g$ is defined as
+	\begin{equation}
+		f \ast g(t) = \int_0^t f(u)g(t-u)du
+	\end{equation}
+	If $f$ and $g$ are integrable on $0 \leq u \leq t$ for every positive $t$, then $f\ast g$ and $g \ast f$ both exist and are equal. Furthermore, if $\Lagr[|f|](s)$ and $\Lagr[|g|](s)$ are both finite, then 
+	\begin{equation}
+		\Lagr[f\ast g](s) = \Lagr[f](s) \cdot \Lagr[g](s)
+	\end{equation}
+	
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[width=\textwidth]{laplaceprop.jpg}
 	\end{figure}
 
 %	\begin{center}
