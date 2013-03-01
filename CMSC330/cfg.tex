@@ -1,0 +1,88 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+
+\usepackage{fancyhdr}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Context Free Grammars}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Definition}
+	Formally, a CFG is a 4-tuple $(\Sigma, N, P, S)$:
+	\begin{itemize}
+		\item $\Sigma$ - alphabet of \textbf{terminals}
+		\item $N$ - a finite, nonempty set of \textbf{nonterminals} such that $N \cap \Sigma = \emptyset$.
+		\item $P$ - a set of \textbf{productions} of the form $N \rightarrow (\Sigma|N)*$. Informally, rules that map a nonterminal to a set of strings of zero or more terminals.
+		\item $S\in N$ - the \textbf{start symbol}
+	\end{itemize}
+	
+	\subparagraph{Backus-Naur Form} Also called BNF, a production $S \rightarrow B c D$ is written in BNF as \verb|<A> ::= <B>c<D>|. Nonterminals are enclosed in angle brackets.
+	
+	CFG's can generate strings by recursive rewriting. Consider the example $S \rightarrow 0S | 1S | \epsilon$, which constructs the language \verb:(0|1)*:. Informally, a string $s$ is accepted by a CFG $S$ (notated as $s \in [[S]]$) if there exists some rewriting (a series of applications of productions) from $S$ that yields $s$. Such a sequence is called a \textbf{derivation} or \textbf{parse}, and discovering the derivation is called \textbf{parsing}.
+	
+\section{Parsing}
+	\subsection{Parse Trees} 
+		Parse trees are derivations of strings from grammars. The root node in the tree is the start symbol, every internal node is a nonterminal, and leaf nodes are read left to right to give the string corresponding to the tree. Parse trees show the structure of an expression as it corresponds to the grammar.
+	
+		For example, the parse tree for the derivation $S\implies aS \implies aT \implies aU \implies acU \implies ac$ for the grammar.
+		\begin{IEEEeqnarray}{rCl}
+			S & \rightarrow & aS | T\\
+			T & \rightarrow & bT | U\\
+			U & \rightarrow & cU | \epsilon
+		\end{IEEEeqnarray}
+		
+		\begin{center}
+		\begin{tikzpicture}
+			[scale=.75,line cap=round,
+			%Styles
+			axes/.style=,
+			important line/.style={very thick},
+			information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+			dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+			]
+			
+			%Colors
+			\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+			
+			%The graphic
+			\node {S}
+				child {node {a}}
+				child {node {S}
+					child {node {T}
+						child {node {U}
+							child {node {c}}
+							child {node {U}
+								child {node {$\epsilon$}}
+							}
+						}
+					}
+				};
+		\end{tikzpicture}
+		\end{center}
+	
+	\subsection{Ambiguity}
+		A grammar is \textbf{ambiguous} if a string may have multiple derivations (multiple parse trees). Ambiguity leads to ambiguous associativity and precedence of operators. One way to eliminate ambiguity is to turn a grammar into a \textbf{left-recursive} or \textbf{right-recursive} grammar. Left-recursive grammars recurse on the left operand of a production, and right-recursive grammars recurse on the right operand.
+		
+		For example, $E \rightarrow E + a | E - a | E * a | \epsilon$ is left-recursive and $E \rightarrow a + E | \epsilon$ is right-recursive. Left-recursive grammars correspond to left-associative operators, and right-recursive grammars correspond to right-associative operators.
+		
+		\subparagraph{Precedence} If a nonterminal has productions for several operators, they effectively have the same precedence. To order operators by precedence, think of productions for nonterminals as a linked list where the head of the list (start symbol) has the lowest precedence and the end of the list has the highest precedence.
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
