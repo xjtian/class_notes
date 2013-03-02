@@ -1,0 +1,109 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true,
+boxpos=t
+}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Heapsort}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Heapsort}
+	\subsection{Algorithm}
+		Assuming a max-heap is used.
+		\begin{lstlisting}[autogobble=true]
+			def HeapSort(A):
+				heapify(A)
+				return [h.extract_max(0 while len(h) > 0].reverse()
+		\end{lstlisting}
+		
+	\subsection{Analysis}
+		In the worst case, when every element is sifted down to the bottom of the heap, per sift-down operation after extracting the top of the heap, there are $2\log n \pm 1$ comparisons done because sift-down requires finding the greater child node. Therefore, a good bound for the number of comparisons done in the entire sort is $2n\log n \pm n$.
+		
+		\begin{IEEEeqnarray}{rCl}
+			\sum_{i=1}^n 2\lg i \pm 1 & = & 2 \sum{i=1}^n \pm n\\
+			& = & 2 \lg \prod_{i=1}^n i \pm n\\
+			& = & 2\lg n! \pm n
+		\end{IEEEeqnarray}
+		
+		Apply \textbf{Stirling's Formula} to approximate $n!$:
+		
+		\begin{IEEEeqnarray}{rCl}
+			n! & \approx & \left(\frac{n}{e}\right)^m \cdot \sqrt{2\pi n}\\
+			2\lg n! \pm n & \approx & 2\lg\left[ \left(\frac{n}{e}\right)^n \cdot \sqrt{2\pi n} \right] \pm n\\
+			& = & 2(\lg n^n - \lg e^n + \lg\sqrt{2\pi n}) \pm n\\
+			& = & 2n\lg n + \Theta(n)
+		\end{IEEEeqnarray}
+		
+		The original estimate was very close to the actual computation for two reasons:
+		\begin{enumerate}
+			\item The size of heap levels grows exponentially, so half of all elements are in the bottom level. This means that there's a 50\% chance sift-down after rotating the last element to the head puts it back on the bottom layer.
+			\item All elements on the bottom level of the heap share the property that they are all relatively small, so it's very likely that the swapped-up element belongs in the bottom after sift-down anyways.
+		\end{enumerate}
+		
+		Therefore, given that heapify is $\Theta(n)$, the final comparison-based runtime of heapsort is $2n\lg n + \Theta(n)$, or $O(n\lg n)$.
+		
+\section{Floyd Siftdown}
+	R.W. Floyd proposed an improved version of siftdown that turns heapsort into an $n\lg n$ algorithm instead of $2n\lg n$. Because sifting an element down after an extraction will likely put it back in the bottom level of the heap or close to it, Floyd's siftdown bubbles the element all the way to the bottom, using 1 comparison per level, and then bubbles the element back up to its proper level, which again uses 1 comparison per level.
+	
+	Given that a random element from the bottom level is swapped up to the head after each extraction, the chance that it belongs in level $i$ is $(1/2)^i$ due to the way heap levels grow exponentially. So the expected number of siftup operations that will be done after putting the element on the bottom is
+	\begin{IEEEeqnarray}{rCl}
+		&& \sum_{i=1}^n i \frac{1}{2^i}\\
+		& = & \frac{1}{2}(1) + \frac{1}{4}(2) + \frac{1}{8}(3) + \ldots\\
+		& \approx & 2
+	\end{IEEEeqnarray}
+	
+	So there are $\lg(n - 1) + 2$ comparisons done per siftdown operation, which brings the runtime for heapsort to $n\lg n + \Theta(n)$.
+	
+	\subparagraph{Improved Siftup} In Floyd's version of siftdown, the path that the top element takes to the bottom is itself ordered from greatest to least. If this path is memo-ized, a binary search through the path will reveal where to sift the element up to in $\lg\lg n$ comparisons.
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
