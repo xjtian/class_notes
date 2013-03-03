@@ -1,5 +1,6 @@
 \documentclass[11pt]{article}
 \usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
 
 \usepackage{fancyhdr}
 
@@ -33,12 +34,11 @@ breaklines=true
 	Quicksort is an \textbf{in-place} sorting algorithm with an average running time of $O(n\log n)$. It operates by successive partitions around a random pivot, which puts the pivot element in the correct, sorted position.
 	
 	\begin{lstlisting}[autogobble=true]
-		Quicksort(A):
+		Quicksort(A, p, r):
 			if n==1: return
-			p = random pivot index
-			Partition(A)
-			Quicksort(left)
-			Quicksort(right)
+			q = Partition(A, p, r)
+			Quicksort(A, p, q-1)
+			Quicksort(A, q+1, r)
 	\end{lstlisting}
 	
 	For partitioning, it is often best to assume that the pivot is the first element, which means that it will have to be pre-swapped in the main routine. A variable \verb|i| will mark the split between elements (first element larger than pivot).
@@ -56,14 +56,43 @@ breaklines=true
 	\subsection{Duplicate Keys}
 		Quicksort goes quadratic unless partitioning stops on equal keys (imagine a uniform array). This problem can be solved by 3-way partitioning, with the middle third with all of the keys equal to the pivot.
 	
-\section{Running Time}
-	The main factor that determines the runtime of quicksort in practice is the way the pivot element is chosen.
+\section{Analysis}
+	Per partition, there is guaranteed to be $n-1$ comparisons. The worst-case for the algorithm is that on each run of the partition subroutine, the smallest or largest element is picked. This means that the number of comparisons is
+	\begin{equation}
+		\sum_{i=1}^{n-1} (i - 1) = \frac{n(n-1)}{2}
+	\end{equation}
 	
-	\begin{description}
-		\item[Ideal:] choose the median every time: $O(n\log n)$
-		\item[Worst:] choose the 1\textsuperscript{st} element in a sorted array: $O(n^2)$
-		\item[Practical:] choose a random pivot. At worst a $25\%-75\%$ split after partition every iteration guarantees an $O(n\log n)$ running time.
-	\end{description}
+	The best case for the algorithm is picking the median every time. The recurrance for this case:
+	\begin{IEEEeqnarray}{rCl}
+		Q(n) & = & 2Q \left(\frac{n-1}{2}\right) + (n - 1)\\
+		Q(1) & = & 0
+	\end{IEEEeqnarray}
+	Solving this recurrance gives a comparison-based runtime on the order of $n\lg n$.
+	
+	\subsection{Average Case}
+		A naive way to describe the average case is to say that the partition subroutine gives a 25-75\% split on every iteration. The recurrance for this case:
+		\begin{IEEEeqnarray}{rCl}
+			Q(n) & = & Q \left(\frac{n-1}{4}\right) + Q\left(\frac{3(n-1)}{4}\right) + (n - 1)\\
+				& \approx & Q \left(\frac{n}{4}\right) + Q\left(\frac{3n}{4}\right) + (n - 1)\\
+			Q(1) & = & 0
+		\end{IEEEeqnarray}
+		
+		Solve this recurrance by constructive induction, guessing that the solution of the recurrance is bounded by
+		\begin{equation}
+			Q(n) \stackrel{?}{\leq} an\lg n
+		\end{equation}
+		Substitute into the recurrance to get the smallest constant value for this solution.
+		\begin{IEEEeqnarray}{rCl}
+			Q(n) & \approx & Q\left(\frac{n}{4}\right) + Q\left(\frac{3n}{4}\right) + (n - 1)\\
+			& \leq & a\frac{n}{4}\lg \frac{n}{4} + a\frac{3n}{4}\lg \frac{3n}{4} + (n - 1)\\
+			& = & \frac{an}{4}(\lg n - \lg 4) + \frac{3an}{4}\left(\lg n - \lg \frac{4}{3}\right) + (n - 1)\\
+			& = & an\lg n + \left( 1 - \frac{a}{2} - \frac{3a}{4}\lg \frac{4}{3} \right) n - 1
+		\end{IEEEeqnarray}
+		For the induction to hold, the coefficient of $n$ must be $\leq 0$.
+		\begin{equation}
+			1 - \frac{a}{2} - \frac{3a}{4}\lg \frac{4}{3} \leq 0
+		\end{equation}
+		This gives $a \geq 1.23$, so an estimate for the comparison-based runtime from the naive analysis is $1.23\lg n$.
 	
 \section{Practical Improvements}
 	\begin{itemize}
