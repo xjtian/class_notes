@@ -2,29 +2,9 @@
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage[retainorgcmds]{IEEEtrantools}
 
-\usepackage[pdftex]{graphicx}
 \usepackage{tikz}
-\usepackage{circuitikz}
-\usetikzlibrary{intersections}
 
 \usepackage{fancyhdr}
-
-%Listings stuff
-\usepackage{listings}
-\usepackage{lstautogobble}
-\usepackage{color}
-
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\lstset{
-basicstyle={\small\ttfamily},
-tabsize=3,
-numbers=left,
-numbersep=5pt,
-numberstyle=\tiny\color{gray},
-stepnumber=2,
-breaklines=true,
-boxpos=t
-}
 
 %Format stuff
 \pagestyle{fancy}
@@ -94,7 +74,7 @@ If each mass in the system is displaced vertically a random amount, the free-bod
 		\node[dot=$m_{p+1}$] at (6, 3) {};
 		\node[dot=$m_{p-1}$] at (2, 1) {};
 		
-		\draw[dashed] (2, 1) -- (4, 1) -- (4, 1.5) -- (6, 1.5) -- (6, 3);
+		\draw[dashed,green!70!black] (2, 1) -- (4, 1) -- (4, 1.5) -- (6, 1.5) -- (6, 3);
 		\draw[ultra thick] (-.1, 1) node[left] {$y_{p-1}$} -- (.1, 1);
 		\draw[ultra thick] (-.1, 1.5) node[left] {$y_p$} -- (.1, 1.5);
 		\draw[ultra thick] (-.1, 3) node[left] {$y_{p+1}$} -- (.1, 3);
@@ -124,7 +104,18 @@ If each mass in the system is displaced vertically a random amount, the free-bod
 	\end{equation}
 	
 \section{Normal Modes}
-
+	Making the assumption that the normal modes are in the form 
+	\begin{equation}
+		y_p = A_p e^{i\omega t}
+	\end{equation}
+	after substitution the following set of solutions is obtained.
+	\begin{IEEEeqnarray}{rCl}
+		y_p & = & c\sin(p\theta)e^{i\omega_p t}\\\nonumber\\
+		\theta & = & \frac{n\pi}{N+1}\\
+		\omega_n & = & 2\omega_0 \sin\left(\frac{\theta}{2}\right)
+	\end{IEEEeqnarray}
+	
+	In this equation, $p$ is an integer pointing to one of the masses in the system, and $N$ is the total number of masses. $n$ denotes which normal mode that the equation describes.
 %	\begin{center}
 %	\begin{tikzpicture}
 %		[scale=3,line cap=round,
