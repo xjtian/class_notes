@@ -1,0 +1,76 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{fancyhdr}
+
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Nonlinear Equations}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+Nonlinear, second-order differential equations can be expressed generically as
+\begin{equation}
+	y'' = f(x, y, y')
+\end{equation}
+where $x$ is the independent variable and $y$ is the dependent variable.
+\section{Uniqueness}
+	If $f(x, y, z)$ and its two partials $f_y$ and $f_z$ are continuous in some interval $I$ containing $(y_0, z_0)$, then the initial-value problem
+	\begin{equation}
+		\ddot{y} = f(t, y, \dot{y}), \quad y(t_0) = y_0, \quad \dot{y}(t_0) = z_0
+	\end{equation}
+	has a unique solution on some subinterval of $I$ containing $t_0$. If in addition $f_y$ and $f_z$ are bounded above and below for all $t$ in $I$ and all $(x, y) \in \mathbb{R}^2$, then the solution exists on the entirety of $I$.
+	
+\section{Solving Nonlinear Equations}
+	There are 3 special cases for nonlinear equations. If $\ddot{y} = f(x)$, that is $f$ is not dependent on $y$ or $\dot{y}$, the solution can be obtained by direct integration. The $\ddot{y} = f(x, \dot{y})$ case can be reduced to a first-order linear equation after a change of variables.
+	
+	The last special case, called an \textbf{autonomous equation} because it does not depend on the independent variable, is
+	\begin{equation}
+		\ddot{y} = f(y, \dot{y})
+	\end{equation}
+	If we make the assumption that $\dot{y}$ can be expressed in terms of a differentiable equation in $y$, then it is possible to reduce this to a first order equation with a change in variables.
+	\begin{IEEEeqnarray}{rCl}
+		z & = & \dot{y}\\
+		\frac{dz}{dx} & = & \frac{dz}{dy} \cdot \frac{dy}{dx}\\
+		\frac{dz}{dx} & = & z \cdot \frac{dz}{dy} = \ddot{y}\\
+		z \cdot \frac{dz}{dy} & = & f(y, z)
+	\end{IEEEeqnarray}
+	
+\section{Phase Space}
+	If it is not possible to find an explicit formula for a solution to an autonomous equation, then it is possible to apply numerical methods and plot them on the \textbf{phase space}, a 2-dimensional $(y, \dot{y})$ space.
+	
+	\subparagraph{Periodicity Theorem} If $f_y$ and $f_z$ are bounded continuous functions of $y$ and $y(t)$ is a solution of $\dot{y} = f(y, \dot{y})$, then $y(t)$ is periodic if and only if it is a closed curve in the phase space.
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
