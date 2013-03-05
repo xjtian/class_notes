@@ -110,12 +110,31 @@ If each mass in the system is displaced vertically a random amount, the free-bod
 	\end{equation}
 	after substitution the following set of solutions is obtained.
 	\begin{IEEEeqnarray}{rCl}
-		y_p & = & c\sin(p\theta)e^{i\omega_p t}\\\nonumber\\
-		\theta & = & \frac{n\pi}{N+1}\\
-		\omega_n & = & 2\omega_0 \sin\left(\frac{\theta}{2}\right)
+		y_p & = & c\sin(p\theta)e^{i\omega_p t}\\
+		\omega_n & = & 2\omega_0 \sin\left(\frac{\theta}{2}\right)\\
+		\theta & = & \frac{n\pi}{N+1}
 	\end{IEEEeqnarray}
 	
-	In this equation, $p$ is an integer pointing to one of the masses in the system, and $N$ is the total number of masses. $n$ denotes which normal mode that the equation describes.
+	Also, the relationship between adjacent amplitudes is
+	\begin{equation}
+		\frac{A_{p-1} + A_{p+1}}{A_p} = \frac{-\omega^2 + 2\omega_0^2}{\omega_0^2}
+	\end{equation}
+	
+	In this equation, $p$ is an integer pointing to one of the masses in the system, and $N$ is the total number of masses. $n$ denotes which normal mode that the equation describes. There are $N$ different total normal modes in the system because the time evolution and amplitude are both periodic functions.
+	
+\section{General Solution}
+	Just like the general solution to the coupled mechanical oscillators, the position of any one particle is a combination of normal modes.
+	\begin{equation}
+		y_p = \sum_{n=1}^N c_n \sin\left(\frac{n\pi}{N+1}\right) e^{i\omega_n t}
+	\end{equation}
+	Define the eigenvectors of each normal mode as
+	\begin{equation}
+		\mathbf{q_n} = \left( \sin \left(\frac{n\pi}{N+1}\right), \sin \left(\frac{2n\pi}{N+1}\right), \ldots , \sin \left(\frac{Nn\pi}{N+1}\right) \right)
+	\end{equation}
+	This gives the general solution to all the masses:
+	\begin{equation}
+		\mathbf{y} = \sum_{n=1}^N a_n \mathbf{q_n} e^{i\omega_n t}
+	\end{equation}
 %	\begin{center}
 %	\begin{tikzpicture}
 %		[scale=3,line cap=round,
