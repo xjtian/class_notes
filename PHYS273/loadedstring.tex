@@ -135,6 +135,15 @@ If each mass in the system is displaced vertically a random amount, the free-bod
 	\begin{equation}
 		\mathbf{y} = \sum_{n=1}^N a_n \mathbf{q_n} e^{i\omega_n t}
 	\end{equation}
+	
+	\subsection{Initial Conditions}
+		Just like the 2 coupled mechanical oscillators, the real and imaginary coefficients for the complex coefficient are given by 
+		\begin{equation}
+			a_n = \frac{\mathbf{x_0} \cdot \mathbf{q_n}}{|\mathbf{q_n}|^2}
+		\end{equation}
+		\begin{equation}
+			b_n = \frac{-\mathbf{v_0} \cdot \mathbf{q_n}}{\omega_n |\mathbf{q_n}|^2}
+		\end{equation}
 %	\begin{center}
 %	\begin{tikzpicture}
 %		[scale=3,line cap=round,
