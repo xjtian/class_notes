@@ -62,26 +62,26 @@ breaklines=true
 		\sum_{i=1}^{n-1} (i - 1) = \frac{n(n-1)}{2}
 	\end{equation}
 	
-	The best case for the algorithm is picking the median every time. The recurrance for this case:
+	The best case for the algorithm is picking the median every time. The recurrence for this case:
 	\begin{IEEEeqnarray}{rCl}
 		Q(n) & = & 2Q \left(\frac{n-1}{2}\right) + (n - 1)\\
 		Q(1) & = & 0
 	\end{IEEEeqnarray}
-	Solving this recurrance gives a comparison-based runtime on the order of $n\lg n$.
+	Solving this recurrence gives a comparison-based runtime on the order of $n\lg n$.
 	
-	\subsection{Average Case}
-		A naive way to describe the average case is to say that the partition subroutine gives a 25-75\% split on every iteration. The recurrance for this case:
+	\subsection{Average Case Estimate}
+		A naive way to describe the average case is to say that the partition subroutine gives a 25-75\% split on every iteration. The recurrence for this case:
 		\begin{IEEEeqnarray}{rCl}
 			Q(n) & = & Q \left(\frac{n-1}{4}\right) + Q\left(\frac{3(n-1)}{4}\right) + (n - 1)\\
 				& \approx & Q \left(\frac{n}{4}\right) + Q\left(\frac{3n}{4}\right) + (n - 1)\\
 			Q(1) & = & 0
 		\end{IEEEeqnarray}
 		
-		Solve this recurrance by constructive induction, guessing that the solution of the recurrance is bounded by
+		Solve this recurrence by constructive induction, guessing that the solution of the recurrence is bounded by
 		\begin{equation}
 			Q(n) \stackrel{?}{\leq} an\lg n
 		\end{equation}
-		Substitute into the recurrance to get the smallest constant value for this solution.
+		Substitute into the recurrence to get the smallest constant value for this solution.
 		\begin{IEEEeqnarray}{rCl}
 			Q(n) & \approx & Q\left(\frac{n}{4}\right) + Q\left(\frac{3n}{4}\right) + (n - 1)\\
 			& \leq & a\frac{n}{4}\lg \frac{n}{4} + a\frac{3n}{4}\lg \frac{3n}{4} + (n - 1)\\
@@ -93,11 +93,58 @@ breaklines=true
 			1 - \frac{a}{2} - \frac{3a}{4}\lg \frac{4}{3} \leq 0
 		\end{equation}
 		This gives $a \geq 1.23$, so an estimate for the comparison-based runtime from the naive analysis is $1.23\lg n$.
+		
+	\subsection{Average Case}
+		When the algorithm partitions on the $q$-th smallest element in the array, the recurrence looks like
+		\begin{equation}
+			Q(n) = Q(q-1) + Q(n-q) + (n-1)
+		\end{equation}
+		For a perfectly random partition subroutine or a perfectly shuffled array, it is equally likely to partition on any one of the elements. Therefore, the average case of the algorithm is the sum of comparisons done for all values of $q$ divided by the number of possibilities for $q$. 
+		\begin{IEEEeqnarray}{rCl}
+			Q(n) & = & \sum_{q=1}^n \frac{1}{n}[ Q(q-1) + Q(n-q) + (n-1) ]\\
+			& = & \frac{1}{n}\sum_{q=1}^n (Q(q-1) + Q(n-q)) + (n-1)\\
+			& = & \frac{1}{n}\sum_{q=1}^n Q(q-1) + \frac{1}{n}\sum_{q=1}^n Q(n-q) + (n-1)
+		\end{IEEEeqnarray}
+		A change of variable in this step yields a nicer formula:
+		\begin{equation}
+			Q(n) = \frac{2}{n} \sum_{q=0}^n Q(q) + (n-1)
+		\end{equation}
+	
+		Now use constructive induction to solve the recurrence/sum. Guess that the solution to the recurrence is $S(n) \leq an\lg n$ (dropped $q=0$ from the summation because $Q(0) = 0$ and $0$ doesn't play nice with logs).
+		\begin{equation}
+			S(n) \leq \frac{2}{n}\sum_{q=1}^n aq\lg q + (n-1)
+		\end{equation}
+		Approximate an upper bound for the sum with an integral, which is reasonably accurate for asymptotically large values of $n$.
+		\begin{IEEEeqnarray}{rCl}
+			\sum_{q=1}^n & \leq & \int_1^n ax\lg x dx\\
+			& = & a\int_1^n x\lg x dx\\
+			& = & a\left[ \frac{x^2 \lg x}{2} - \frac{x^2}{4\ln 2} \right]_1^n\\
+			& = & a\left(\frac{n^2\lg n}{2} - \frac{n^2}{4\ln 2} + \frac{1}{4\ln 2}\right)
+		\end{IEEEeqnarray}
+		Substituting into the recurrence:
+		\begin{IEEEeqnarray}{rCl}
+			S(n) & \leq & \frac{2a}{n}\left( \frac{n^2\lg n}{2} - \frac{n^2}{4\ln 2} + \frac{1}{4\ln 2} \right) + (n-1)\\
+			& = & an\lg n - \frac{an}{2\ln 2} + \frac{a}{2n\ln 2} + n - 1\\
+			& = & an\lg n + \left(1 - \frac{a}{2\ln 2}\right) n - 1 + \frac{a}{2n\ln 2}
+		\end{IEEEeqnarray}
+		
+		For the induction to hold (that is, for $S(n) \leq an\lg n$), the coefficient of the $n$ term must be less than or equal to 0. Note the coefficient in front of the $1/n$ term does not matter because $1/n$ will always be some constant less than or equal to 1. This gives $a \geq 2\ln 2$, and because we only care about the smallest upper-bound for the recurrence, $a = 2\ln 2 \approx 1.38$.
+		
+		A little algebra makes the final average-case solution much nicer:
+		\begin{IEEEeqnarray}{rCl}
+			S(n) & \leq & 2\ln 2 \cdot n\lg n\\
+			& = & 2\ln 2 \cdot \frac{n\ln n}{\ln 2}\\
+			& = & 2n\ln n
+		\end{IEEEeqnarray}
+		So finally, we can conclude that the average-case comparison-based running time of Quicksort, given a randomly shuffled array or a truly random partition subroutine, is
+		\begin{equation}
+			S(n) \leq 2n\ln n \in \Theta(n\lg n)
+		\end{equation}
 	
 \section{Practical Improvements}
 	\begin{itemize}
-		\item Insertion sort cutoff around 10 elements.
-		\item Estimate true median as partition by taking median of a size 3 sample (median-of-3 method) for medium arrays.
+		\item Insertion sort cutoff around 10 elements. This avoids the extra overhead associated with recursive calls.
+		\item Estimate true median for partition by taking median of a size 3 sample (median-of-3 method) for medium arrays.
 		\item Tukey's ninther for large arrays: pick 9 items, and take the median of the medians.
 	\end{itemize}
 \end{document}
