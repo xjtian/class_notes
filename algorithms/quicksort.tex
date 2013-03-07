@@ -94,7 +94,7 @@ breaklines=true
 		\end{equation}
 		This gives $a \geq 1.23$, so an estimate for the comparison-based runtime from the naive analysis is $1.23\lg n$.
 		
-	\subsection{Average Case}
+	\subsection{Average Case by Induction}
 		When the algorithm partitions on the $q$-th smallest element in the array, the recurrence looks like
 		\begin{equation}
 			Q(n) = Q(q-1) + Q(n-q) + (n-1)
@@ -140,11 +140,55 @@ breaklines=true
 		\begin{equation}
 			S(n) \leq 2n\ln n \in \Theta(n\lg n)
 		\end{equation}
+		
+	\subsection{Average Case by Summation}
+		A small leap of intuition yields the same average-case result as the inductive method using only summations. The key initial insight is that given a randomly shuffled list with sorted order
+		\[x_1 < x_2 < x_3 < \ldots < x_n\]
+		the probability that $x_1$ is compared to $x_n$ sometime in the Quicksort routine is $2/n$: the pivot in the first step must be either one of those elements or they will never be compared to each other.
+		
+		Now imagine taking two elements $x_i, x_j$ such that $i < j$. In each step, if $x_p$, the pivot element, is chosen such that $i < p < j$, then the two elements will never be compared. The intuitive leap then is to "chop off" the ends of the array before $i$ and after $j$, which reduces this problem to the one solved above. That is, given a sub-array with its smallest element as $x_i$ and its largest element as $x_j$, what is the probability that $x_i$ and $x_j$ are compared?
+		\begin{equation}
+			P(x_i <=> x_j) = \frac{2}{j-i+1}
+		\end{equation}
+		
+		The average number of comparisons done in Quicksort is then equal to the sum of the probabilities for all $(i,j)$ pairs that $x_i$ is compared to $x_j$.
+		\begin{IEEEeqnarray}{rCl}
+			Q(n) & = & \sum_{1\leq i < j \leq n} \frac{2}{j-i+1}\\
+			& = & \sum_{i=1}^n \sum_{j=i+1}^n \frac{2}{j-i+1}\\
+			& = & 2\sum_{i=1}^n\sum_{j=2}^{n-i+1} \frac{1}{j}\\
+			& = & 2 \sum_{i=1}^n (H_{n-i+1} - 1)\\
+			& = & 2\sum_{i=1}^n H_{n-i+1} - 2n\\
+			& = & 2\sum_{i=1}^n H_i - 2n
+		\end{IEEEeqnarray}
+		In the above, $H_i$ is the i-th harmonic number (harmonic sum with $n=i$). Substitute Euler's calculation for $H_n$.
+		\begin{IEEEeqnarray}{rCl}
+			Q(n) & = & 2\sum_{i=1}^n H_i - 2n\\
+			& \approx & 2\sum_{i=1}^n \left[\ln i + \gamma + \Theta\left(\frac{1}{i}\right)\right] - 2n\\
+			& = & 2\ln n! + 2(\gamma - 1)n + 2\sum_{i=1}^n \Theta\left(\frac{1}{i}\right)\\
+			& = & 2\ln n! + 2(\gamma - 1)n + \Theta(\ln n)\\
+		\end{IEEEeqnarray}
+		Use Stirling's formula to approximate $n!$:
+		\begin{IEEEeqnarray}{rCl}
+			Q(n) & = & 2\ln n! + 2(\gamma - 1)n + \Theta(\ln n)\\
+			& \approx & 2\ln \left[ \left(\frac{n}{e}\right)^n \sqrt{2\pi n} \right] + 2(\gamma - 1)n + \Theta(\ln n)\\
+			& = & 2n\ln n - 2n\ln e + \ln n + 2(\gamma - 1)n + \Theta(\ln n)\\
+			& = & 2n\ln n + 2(\gamma - 2)n + \Theta(\ln n)
+		\end{IEEEeqnarray}
+		
+		The high-order result is the exact same as with the inductive method, but the summation proof yields a few more lower-order terms that are ignored in the analysis anyways.
 	
 \section{Practical Improvements}
 	\begin{itemize}
-		\item Insertion sort cutoff around 10 elements. This avoids the extra overhead associated with recursive calls.
+		\item Recurse on the smaller sub-array first to guarantee $O(\lg n)$ extra memory on the recursive stack.
+		\item Insertion or selection sort cutoff around 10 elements to avoid the extra overhead associated with recursive calls.
 		\item Estimate true median for partition by taking median of a size 3 sample (median-of-3 method) for medium arrays.
 		\item Tukey's ninther for large arrays: pick 9 items, and take the median of the medians.
+	\end{itemize}
+	
+\section{Why Quicksort?}
+	Consider the three major $O(n\lg n)$ sorts: Mergesort, Heapsort, and Quicksort. Quicksort is most often used in library sorting functions because of two reasons.
+	\begin{itemize}
+		\item In-place: Quicksort uses $O(\lg n)$ space on the stack for recursion, whereas the practical version of Mergesort is not an in-place algorithm.
+		\item Cache efficiency: with modern hardware, when one value is pulled into the cache, some of the values in the surrounding memory are usually pulled into the cache as well. Quicksort takes advantage of this \textbf{spatial locality}, while in Heapsort, the elements at the bottom levels are too far away from each other in the array representation.
 	\end{itemize}
 \end{document}
