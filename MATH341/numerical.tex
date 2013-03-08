@@ -34,27 +34,54 @@ breaklines=true
 \rhead{}
 
 \begin{document}
-Both the following methods consider the initial value problem
-\begin{IEEEeqnarray}{rCl}
-	y' & = & F(x, y)\\
-	y(a) & = & b
-\end{IEEEeqnarray}
-\section{Euler's Method}
+\section{First-Order}
+	Both the following methods consider the initial value problem
+	\begin{IEEEeqnarray}{rCl}
+		y' & = & F(x, y)\\
+		y(a) & = & b
+	\end{IEEEeqnarray}
+	\subsection{Euler's Method}
+		\begin{equation}
+			y(x) \approx y'(a) + (x - a) \cdot F(a, b)
+		\end{equation}
+		
+		Applied iteratively with step size $h$,
+		\begin{IEEEeqnarray}{rCl}
+			y(x_k) & = & y(x_{k-1}) + hF(x_{k-1}, y(x_{k-1}))\\
+			x_k & = & x_{k - 1} + h
+		\end{IEEEeqnarray}
+		
+	\subsection{Prediction-Correction Euler's Method}
+		\begin{IEEEeqnarray}{rCl}
+			y(x_k) & = & y(x_{k-1}) + h\frac{F(x_k, P_k) + F(x_{k-1}, y_{k-1})}{2}\\
+			P_k & = & y(x_{k-1}) + h F(x_{k-1}, y(x_{k-1}))
+	\end{IEEEeqnarray}
+	
+\section{Second-Order}
+	Introduce an artificial second dimension for the generic second-order ODE
 	\begin{equation}
-		y(x) \approx y'(a) + (x - a) \cdot F(a, b)
+		y'' = f(x, y, y')
 	\end{equation}
-	
-	Applied iteratively with step size $h$,
+	so it becomes
 	\begin{IEEEeqnarray}{rCl}
-		y(x_k) & = & y(x_{k-1}) + hF(x_{k-1}, y(x_{k-1}))\\
-		x_k & = & x_{k - 1} + h
+		z & = & y'\\
+		z' & = & f(x,y,z)
 	\end{IEEEeqnarray}
+	Both of the following methods consider the initial value problem $y_0 = y(x_0), z_0 = y'(x_0)$.
 	
-\section{Prediction-Correction Euler's Method}
-	\begin{IEEEeqnarray}{rCl}
-		y(x_k) & = & y(x_{k-1}) + h\frac{F(x_k, P_k) + F(x_{k-1}, y_{k-1})}{2}\\
-		P_k & = & y(x_{k-1}) + h F(x_{k-1}, y(x_{k-1}))
-	\end{IEEEeqnarray}
+	\subsection{Euler's Method}
+		\begin{IEEEeqnarray}{rCl}
+			z_{k+1} & = & z_k + hf(x_k, y_k, z_k)\\
+			y_{k+1} & = & y_k + hz_k
+		\end{IEEEeqnarray}
+		
+	\subsection{Improved Euler's Method}
+		\begin{IEEEeqnarray}{rCl}
+			\tilde{z}_{k+1} & = & z_k + hf(x_k, y_k, z_k)\\
+			\tilde{y}_{k+1} & = & y_k + hz_k\\
+			y_{k+1} & = & y_k + \frac{h}{2}(z_k + \tilde{z}_{k+1})\\
+			z_{k+1} & = & z_k + \frac{h}{2}(f(x_k,y_k,z_k) + f(x_k, \tilde{y}_{k+1}, \tilde{z}_{k+1}))
+		\end{IEEEeqnarray}
 
 %	\begin{center}
 %	\begin{tikzpicture}
