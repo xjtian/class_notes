@@ -202,6 +202,19 @@ If each mass in the system is displaced vertically a random amount, the free-bod
 	\begin{equation}
 		\rho \ddot{y} = T \cdot \frac{d^2 y}{dx^2}
 	\end{equation}
+	
+	\subsection{Normal Modes}
+		Let $y^{(n)}(t, x)$ denote the n-th normal mode for the continuous system.
+		\begin{IEEEeqnarray}{rCl}
+			y^{(n)}(t,x) & = & c_n \sin\left( \frac{n\pi x}{L} \right)e^{i\omega_n t}\\
+			\omega_n & = & \frac{n\pi}{L} \sqrt{\frac{T}{\rho}}
+		\end{IEEEeqnarray}
+		The expression for $\omega_n$ only holds for small oscillations, based on the observation that $\sin\theta \approx \theta$ for small values of $\theta$.
+		
+		The general solution is a superposition of all normal modes.
+		\begin{equation}
+			y(t, x) = \sum_{n=1}^\infty c_n \sin\left( \frac{n\pi x}{L} \right)e^{i\omega_n t}
+		\end{equation}
 
 %	\begin{center}
 %	\begin{tikzpicture}
