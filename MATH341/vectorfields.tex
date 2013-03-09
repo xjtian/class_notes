@@ -1,0 +1,104 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usepackage{circuitikz}
+\usetikzlibrary{intersections}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true,
+boxpos=t
+}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Vector Fields}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Geometric Interpretation}
+	For 2-dimensional systems of the form $\mathbf{y'} = \mathbf{F}(t, \mathbf{y})$, a more meaningful geometric interpretation can be derived first by re-expressing the system as
+	\begin{eqnarray}
+		\frac{dx}{dt} & = & F(t, x, y)\\
+		\frac{dy}{dt} & = & G(t, x, y)
+	\end{eqnarray}
+	
+	A vector field of the system is a snapshot at a set point in time, $t_0$. For each point in the x-y plane, draw the vector $(F(t_0, x, y), G(t_0, x, y))$ to represent the direction that a particle would travel in at $t_0$ for every location.
+	
+	On some interval $a < t < b$, the solution $(x(t), y(t))$ traces a path called a \textbf{trajectory} of the system. A sketch of several trajectories is called a \textbf{portrait} of the system. If a trajectory ends up only being a single point $\mathbf{x_0}$, then it is called an \textbf{equilibrium solution} at an \textbf{equilibrium point}.
+	
+\section{Existence and Uniqueness}
+	Given that $\mathbf{F}(t, \mathbf{x})$ and all entries in its derivative matrix $\mathbf{F}_{\mathbf{x}}(t, \mathbf{x})$ are continuous on some interval $I$ of $t$ containing $t_0$ and $\mathbf{x}$ in an open rectangle containing $\mathbf{x_0}$, then the system $\dot{\mathbf{x}} = \mathbf{F}(t, \mathbf{x})$ has a unique solution satisfying those initial conditions.
+	
+	If in addition all entries in the derivative matrix are bounded for the entire rectangle, then the solutions exist entirely across $I$.
+	
+	A corollary that arises from this theory is that if two solution trajectories of an autonomous system have a point in common, then they are two sides of a single trajectory. Trajectories of nonautonomous systems can cross themselves though.
+	
+\section{Flows}
+	The trajectories of an autonomous system are called the \textbf{flow lines} of the vector field. Associate each vector field with a family of \textbf{flow transformations} $T_t$, defined by 
+	\begin{equation}
+		T_t(\mathbf{x}) = \mathbf{y}(t)
+	\end{equation}
+	where $\mathbf{y}(t)$ solves $\dot{\mathbf{y}} = \mathbf{F}(\mathbf{y})$ with initial value $\mathbf{y}(0) = \mathbf{x}$. $T_t(\mathbf{x})$ is the point on the flow line of $\mathbf{F}$ starting at $\mathbf{x}$ that the flow reaches at time $t$. Flow transformations have the composition property
+	\begin{equation}
+		T_tT_s = T_{t+s}
+	\end{equation}
+	and
+	\begin{equation}
+		T_{-t}T_t = T_tT_{-t} = I
+	\end{equation}
+	where $I$ is an identity operator that leaves points fixed.
+	
+	$T_t$ is volume-preserving in a region $B$ if and only if $\text{div}\mathbf{F}$ is identically zero in $B$. If $\text{div }\mathbf{F} < 0$ then the flow is volume decreasing, and if $\text{div }\mathbf{F} > 0$ then the flow is volume increasing.
+	
+	As an aside, note that the Jacobian determinant $J_t(\mathbf{x})$ satisfies
+	\begin{equation}
+		\frac{d}{dt}J_t(\mathbf{x}) = \text{div}\mathbf{F}(\mathbf{y}(t))J_t(\mathbf{x})
+	\end{equation}
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
