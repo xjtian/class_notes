@@ -1,5 +1,6 @@
 \documentclass[11pt]{article}
 \usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
 
 \usepackage{fancyhdr}
 
@@ -33,12 +34,11 @@ breaklines=true
 	Quicksort is an \textbf{in-place} sorting algorithm with an average running time of $O(n\log n)$. It operates by successive partitions around a random pivot, which puts the pivot element in the correct, sorted position.
 	
 	\begin{lstlisting}[autogobble=true]
-		Quicksort(A):
+		Quicksort(A, p, r):
 			if n==1: return
-			p = random pivot index
-			Partition(A)
-			Quicksort(left)
-			Quicksort(right)
+			q = Partition(A, p, r)
+			Quicksort(A, p, q-1)
+			Quicksort(A, q+1, r)
 	\end{lstlisting}
 	
 	For partitioning, it is often best to assume that the pivot is the first element, which means that it will have to be pre-swapped in the main routine. A variable \verb|i| will mark the split between elements (first element larger than pivot).
@@ -56,19 +56,139 @@ breaklines=true
 	\subsection{Duplicate Keys}
 		Quicksort goes quadratic unless partitioning stops on equal keys (imagine a uniform array). This problem can be solved by 3-way partitioning, with the middle third with all of the keys equal to the pivot.
 	
-\section{Running Time}
-	The main factor that determines the runtime of quicksort in practice is the way the pivot element is chosen.
+\section{Analysis}
+	Per partition, there is guaranteed to be $n-1$ comparisons. The worst-case for the algorithm is that on each run of the partition subroutine, the smallest or largest element is picked. This means that the number of comparisons is
+	\begin{equation}
+		\sum_{i=1}^{n-1} (i - 1) = \frac{n(n-1)}{2}
+	\end{equation}
 	
-	\begin{description}
-		\item[Ideal:] choose the median every time: $O(n\log n)$
-		\item[Worst:] choose the 1\textsuperscript{st} element in a sorted array: $O(n^2)$
-		\item[Practical:] choose a random pivot. At worst a $25\%-75\%$ split after partition every iteration guarantees an $O(n\log n)$ running time.
-	\end{description}
+	The best case for the algorithm is picking the median every time. The recurrence for this case:
+	\begin{IEEEeqnarray}{rCl}
+		Q(n) & = & 2Q \left(\frac{n-1}{2}\right) + (n - 1)\\
+		Q(1) & = & 0
+	\end{IEEEeqnarray}
+	Solving this recurrence gives a comparison-based runtime on the order of $n\lg n$.
+	
+	\subsection{Average Case Estimate}
+		A naive way to describe the average case is to say that the partition subroutine gives a 25-75\% split on every iteration. The recurrence for this case:
+		\begin{IEEEeqnarray}{rCl}
+			Q(n) & = & Q \left(\frac{n-1}{4}\right) + Q\left(\frac{3(n-1)}{4}\right) + (n - 1)\\
+				& \approx & Q \left(\frac{n}{4}\right) + Q\left(\frac{3n}{4}\right) + (n - 1)\\
+			Q(1) & = & 0
+		\end{IEEEeqnarray}
+		
+		Solve this recurrence by constructive induction, guessing that the solution of the recurrence is bounded by
+		\begin{equation}
+			Q(n) \stackrel{?}{\leq} an\lg n
+		\end{equation}
+		Substitute into the recurrence to get the smallest constant value for this solution.
+		\begin{IEEEeqnarray}{rCl}
+			Q(n) & \approx & Q\left(\frac{n}{4}\right) + Q\left(\frac{3n}{4}\right) + (n - 1)\\
+			& \leq & a\frac{n}{4}\lg \frac{n}{4} + a\frac{3n}{4}\lg \frac{3n}{4} + (n - 1)\\
+			& = & \frac{an}{4}(\lg n - \lg 4) + \frac{3an}{4}\left(\lg n - \lg \frac{4}{3}\right) + (n - 1)\\
+			& = & an\lg n + \left( 1 - \frac{a}{2} - \frac{3a}{4}\lg \frac{4}{3} \right) n - 1
+		\end{IEEEeqnarray}
+		For the induction to hold, the coefficient of $n$ must be $\leq 0$.
+		\begin{equation}
+			1 - \frac{a}{2} - \frac{3a}{4}\lg \frac{4}{3} \leq 0
+		\end{equation}
+		This gives $a \geq 1.23$, so an estimate for the comparison-based runtime from the naive analysis is $1.23\lg n$.
+		
+	\subsection{Average Case by Induction}
+		When the algorithm partitions on the $q$-th smallest element in the array, the recurrence looks like
+		\begin{equation}
+			Q(n) = Q(q-1) + Q(n-q) + (n-1)
+		\end{equation}
+		For a perfectly random partition subroutine or a perfectly shuffled array, it is equally likely to partition on any one of the elements. Therefore, the average case of the algorithm is the sum of comparisons done for all values of $q$ divided by the number of possibilities for $q$. 
+		\begin{IEEEeqnarray}{rCl}
+			Q(n) & = & \sum_{q=1}^n \frac{1}{n}[ Q(q-1) + Q(n-q) + (n-1) ]\\
+			& = & \frac{1}{n}\sum_{q=1}^n (Q(q-1) + Q(n-q)) + (n-1)\\
+			& = & \frac{1}{n}\sum_{q=1}^n Q(q-1) + \frac{1}{n}\sum_{q=1}^n Q(n-q) + (n-1)
+		\end{IEEEeqnarray}
+		A change of variable in this step yields a nicer formula:
+		\begin{equation}
+			Q(n) = \frac{2}{n} \sum_{q=0}^n Q(q) + (n-1)
+		\end{equation}
+	
+		Now use constructive induction to solve the recurrence/sum. Guess that the solution to the recurrence is $S(n) \leq an\lg n$ (dropped $q=0$ from the summation because $Q(0) = 0$ and $0$ doesn't play nice with logs).
+		\begin{equation}
+			S(n) \leq \frac{2}{n}\sum_{q=1}^n aq\lg q + (n-1)
+		\end{equation}
+		Approximate an upper bound for the sum with an integral, which is reasonably accurate for asymptotically large values of $n$.
+		\begin{IEEEeqnarray}{rCl}
+			\sum_{q=1}^n & \leq & \int_1^n ax\lg x dx\\
+			& = & a\int_1^n x\lg x dx\\
+			& = & a\left[ \frac{x^2 \lg x}{2} - \frac{x^2}{4\ln 2} \right]_1^n\\
+			& = & a\left(\frac{n^2\lg n}{2} - \frac{n^2}{4\ln 2} + \frac{1}{4\ln 2}\right)
+		\end{IEEEeqnarray}
+		Substituting into the recurrence:
+		\begin{IEEEeqnarray}{rCl}
+			S(n) & \leq & \frac{2a}{n}\left( \frac{n^2\lg n}{2} - \frac{n^2}{4\ln 2} + \frac{1}{4\ln 2} \right) + (n-1)\\
+			& = & an\lg n - \frac{an}{2\ln 2} + \frac{a}{2n\ln 2} + n - 1\\
+			& = & an\lg n + \left(1 - \frac{a}{2\ln 2}\right) n - 1 + \frac{a}{2n\ln 2}
+		\end{IEEEeqnarray}
+		
+		For the induction to hold (that is, for $S(n) \leq an\lg n$), the coefficient of the $n$ term must be less than or equal to 0. Note the coefficient in front of the $1/n$ term does not matter because $1/n$ will always be some constant less than or equal to 1. This gives $a \geq 2\ln 2$, and because we only care about the smallest upper-bound for the recurrence, $a = 2\ln 2 \approx 1.38$.
+		
+		A little algebra makes the final average-case solution much nicer:
+		\begin{IEEEeqnarray}{rCl}
+			S(n) & \leq & 2\ln 2 \cdot n\lg n\\
+			& = & 2\ln 2 \cdot \frac{n\ln n}{\ln 2}\\
+			& = & 2n\ln n
+		\end{IEEEeqnarray}
+		So finally, we can conclude that the average-case comparison-based running time of Quicksort, given a randomly shuffled array or a truly random partition subroutine, is
+		\begin{equation}
+			S(n) \leq 2n\ln n \in \Theta(n\lg n)
+		\end{equation}
+		
+	\subsection{Average Case by Summation}
+		A small leap of intuition yields the same average-case result as the inductive method using only summations. The key initial insight is that given a randomly shuffled list with sorted order
+		\[x_1 < x_2 < x_3 < \ldots < x_n\]
+		the probability that $x_1$ is compared to $x_n$ sometime in the Quicksort routine is $2/n$: the pivot in the first step must be either one of those elements or they will never be compared to each other.
+		
+		Now imagine taking two elements $x_i, x_j$ such that $i < j$. In each step, if $x_p$, the pivot element, is chosen such that $i < p < j$, then the two elements will never be compared. The intuitive leap then is to "chop off" the ends of the array before $i$ and after $j$, which reduces this problem to the one solved above. That is, given a sub-array with its smallest element as $x_i$ and its largest element as $x_j$, what is the probability that $x_i$ and $x_j$ are compared?
+		\begin{equation}
+			P(x_i <=> x_j) = \frac{2}{j-i+1}
+		\end{equation}
+		
+		The average number of comparisons done in Quicksort is then equal to the sum of the probabilities for all $(i,j)$ pairs that $x_i$ is compared to $x_j$.
+		\begin{IEEEeqnarray}{rCl}
+			Q(n) & = & \sum_{1\leq i < j \leq n} \frac{2}{j-i+1}\\
+			& = & \sum_{i=1}^n \sum_{j=i+1}^n \frac{2}{j-i+1}\\
+			& = & 2\sum_{i=1}^n\sum_{j=2}^{n-i+1} \frac{1}{j}\\
+			& = & 2 \sum_{i=1}^n (H_{n-i+1} - 1)\\
+			& = & 2\sum_{i=1}^n H_{n-i+1} - 2n\\
+			& = & 2\sum_{i=1}^n H_i - 2n
+		\end{IEEEeqnarray}
+		In the above, $H_i$ is the i-th harmonic number (harmonic sum with $n=i$). Substitute Euler's calculation for $H_n$.
+		\begin{IEEEeqnarray}{rCl}
+			Q(n) & = & 2\sum_{i=1}^n H_i - 2n\\
+			& \approx & 2\sum_{i=1}^n \left[\ln i + \gamma + \Theta\left(\frac{1}{i}\right)\right] - 2n\\
+			& = & 2\ln n! + 2(\gamma - 1)n + 2\sum_{i=1}^n \Theta\left(\frac{1}{i}\right)\\
+			& = & 2\ln n! + 2(\gamma - 1)n + \Theta(\ln n)\\
+		\end{IEEEeqnarray}
+		Use Stirling's formula to approximate $n!$:
+		\begin{IEEEeqnarray}{rCl}
+			Q(n) & = & 2\ln n! + 2(\gamma - 1)n + \Theta(\ln n)\\
+			& \approx & 2\ln \left[ \left(\frac{n}{e}\right)^n \sqrt{2\pi n} \right] + 2(\gamma - 1)n + \Theta(\ln n)\\
+			& = & 2n\ln n - 2n\ln e + \ln n + 2(\gamma - 1)n + \Theta(\ln n)\\
+			& = & 2n\ln n + 2(\gamma - 2)n + \Theta(\ln n)
+		\end{IEEEeqnarray}
+		
+		The high-order result is the exact same as with the inductive method, but the summation proof yields a few more lower-order terms that are ignored in the analysis anyways.
 	
 \section{Practical Improvements}
 	\begin{itemize}
-		\item Insertion sort cutoff around 10 elements.
-		\item Estimate true median as partition by taking median of a size 3 sample (median-of-3 method) for medium arrays.
+		\item Recurse on the smaller sub-array first to guarantee $O(\lg n)$ extra memory on the recursive stack.
+		\item Insertion or selection sort cutoff around 10 elements to avoid the extra overhead associated with recursive calls.
+		\item Estimate true median for partition by taking median of a size 3 sample (median-of-3 method) for medium arrays.
 		\item Tukey's ninther for large arrays: pick 9 items, and take the median of the medians.
+	\end{itemize}
+	
+\section{Why Quicksort?}
+	Consider the three major $O(n\lg n)$ sorts: Mergesort, Heapsort, and Quicksort. Quicksort is most often used in library sorting functions because of two reasons.
+	\begin{itemize}
+		\item In-place: Quicksort uses $O(\lg n)$ space on the stack for recursion, whereas the practical version of Mergesort is not an in-place algorithm.
+		\item Cache efficiency: with modern hardware, when one value is pulled into the cache, some of the values in the surrounding memory are usually pulled into the cache as well. Quicksort takes advantage of this \textbf{spatial locality}, while in Heapsort, the elements at the bottom levels are too far away from each other in the array representation.
 	\end{itemize}
 \end{document}
