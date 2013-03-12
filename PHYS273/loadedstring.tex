@@ -215,6 +215,29 @@ If each mass in the system is displaced vertically a random amount, the free-bod
 		\begin{equation}
 			y(t, x) = \sum_{n=1}^\infty c_n \sin\left( \frac{n\pi x}{L} \right)e^{i\omega_n t}
 		\end{equation}
+		
+	\subsection{Initial Conditions}
+		Take the following initial conditions:
+		\begin{IEEEeqnarray}{rCl}
+			y(x, t=0) & = & \sum_0^\infty a_n \sin\left( \frac{n\pi x}{L} \right)\\
+			\dot{y}(x, t=0) & = & \sum_0^\infty -\omega_n b_n \sin\left( \frac{n\pi x}{L} \right)
+		\end{IEEEeqnarray}
+		Remember that the normal mode eigenvectors are all orthogonal to each other. In the continuous case, when there are an infinite number of terms in the eigenvectors, the statement of orthogonality follows \textbf{Foiurier's Trick}, which states that
+		\begin{equation}
+			\int_0^L \sin\left( \frac{n\pi x}{L} \right) \sin\left( \frac{m\pi x}{L} \right) dx = \frac{L}{2}\delta_{nm}
+		\end{equation}
+		Note that this is simply the dot product of two normal mode eigenvectors generalized to an infinite number of terms.
+		
+		From this property, it is trivial to show that
+		\begin{equation}
+			\int_0^L \sin\left( \frac{n\pi x}{L} \right) y(x, t=0)dx = a_n \frac{L}{2}
+		\end{equation}
+		
+		Therefore, for any initial conditions $y(x, t=0)$ and $\dot{y}(x, t=0)$, the real and imaginary parts of the normal mode coefficients can be derived with
+		\begin{IEEEeqnarray}{rCl}
+			a_n & = & \frac{2}{L} \int_0^L \sin\left( \frac{n\pi x}{L} \right) y(x, t=0)dx\\
+			b_n & = & \frac{-2}{\omega_n L} \int_0^L \sin\left( \frac{n\pi x}{L} \right) \dot{y}(x, t=0)dx
+		\end{IEEEeqnarray}
 
 %	\begin{center}
 %	\begin{tikzpicture}
