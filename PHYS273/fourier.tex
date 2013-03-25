@@ -1,0 +1,93 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usepackage{circuitikz}
+\usetikzlibrary{intersections}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true,
+boxpos=t
+}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{General Fourier Series}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+	Fourier series are based on the fact that sines and cosines are orthogonal functions.
+	\begin{IEEEeqnarray}{rCl}
+		\int_{-L/2}^{L/2} \cos\left( \frac{n\pi x}{L} \right) \cos\left( \frac{m\pi x}{L} \right)dx & = & \frac{L}{2}\delta_{nm}\\
+		\int_{-L/2}^{L/2} \sin\left( \frac{n\pi x}{L} \right) \sin\left( \frac{m\pi x}{L} \right)dx & = & \frac{L}{2}\delta_{nm}
+	\end{IEEEeqnarray}
+	Note that this is basically a restatement of Fourier's Trick, which was applied to determine the expansion coefficients for the continuous loaded string. The general solution to the loaded string at initial conditions is an example of a \textbf{Fourier Sine Series} because the x-axis was defined $[0, L]$.
+	\begin{equation}
+		y(x, t=0) = \sum_{n=1}^\infty a_n \sin\left( \frac{n\pi x}{L} \right)
+	\end{equation}
+	
+	However, if the coordinate system is normalized so that $x$ is in the range $\left[ -\frac{L}{2}, \frac{L}{2} \right]$, the sine series will not work for most initial conditions because the function has to be odd. 
+	
+	In general, functions are composed of even and odd parts
+	\begin{equation}
+		f(x) = f_{odd}(x) + f_{even}(x)
+	\end{equation}
+	so that any periodic function $f(x)$ with period $2L$ can be represented by
+	\begin{equation}
+		f(x) = \sum_{n=1}^\infty \left[ a_n\cos\left( \frac{n\pi x}{L} \right) + b_n\sin\left( \frac{n\pi x}{L} \right) \right]
+	\end{equation}
+	
+	The above series only works for functions centered vertically on the x-axis, but by adding the average value of the function across one period, we get the \textbf{general Fourier series} for any function periodic with period $2L$ and square-integrable in the interval $(-L, L)$:
+	\begin{IEEEeqnarray}{rCl}
+		f(x) & = & \frac{1}{2}a_0 + \sum_{n=1}^\infty \left[ a_n\cos\left( \frac{n\pi x}{L} \right) + b_n\sin\left( \frac{n\pi x}{L} \right) \right]\\
+		a_n & = & \frac{1}{L}\int_{-L}^L f(x)\cos\left( \frac{n\pi x}{L} \right)dx\\
+		b_n & = & \frac{1}{L}\int_{-L}^L f(x)\sin\left( \frac{n\pi x}{L} \right)dx
+	\end{IEEEeqnarray}
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
