@@ -54,8 +54,8 @@
 	\end{equation}
 	Substitution gives
 	\begin{IEEEeqnarray}{rCl}
-		f(x) & = & \frac{1}{2}a_0 + \sum_{n=1}^\infty \frac{a_n}{2}e^{in\pi x/L} + \sum_{n=-1}^{-\infty} \frac{a_{-n}}{2}e^{in\pi x/L}\\\nonumber
-		&& + \sum_{n=1}^\infty -\frac{b_n}{2i}e^{in\pi x/L} + \sum_{n=1}^{-\infty} -\frac{b_{-n}}{2i}e^{in\pi x/L}
+		f(x) & = & \frac{1}{2}a_0 + \sum_{n=1}^\infty \frac{a_n}{2}e^{i(n\pi x/L)} + \sum_{n=-1}^{-\infty} \frac{a_{-n}}{2}e^{i(n\pi x/L)}\\\nonumber
+		&& + \sum_{n=1}^\infty -\frac{b_n}{2i}e^{i(n\pi x/L)} + \sum_{n=1}^{-\infty} -\frac{b_{-n}}{2i}e^{i(n\pi x/L)}
 	\end{IEEEeqnarray}
 	
 	Define a new constant $c_n$ that combines $a_n$ and $b_n$:
@@ -67,9 +67,10 @@
 		\end{cases}
 	\end{equation}
 	From which the final form of the series eventually follows:
-	\begin{equation}
-		f(x) = \sum_{n=-\infty}^\infty c_n e^{in\pi x / L}
-	\end{equation}
+	\begin{IEEEeqnarray}{rCl}
+		f(x) & = & \sum_{n=-\infty}^\infty c_n e^{i(n\pi x / L)}\\
+		c_n & = & \frac{1}{2L} \int_{-L}^L f(x)e^{-i(n\pi x/L)}dx
+	\end{IEEEeqnarray}
 	
 	To convert back into a general Fourier series:
 	\begin{IEEEeqnarray}{rCl}
