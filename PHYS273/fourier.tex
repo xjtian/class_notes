@@ -19,12 +19,6 @@
 		\int_{-L/2}^{L/2} \cos\left( \frac{n\pi x}{L} \right) \cos\left( \frac{m\pi x}{L} \right)dx & = & \frac{L}{2}\delta_{nm}\\
 		\int_{-L/2}^{L/2} \sin\left( \frac{n\pi x}{L} \right) \sin\left( \frac{m\pi x}{L} \right)dx & = & \frac{L}{2}\delta_{nm}
 	\end{IEEEeqnarray}
-	Note that this is basically a restatement of Fourier's Trick, which was applied to determine the expansion coefficients for the continuous loaded string. The general solution to the loaded string at initial conditions is an example of a \textbf{Fourier Sine Series} because the x-axis was defined $[0, L]$.
-	\begin{equation}
-		y(x, t=0) = \sum_{n=1}^\infty a_n \sin\left( \frac{n\pi x}{L} \right)
-	\end{equation}
-	
-	However, if the coordinate system is normalized so that $x$ is in the range $\left[ -\frac{L}{2}, \frac{L}{2} \right]$, the sine series will not work for most initial conditions because the function has to be odd. 
 	
 	In general, functions are composed of even and odd parts
 	\begin{equation}
@@ -34,6 +28,7 @@
 	\begin{equation}
 		f(x) = \sum_{n=1}^\infty \left[ a_n\cos\left( \frac{n\pi x}{L} \right) + b_n\sin\left( \frac{n\pi x}{L} \right) \right]
 	\end{equation}
+	because the sines completely represent the odd half of the decomposed function and the cosines represent the even part of the decomposed function.
 	
 	The above series only works for functions centered vertically on the x-axis, but by adding the average value of the function across one period, we get the \textbf{general Fourier series} for any function periodic with period $2L$ and square-integrable in the interval $(-L, L)$:
 	\begin{IEEEeqnarray}{rCl}
@@ -61,12 +56,12 @@
 	Define a new constant $c_n$ that combines $a_n$ and $b_n$:
 	\begin{equation}
 		c_n = \begin{cases}
-			n < 0: & \frac{1}{2}(a_{-n} + ib_n)\\
+			n < 0: & \frac{1}{2}(a_{-n} + ib_{-n})\\
 			n = 0: & \frac{1}{2}a_0\\
 			n > 0: & \frac{1}{2}(a_n - ib_n)
 		\end{cases}
 	\end{equation}
-	From which the final form of the series eventually follows:
+	From which the final form of the series eventually follows, again for any function periodic in $[-L, L]$ and square-integrable on the interval:
 	\begin{IEEEeqnarray}{rCl}
 		f(x) & = & \sum_{n=-\infty}^\infty c_n e^{i(n\pi x / L)}\\
 		c_n & = & \frac{1}{2L} \int_{-L}^L f(x)e^{-i(n\pi x/L)}dx
@@ -78,6 +73,8 @@
 		b_n & = & i(c_n - c_{-n})\\
 		a_0 & = & 2c_0
 	\end{IEEEeqnarray}
+	
+	\subparagraph{Complex Parts} Despite the presence of the complex exponential, the final sum is actually entirely real. This happens because for every $e^{in\pi x/L}$ there is a corresponding $e^{-in\pi x/L}$ term. Because $c_n$ is the complex conjugate of $c_{-n}$, the imaginary parts end up canceling out.
 
 %	\begin{center}
 %	\begin{tikzpicture}
