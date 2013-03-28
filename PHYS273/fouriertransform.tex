@@ -1,0 +1,74 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{fancyhdr}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Fourier Transform}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+	Fourier series can be used to represent non-periodic functions if $L$ is taken to $\infty$ - that is, represent a continuous function $f(x)$ as a periodic function with an infinite period.
+
+	First, let $\Delta n = 1$ as the amount $n$ changes per iteration.
+	\begin{IEEEeqnarray}{rCl}
+		f(x) & = & \sum_{n=-\infty}^\infty c_n e^{in\pi x/L}\\
+		& = & \sum_{n=-\infty}^\infty c_n e^{in\pi x/L} \Delta n\\
+		& = & \sum_{n=-\infty}^\infty \left(\frac{L}{\pi}\right) c_n e^{in\pi x/L} \left (\frac{\pi \Delta n}{L} \right)
+	\end{IEEEeqnarray}
+	Define $k = n\pi/L$, which leads obviously to $\Delta k = \pi \Delta n / L$. Also, define $A(k)$ as the following continuous function:
+	\begin{equation}
+		A(k) = \sqrt{2\pi} \left( \frac{Lc_n}{\pi} \right)
+	\end{equation}
+	Substitution gives
+	\begin{equation}
+		f(x) = \sum_{n=-\infty}^\infty \frac{A(k)}{\sqrt{2\pi}} e^{ikx} \Delta k
+	\end{equation}
+	Taking $\lim_{L\rightarrow \infty}$ gives the \textbf{Fourier Transformation} of $f(x)$:
+	\begin{equation}
+		f(x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty A(k)e^{ikx}dk
+	\end{equation}
+	
+	After the limit, $A(k)$ is a continuous function of expansion coefficients and $e^{ikx}$ is a continuous function of basis vectors. use \textbf{Planchere's Theorem} to determine $A(k)$.
+	\begin{IEEEeqnarray}{rCl}
+		c_n & = & \frac{1}{2L} \int_{-L}^L f(x)e^{-in\pi x/L} dx\\
+		c_n \left( \frac{L}{\pi} \right) \sqrt{2\pi} & = & \frac{\sqrt{2\pi}}{2\pi} \int_{-L}^L f(x)e^{-ikx} dx
+	\end{IEEEeqnarray}
+	Note that we defined $A(k) = \sqrt{2\pi}(Lc_n/\pi)$ in the first place, so substitute on the left hand side and take $\lim_{L\rightarrow \infty}$ to get the final result:
+	\begin{equation}
+		A(k) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty f(x) e^{-ikx} dx
+	\end{equation}
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
