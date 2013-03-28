@@ -1,0 +1,85 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{fancyhdr}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Eigenvalues and Eigenvectors}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Finding Eigenvalues and Eigenvectors}
+	For a matrix $A: \mathbb{R}^n \times \mathbb{R}^n$, there may exist up to $n$ different eigenvalues $\lambda$ and an infinite number of eigenvectors $\mathbf{v} \in \mathbb{R}^n$ such that
+	\begin{equation}
+		A\mathbf{v} = \lambda \mathbf{v}
+	\end{equation}
+	
+	For each eigenvalue $\lambda_k$, there is an associated subspace of eigenvectors:
+	\begin{equation}
+		T_{\lambda_k} = \{\mathbf{v} \in \mathbb{R}^n \mid A\mathbf{v} = \lambda_k \mathbf{v} \}
+	\end{equation}
+	If the sum of the dimensions of all of these subspaces is equal to the dimension of $A$, then $A$ can be \textbf{diagonalized}, meaning there exists an invertible matrix $U = \{\mathbf{v_1}, \mathbf{v_1}, \ldots, \mathbf{v_n}\}$ such that
+	\begin{equation}
+		U^{-1}AU = \Lambda
+	\end{equation}
+	where $\Lambda$ is a diagonal matrix with the eigenvalues corresponding to each eigenvector in $U$ along the diagonal.
+	
+	To find the eigenvalues of $A$:
+	\begin{IEEEeqnarray}{rCl}
+		A\mathbf{x} & = & \lambda \mathbf{x}\\
+		A\mathbf{x} & = & \lambda I \mathbf{x}\\
+		(A - \lambda I)\mathbf{x} & = & 0
+	\end{IEEEeqnarray}
+	This will yield a polynomial in $\lambda$. Solve for all possible values and substitute each eigenvalue back into the original equation one-by-one to determine the corresponding basis of eigenvectors.
+	
+\section{Solving Systems}
+	Given a system
+	\begin{equation}
+		\frac{d\mathbf{x}}{dt} = A\mathbf{x}
+	\end{equation}
+	we can extrapolate from the 1-dimensional case that the general solution will be a linear combination of particular solutions. Note that these matrix method is only valid if $\sum \text{dim}T_\lambda = n$.
+	
+	If the algebraic multiplicity of all eigenvalues is 1, then
+	\begin{equation}
+		\mathbf{x} = \sum_{k=1}^n c_ke^{\lambda_k t} \mathbf{v_k}
+	\end{equation}
+	
+	However, if there are eigenvalues with multiplicities greater than 1, then the general solution is
+	\begin{equation}
+		\mathbf{x} = \sum_{k=1}^n c_ke^{\lambda_i t} \mathbf{v_k}
+	\end{equation}
+	where $\lambda_i$ is the eigenvalue that corresponds to $\mathbf{v_k}$.
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
