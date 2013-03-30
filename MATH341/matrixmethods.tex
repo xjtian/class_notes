@@ -1,0 +1,145 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{fancyhdr}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Matrix Methods}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Eigenvalues and Eigenvectors}
+	For a matrix $A: \mathbb{R}^n \times \mathbb{R}^n$, there may exist up to $n$ different eigenvalues $\lambda$ and an infinite number of eigenvectors $\mathbf{v} \in \mathbb{R}^n$ such that
+	\begin{equation}
+		A\mathbf{v} = \lambda \mathbf{v}
+	\end{equation}
+	
+	For each eigenvalue $\lambda_k$, there is an associated subspace of eigenvectors:
+	\begin{equation}
+		T_{\lambda_k} = \{\mathbf{v} \in \mathbb{R}^n \mid A\mathbf{v} = \lambda_k \mathbf{v} \}
+	\end{equation}
+	If the sum of the dimensions of all of these subspaces is equal to the dimension of $A$, then $A$ can be \textbf{diagonalized}, meaning there exists an invertible matrix $U = \{\mathbf{v_1}, \mathbf{v_1}, \ldots, \mathbf{v_n}\}$ such that
+	\begin{equation}
+		U^{-1}AU = \Lambda
+	\end{equation}
+	where $\Lambda$ is a diagonal matrix with the eigenvalues corresponding to each eigenvector in $U$ along the diagonal.
+	
+	To find the eigenvalues of $A$:
+	\begin{IEEEeqnarray}{rCl}
+		A\mathbf{x} & = & \lambda \mathbf{x}\\
+		A\mathbf{x} & = & \lambda I \mathbf{x}\\
+		(A - \lambda I)\mathbf{x} & = & 0\\
+		det(A - \lambda I) & = & 0
+	\end{IEEEeqnarray}
+	This will yield a polynomial in $\lambda$. Solve for all possible values and substitute each eigenvalue back into the original equation one-by-one to determine the corresponding basis of eigenvectors.
+	
+	If the algebraic multiplicity of all eigenvalues is 1, then
+	\begin{equation}
+		\mathbf{x} = \sum_{k=1}^n c_ke^{\lambda_k t} \mathbf{v_k}
+	\end{equation}
+	
+	However, if there are eigenvalues with multiplicities greater than 1, then the general solution is
+	\begin{equation}
+		\mathbf{x} = \sum_{k=1}^n c_ke^{\lambda_i t} \mathbf{v_k}
+	\end{equation}
+	where $\lambda_i$ is the eigenvalue that corresponds to $\mathbf{v_k}$.
+	
+\section{Matrix Exponentials}
+	The series expansion of $e^x$ can be extrapolated for matrix exponentials with square matrices. For any square matrix $A: \mathbb{R}^n \times \mathbb{R}^n$,
+	\begin{equation}
+		e^A = \sum_{k=0}^\infty \frac{1}{k!}A^k
+	\end{equation}
+	If there is a time evolution in the exponential,
+	\begin{equation}
+		e^{tA} = \sum_{k=0}^\infty \frac{t^k}{k!}A^k
+	\end{equation}
+	This summation satisfies the following 3 properties:
+	\begin{enumerate}
+		\item For any scalars $t$ and $s$,
+			\begin{equation}
+				e^{(t+s)A} = e^{tA}e^{sA} = e^{sA}e^{tA}
+			\end{equation}
+		\item $e^{tA}$ is invertible, and
+			\begin{equation}
+				e^{tA}e^{-tA} = e^{-tA}e^{tA} = I
+			\end{equation}
+		\item
+			\begin{equation}
+				\frac{d}{dt}e^{tA} = Ae^{tA} = e^{tA}A
+			\end{equation}
+	\end{enumerate}
+	
+	\subparagraph{Solving Systems} Analogous to the 1-dimensional case, the solution to an IVP $\dot{\mathbf{x}} = A\mathbf{x}$ for $\mathbf{x}(t_0) = \mathbf{x_0}$ is
+	\begin{equation}
+		\mathbf{x}(t) = e^{(t - t_0)A}\mathbf{x_0}
+	\end{equation}
+	
+	\subparagraph{Relationship to Eigenvectors} For the eigenvector matrix of $A$, $U = (\mathbf{u_1}, \mathbf{u_2}, \ldots ,\mathbf{u_n})$ and the diagonal matrix
+	\begin{equation}
+		\Lambda_t = \begin{pmatrix}
+			e^{\lambda_1 t} & \ldots & 0\\
+			\vdots & \ddots & \vdots\\
+			0 & \ldots & e^{\lambda_n t}
+		\end{pmatrix}
+	\end{equation}
+	the solution to an IVP system is
+	\begin{equation}
+		\mathbf{x}(t) = U\Lambda_t U^{-1}\mathbf{x_0}
+	\end{equation}
+	Because there can only exist one solution satisfying one set of initial conditions, it follows that
+	\begin{equation}
+		e^{tA} = U\Lambda_t U^{-1}
+	\end{equation}
+
+	\subsection{Computing $e^{tA}$}
+		An $n\times n$ exponential matrix always reduces to a polynomial:
+		\begin{equation}
+			P(A) = e^{tA} = \sum_{j=0}^{n-1} b_j(t)A^j
+		\end{equation}
+		where the coefficient functions $b(t)$ contain the eigenvalues of $A$ explicitly. These coefficient functions satisfy the equation
+		\begin{equation}
+			e^{t\lambda_k} = \sum_{j=0}^{n-1} b_j(t)\lambda_k^j
+		\end{equation}
+		If some eigenvalues have multiplicity $m>1$, then the additional properties also hold:
+		\begin{equation}
+			\frac{d^p}{d\lambda_k^p}e^{t\lambda} = \frac{d^p}{d\lambda_k^p} \sum_{j=0}^{n-1} b_j(t)\lambda_k^j, \quad p = 1, \ldots, m-1
+		\end{equation}
+		
+		\subparagraph{Cayley-Hamilton Theorem} If $A$ is an $n\times n$ matrix with characteristic polynomial $P(\lambda)$, then A satisfies its own characteristic equation.
+		\begin{equation}
+			P(\lambda) = \det(A - \lambda I) \rightarrow P(A) = 0
+		\end{equation}
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
