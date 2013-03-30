@@ -2,6 +2,8 @@
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage[retainorgcmds]{IEEEtrantools}
 
+\usepackage{tikz}
+
 \usepackage{fancyhdr}
 
 %Format stuff
@@ -14,40 +16,51 @@
 \rhead{}
 
 \begin{document}
-\section{Introduction}
-
-	\begin{description}
-		\item[Computational complexity.] Framework to study efficiency of algorithms for solving a particular problem.
-		\item[Model of computation.] Allowable operations.
-		\item[Cost model.] Operation count(s).
-		\item[Upper bound.] Cost guarantee provided by some algorithm.
-		\item[Lower bound.] Proven limit on cost guarantee of all algorithms.
-		\item[Optimal algorithm.] Algorithm with best possible cost guarantee.
-	\end{description}
+	Every comparison-based sort has a corresponding decision tree. Consider the following decision tree for an arbitrary sorting algorithm to sort a 3-element list \verb|[A, B, C]|.
 	
-	Sorting:
-	\begin{itemize}
-		\item Model of computation: decision tree (can access information only through compares)
-		\item Cost model: number of comparisons
-		\item Upper bound: $N\log N$ from mergesort
-		\item Lower bound: $N\log N$
-	\end{itemize}
+	\begin{center}
+	\begin{tikzpicture}
+		[scale=1,line cap=round,
+		%Styles
+		axes/.style=,
+		important line/.style={very thick},
+		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1},
+		->,>=stealth
+		]
+		
+		%Colors
+		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+		
+		%The graphic
+		
+		\node {A:B}
+			child{ node{A:C}
+				child{ node{B:C} 
+					child{ node{[ABC]}  }
+					child{ node{[ACB]}}
+				}
+				child{ node{[CAB]} }
+			}
+			child[missing]
+			child{ node{A:C}
+				child{ node{[BAC]} }
+				child{ node{B:C}
+					child{ node{[BCA]} }
+					child{ node{[CBA]} }
+				}
+			};
+	\end{tikzpicture}
+	\end{center}
+	At every point in the tree, a comparison-based sort by definition will compare 2 elements. The leaves in the tree are all possible orderings for the list. For a decision tree to represent all permutations of the array, there need to be $n!$ number of leaves. For a binary decision tree there is an upper bound on the number of leaves possible:
+	\begin{equation}
+		L \leq 2^H
+	\end{equation}
 	
-	\subsection{Proving Lower Bound}
-		
-		\textbf{Proposition:} any compare-based sorting algorithm use at least $\log (N!) \approx N\log N$ compares in the worst case.
-		\begin{itemize}
-			\item Assume array consists of $N$ distinct values $a_1$ through $a_n$.
-			\item Worst case dictated by height $h$ of decision tree.
-			\item Binary tree of height $h$ has at most $2^h$ leaves.
-			\item $N!$ different orderings $\rightarrow$ at least $N!$ leaves.
-		\end{itemize}
-		
-		\begin{IEEEeqnarray}{rCl}
-				2^h & \geq & \# leaves \geq N! \\
-				h & \geq&  \log (N!) \approx N\log N
-			\end{IEEEeqnarray}
-		
-%		\def\enotesize{\normalsize}
-%		\theendnotes
+	Substituting $L = n!$ into the above inequality and using Stirling's Formula to expand the factorial gives
+	\begin{equation}
+		H \geq n\lg n + O(n)
+	\end{equation}
+	
+	Because the height of the tree is the number of comparisons done, the optimal (lower-bound) number of comparisons for a comparison-based sort is $\Theta(n\lg n)$.
 \end{document}
