@@ -30,7 +30,7 @@
 	\begin{equation}
 		f(x) = \sum_{n=-\infty}^\infty \frac{A(k)}{\sqrt{2\pi}} e^{ikx} \Delta k
 	\end{equation}
-	Taking $\lim_{L\rightarrow \infty}$ gives the \textbf{Fourier Transformation} of $f(x)$:
+	Taking $\lim_{L\rightarrow \infty}$ gives the \textbf{reverse Fourier Transformation} of $f(x)$:
 	\begin{equation}
 		f(x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty A(k)e^{ikx}dk
 	\end{equation}
@@ -40,7 +40,7 @@
 		c_n & = & \frac{1}{2L} \int_{-L}^L f(x)e^{-in\pi x/L} dx\\
 		c_n \left( \frac{L}{\pi} \right) \sqrt{2\pi} & = & \frac{\sqrt{2\pi}}{2\pi} \int_{-L}^L f(x)e^{-ikx} dx
 	\end{IEEEeqnarray}
-	Note that we defined $A(k) = \sqrt{2\pi}(Lc_n/\pi)$ in the first place, so substitute on the left hand side and take $\lim_{L\rightarrow \infty}$ to get the final result:
+	Note that we defined $A(k) = \sqrt{2\pi}(Lc_n/\pi)$ in the first place, so substitute on the left hand side and take $\lim_{L\rightarrow \infty}$ to get the \textbf{forward Fourier Transform} of $f(x)$:
 	\begin{equation}
 		A(k) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty f(x) e^{-ikx} dx
 	\end{equation}
