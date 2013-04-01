@@ -1,8 +1,8 @@
 \documentclass[11pt]{article}
 \usepackage{amsmath, amssymb}
+\usepackage[retainorgcmds]{IEEEtrantools}
 
 \usepackage{fancyhdr}
-\pagenumbering{gobble}
 
 \usepackage{listings}
 \usepackage{lstautogobble}
@@ -19,11 +19,7 @@ numberstyle=\tiny\color{gray},
 stepnumber=2
 }
 
-%Properly formatted differential 'd'
-\newcommand{\ud}{\, \mathrm{d}}
-
 %Format stuff
-%\reversemarginpar
 \pagestyle{fancy}
 \headheight 35pt
 
@@ -40,45 +36,35 @@ stepnumber=2
 	\end{itemize}
 	
 	\textbf{Approach:}
-	\begin{lstlisting}
-		Split array in half
-		Recursively sort halves
-		Merge halves and return
+	\begin{lstlisting}[autogobble=true]
+		def MergeSort(A, p, r):
+			if p < r:
+				q = (p+r)/2
+				MergeSort(A, p, q)
+				MergeSort(A, q+1, r)
+				merge(A, p, q, r)
+				
+		def Merge(A, p, q, r)
+			C = [0] * (r - p + 1)
+			i, j, k = p, q, 1
+			
+			while i < q and j <= r:
+				if A[i] < A[j]:
+					C[k++] = A[i++]
+				else
+					C[k++] = A[j++]
+			Append leftovers and copy C -> A
 	\end{lstlisting}
+		
+\section{Analysis}
+	For the merge subroutine, the best-case number of comparisons for this version is $n$, and the worst case is $2n - 1$ when given two lists of size $n$ to merge. There can be some practical improvements made, such as using a binary search when one side to merge has size 1, but the worst case for \textbf{any} merge algorithm will always be $2n-1$ because there will always exist at least 1 case such that the algorithm must iterate through all elements to determine the ordering.
 	
-	\textbf{Merge Subprocedure:}
-	\begin{lstlisting}
-		C = output array [n]
-		A = left array [n/2]
-		B = right array [n/2]
-		
-		i = counter for A
-		j = counter for B
-		
-		while i and j are both inside:
-			Put the smallest element in C
-			Increment counter of array that element is from
-		Append leftover elements in each array
-	\end{lstlisting}
-		
-\section{Runtime}
-	\begin{itemize}
-		\itemsep=-2pt
-		\item Merge: $O(n)$
-		\item Mergesort: $O(n\log_2 n)$
-	\end{itemize}
+	At each level of the algorithm, the merge subroutine merges two lists of size $n/2$ each, so the work done at each level of the recurrence is $n - 1$. Because there are $\lg n$ levels in the recursive, tree, the number of comparisons is $\Theta(n\lg n)$.
 	
-	\subsection{Analysis}
-		\begin{itemize}
-			\item Maximum number of levels is $\log_2 n$
-			\item At any level $j$, there are $2^j$ subproblems
-			\item At each level $j$, the size of the subproblem is $\dfrac{n}{2^j}$
-			\item The work at level $j$ is:
-				\begin{equation}
-				2^j \times \frac{n}{2^j} = n
-				\end{equation}
-			\item $Work = Levels * work/level = n \cdot \log_2 n$
-		\end{itemize}
+	\begin{IEEEeqnarray}{rCl}
+		\sum_{i=0}^{\lg n} 2^i \left(\frac{n}{2^i} - 1\right) & = & \sum_{i=0}^{\lg n - 1} (n - 2^i)\\
+		& = & n\lg n - n + 1
+	\end{IEEEeqnarray}
 		
 \section{Practical Improvements}
 

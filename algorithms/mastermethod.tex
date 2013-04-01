@@ -46,86 +46,46 @@
 	Note: In case 1, the base of the logarithm doesn't matter because the difference is a constant factor.
 	
 \section{Proof}
-	\subsection{Exact Analysis}
-		Given the following recurrence:
-		\begin{IEEEeqnarray}{rCl}
-			T(n) & = & aT\left(\frac{n}{b}\right) + cn^d\\
-			T(1) & = & f
-		\end{IEEEeqnarray}
-		expanding it out a few iterations for $T(n)$ reveals the pattern.
-		
-		\begin{IEEEeqnarray}{rCl}
-			T(n) & = & aT\left(\frac{n}{b}\right) + cn^d\\
-			& = & a\left[aT\left(\frac{n}{b^2}\right) + c\left(\frac{n}{b}\right)^d\right] + cn^d\\
-			& = & a\left[a\left[aT\left(\frac{n}{b^3}\right) + c\left(\frac{n}{b^2}\right)^d\right] + c\left(\frac{n}{b}\right)^d \right] + cn^d\\
-			& = & a^3T\left(\frac{n}{b^3}\right) + a^2c\left(\frac{n}{b^2}\right)^d + cn^d
-		\end{IEEEeqnarray}
-		
-		Let $k = \log_b n$ be the number of iterations in the recurrence before $T$ reaches its base case.
-		
-		\begin{IEEEeqnarray}{rCl}
-			T(n) & = & a^k f + \sum_{i=0}^{k-1} a^i c \left(\frac{n}{b^i}\right)^d\\
-			& = & a^k f + cn^d \sum_{i=0}^{k-1} \frac{a^i}{b^{i^d}}\\
-			& = & a^k f + cn^d \sum_{i=0}^{k-1} \left(\frac{a}{b^d}\right)^i\\
-			& = & a^k f + cn^d \left(\frac{\displaystyle \left(\frac{a}{b^d}\right)^k - 1}{\displaystyle \frac{a}{b^d} - 1}\right)\\
-			& = & n^{\log_b a}f + cn^d\left(\frac{\displaystyle \frac{a^{\log_b n}}{n^d} - 1}{\displaystyle \frac{a}{b^d} - 1}\right)\\
-			& = & n^{\log_b a}f + \frac{\displaystyle ca^{\log_b n} - cn^d}{\displaystyle \frac{a}{b^d} - 1}\\
-			T(n) & = & \left( \frac{\displaystyle c}{\displaystyle \frac{a}{b^d} - 1} + f \right)n^{\log_b a} - \frac{\displaystyle cn^d}{\displaystyle \frac{a}{b^d} - 1}
-		\end{IEEEeqnarray}
-		
-		Note that the geometric sum formula is not valid when $a/b^d = 1$ so the final formula doesn't work for that case, but it is a special case that makes the original summation trivial to solve. The full definition of the Master Theorem, accounting for all 3 possible cases, is as follows:
-		
-		\begin{equation}
-			T(n) = \left\lbrace
+	Given the following recurrence:
+	\begin{IEEEeqnarray}{rCl}
+		T(n) & = & aT\left(\frac{n}{b}\right) + cn^d\\
+		T(1) & = & f
+	\end{IEEEeqnarray}
+	expanding it out a few iterations for $T(n)$ reveals the pattern.
+	
+	\begin{IEEEeqnarray}{rCl}
+		T(n) & = & aT\left(\frac{n}{b}\right) + cn^d\\
+		& = & a\left[aT\left(\frac{n}{b^2}\right) + c\left(\frac{n}{b}\right)^d\right] + cn^d\\
+		& = & a\left[a\left[aT\left(\frac{n}{b^3}\right) + c\left(\frac{n}{b^2}\right)^d\right] + c\left(\frac{n}{b}\right)^d \right] + cn^d\\
+		& = & a^3T\left(\frac{n}{b^3}\right) + a^2c\left(\frac{n}{b^2}\right)^d + cn^d
+	\end{IEEEeqnarray}
+	
+	Let $k = \log_b n$ be the number of iterations in the recurrence before $T$ reaches its base case.
+	
+	\begin{IEEEeqnarray}{rCl}
+		T(n) & = & a^k f + \sum_{i=0}^{k-1} a^i c \left(\frac{n}{b^i}\right)^d\\
+		& = & a^k f + cn^d \sum_{i=0}^{k-1} \frac{a^i}{b^{i^d}}\\
+		& = & a^k f + cn^d \sum_{i=0}^{k-1} \left(\frac{a}{b^d}\right)^i\\
+		& = & a^k f + cn^d \left(\frac{\displaystyle \left(\frac{a}{b^d}\right)^k - 1}{\displaystyle \frac{a}{b^d} - 1}\right)\\
+		& = & n^{\log_b a}f + cn^d\left(\frac{\displaystyle \frac{a^{\log_b n}}{n^d} - 1}{\displaystyle \frac{a}{b^d} - 1}\right)\\
+		& = & n^{\log_b a}f + \frac{\displaystyle ca^{\log_b n} - cn^d}{\displaystyle \frac{a}{b^d} - 1}\\
+		T(n) & = & \left( \frac{\displaystyle c}{\displaystyle \frac{a}{b^d} - 1} + f \right)n^{\log_b a} - \frac{\displaystyle cn^d}{\displaystyle \frac{a}{b^d} - 1}
+	\end{IEEEeqnarray}
+	
+	Note that the geometric sum formula is not valid when $a/b^d = 1$ so the final formula doesn't work for that case, but it is a special case that makes the original summation trivial to solve. The full definition of the Master Theorem, accounting for all 3 possible cases, is as follows:
+	
+	\begin{equation}
+		T(n) = \left\lbrace
+		\begin{array}{ll}
+			\left( f + \frac{\displaystyle c}{\displaystyle ab^{-d} - 1}\right) n^{\log_b a} - \frac{\displaystyle cn^d}{\displaystyle ab^{-d} - 1} = & \left\lbrace
 			\begin{array}{ll}
-				\left( f + \frac{\displaystyle c}{\displaystyle ab^{-d} - 1}\right) n^{\log_b a} - \frac{\displaystyle cn^d}{\displaystyle ab^{-d} - 1} = & \left\lbrace
-				\begin{array}{ll}
-					\Theta(n^{\log_b a}) & a > b^d\\
-					\Theta(n^d) & a < b^d
-				\end{array}\right.
-				\\
-				n^d(f + c\log_b n) = \Theta(n^d \log_b n) & a = b^d
+				\Theta(n^{\log_b a}) & a > b^d\\
+				\Theta(n^d) & a < b^d
 			\end{array}\right.
-		\end{equation}
-		
-		\subparagraph{Superposition} If the work done in each recursive call isn't perfectly modeled by $cn^d$ because there are extra terms, use the theorem on each part of the recurrence letting $f=0$, add the solutions together, and then finally add $fn^{\log_b a}$.
-		
-	\subsection{Inexact Analysis}
-		Assume the following:
-		\begin{enumerate}
-			\item $T(1)\leq c$
-			\item $T(n)\leq aT\left(\dfrac{n}{b}\right) + cn^d$
-		\end{enumerate}
-		
-		On the recursion tree, at any level $j$, there are $a^j$ subproblems of $\dfrac{n}{b^j}$ size each ($j\leq log_b n$). The total work done at each level is the product of the number of subproblems and the amount of work done in each subproblem.
-		\begin{equation}
-			T(j)\leq a^j\cdot c\cdot\left[\frac{n}{b^j}\right]^d = cn^d\cdot\left[\frac{a}{b^d}\right]^j
-		\end{equation}
-		
-		The total work then is the sum of the work done at each level $j$ in the recursion tree:
-		\begin{equation}
-			T(n)\leq cn^d\cdot \sum_{j=0}^{\log_b n}\left[\frac{a}{b^d}\right]^j
-		\end{equation}
-		
-		The ratio of $a$ to $b^d$ determines the final result of $T(n)$. There exist three cases:
-		
-		\begin{enumerate}
-			\item
-				\[a=b^d, \frac{a}{b^d} = 1\]
-				\begin{equation}
-					T(n) \approx cn^d\cdot\log_b n
-				\end{equation}
-			\item
-				\[a<b^d, \frac{a}{b^d}<1\]
-				\[\sum_{j=0}^{\log_b n}\left[\frac{a}{b^n}\right]^j \leq \text{constant}\]
-				\begin{equation}
-					T(n) \approx cn^d
-				\end{equation}
-			\item
-				\[a>b^d, \frac{a}{b^d} > 1\]
-				\[\sum_{j=0}^{\log_b n}\left[\frac{a}{b^n}\right]^j \leq \frac{r^k+1 -1}{r-1} = r^k\left(1 + \frac{1}{r-1}\right)\]
-				\begin{equation}
-					T(n)=O\left(n^d\cdot\left[\frac{a}{b^n}\right]^{\log_b n}\right) = O(n^{\log_b a})
-				\end{equation}
-		\end{enumerate}
+			\\
+			n^d(f + c\log_b n) = \Theta(n^d \log_b n) & a = b^d
+		\end{array}\right.
+	\end{equation}
+	
+	\subparagraph{Superposition} If the work done in each recursive call isn't perfectly modeled by $cn^d$ because there are extra terms, use the theorem on each part of the recurrence letting $f=0$, add the solutions together, and then finally add $fn^{\log_b a}$.
 \end{document}
