@@ -1,0 +1,113 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usepackage{circuitikz}
+\usetikzlibrary{intersections}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true,
+boxpos=t
+}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Traveling Waves}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+Rewrite the normal modes of the loaded string, taking only the real parts:
+\begin{IEEEeqnarray}{rCl}
+	y_n(x, t) & = & A_n\sin\left( \frac{n\pi x}{L} \right) e^{i\omega_n t}\\
+	& = & A_n\sin\left( \frac{n\pi x}{L} \right) \cos(\omega_n t)\\
+	& = & \frac{A_n}{2}\left[ \sin\left(\frac{n\pi}{L}x - \omega_n t \right) + \sin\left( \frac{n\pi}{L} x + \omega_n t \right) \right]
+\end{IEEEeqnarray}
+Introduce $k = n\pi / L$, called the \textbf{wave number}, and substitute the actual value for $\omega_n$:
+\begin{equation}
+	y_n(x, t) = \frac{A_n}{2} \left[ \sin\left( k\left( x - \sqrt{\frac{T}{\mu}} t \right) \right) + \sin\left( k\left( x + \sqrt{\frac{T}{\mu}} t \right) \right) \right]
+\end{equation}
+
+Each of the above sine functions is known as a \textbf{traveling wave}. At any moment in time, each looks like a perfect sine wave, but as time goes forward, the wave moves to the right or left.
+
+To follow the wave as it moves forward, hold the phase constant.
+\begin{IEEEeqnarray}{rCl}
+	\Delta (phase) = 0 & = & k\left( \Delta x - \sqrt{\frac{T}{\mu}} \Delta t\right)\\
+	\frac{dx}{dt} & = & \sqrt{\frac{T}{\mu}} = v_p
+\end{IEEEeqnarray}
+This velocity is called the \textbf{phase velocity}, and with this expression the normal mode solution is
+\begin{equation}
+	y_n(x, t) = \frac{A_n}{2} [ \sin((k(x - v_p t)) + \sin(k(x+v_p t)) ]
+\end{equation}
+Substituting any one of the traveling wave equations into the classical wave equation gives
+\begin{equation}
+	\frac{\partial^2 y}{\partial x^2} = \frac{1}{v_p^2} \frac{\partial^2 y}{\partial t^2}
+\end{equation}
+While the traveling wave fits the classical wave equation, it cannot be written as a linear combination of typical normal modes because the normal modes for the loaded string are written for boundary conditions that the traveling wave does not meet.
+
+However, for an infinitely long loaded string with no boundary, an acceptable solution is the traveling wave
+\begin{equation}
+	y(x, t) = A\sin(kx - \omega t)
+\end{equation}
+where $\omega = kv$. Note for this solution, $\lambda = 2\pi / k$.
+
+For a fixed string, due to the boundary conditions, $k$ can only be a discrete set $n\pi /L$. This means that $\omega$ must also be discrete. In other words, the boundary conditions pick out a discrete set of $k$ and $\omega$ values which are allowed.
+\begin{equation}
+	\omega_n = k_n v_p = \left( \frac{n\pi}{L} \right)v_p
+\end{equation}
+
+Without boundary conditions, any value of $k$ is allowed so long as $\omega = v_p k$. In this case, the general solution is no longer a discrete sum, but a reverse Fourier Transform.
+\begin{equation}
+	y(x, t) = \frac{1}{\sqrt{2\pi}} \left[ \int_{-\infty}^{\infty} A(k) e^{ikx} dk \right]e^{i\omega t}
+\end{equation}
+or
+\begin{equation}
+	y(x, t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty A(k)e^{i(kx + \omega t)}dk
+\end{equation}
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
