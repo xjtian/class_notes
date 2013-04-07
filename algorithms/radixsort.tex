@@ -57,11 +57,18 @@ Guess $r \stackrel{?}{=} n$, which gives an inconsistent result
 \begin{equation}
 	r = \frac{n}{\ln n - 1}
 \end{equation}
-Substituting this value for $r$ yields
+Substituting this value for $r$ and evaluating again yields
 \begin{equation}
 	r = \frac{n}{\ln n - \ln\ln n - 1}
 \end{equation}
-The trend continues and results in an infinite series getting closer to $n$, so for all practical purposes we can say $n / (\ln n - 1) \approx n$ and pick $r = n$ for the radix to sort by.
+The trend continues, and because $\ln\ln n$ is almost negligible, it's enough to say that the best radix to pick for the sort is
+\begin{equation}
+	r = \frac{n}{\ln n - 1}
+\end{equation}
+
+Note that in practice, it's often best to pick a radix that is a power of 2 to take advantage of hardware. If a power of 2 is close to $n/(\ln n - 1)$, then it's the best base to pick.
+
+
 %	\begin{center}
 %	\begin{tikzpicture}
 %		[scale=3,line cap=round,
