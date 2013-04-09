@@ -1,0 +1,75 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usepackage{circuitikz}
+\usetikzlibrary{intersections}
+
+\usepackage{fancyhdr}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Dispersion}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+For a perfect traveling wave with period $T$ and wavelength $\lambda$, remember that
+\begin{equation}
+	v_p = \frac{\lambda}{T} = \frac{\omega}{k}
+\end{equation}
+The traveling wave satisfies the classical wave equation, which means that the ratio between $\omega$ and $k$, or $v_p$, is constant, or $\omega$ is directly proportional to $k$.
+	\begin{IEEEeqnarray}{rCl}
+		\frac{\partial^2 y}{\partial x^2} & = & \alpha \frac{\partial^2 y}{\partial t^2}\\
+		\frac{\omega}{k} & = & \frac{1}{\sqrt{\alpha}}
+	\end{IEEEeqnarray}
+	
+	Recall the general solution to a traveling wave system:
+	\begin{equation}
+		y(x, t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty A(k)e^{ikx}e^{-i\omega t}dk
+	\end{equation}
+For the perfect traveling wave, $\omega(k) = v_p k$ where $v_p$ is a fixed value, so
+	\begin{equation}
+		y(x, t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty A(k)e^{ik(x-v_p t)}dk
+	\end{equation}
+In this case, the shape of the original pulse, represented by the Fourier transform $A(k)$, translates across the medium while maintaining its shape because as $t$ changes, every wave number undergoes the same phase change, $v_p \Delta t$.
+
+	For a general $\omega(k)$ for a combination of multiple traveling waves, the general form of the solution is
+	\begin{equation}
+		y(x, t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty A(k)e^{ik(x-(\omega(k)/k) t)}dk
+	\end{equation}
+	
+	The $\omega(k)$ time factor is called the \textbf{dispersion relation}. If $\omega(k)$ is directly proportional to $k$, then there is no dispersion in the wave. If $omega(k)$ is lower for higher wave numbers, then the wave undergoes \textbf{normal dispersion}. If $omega(k)$ is high for higher wave numbers, then the wave undergoes \textbf{anomalous dispersion}.
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
