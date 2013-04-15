@@ -19,32 +19,59 @@
 \rhead{}
 
 \begin{document}
-For a perfect traveling wave with period $T$ and wavelength $\lambda$, remember that
-\begin{equation}
-	v_p = \frac{\lambda}{T} = \frac{\omega}{k}
-\end{equation}
-The traveling wave satisfies the classical wave equation, which means that the ratio between $\omega$ and $k$, or $v_p$, is constant, or $\omega$ is directly proportional to $k$.
+\section{General Dispersion}
+A perfect traveling wave satisfies the classical wave equation, which means that the ratio between $\omega$ and $k$, or $v_p$, is constant:
 	\begin{IEEEeqnarray}{rCl}
 		\frac{\partial^2 y}{\partial x^2} & = & \alpha \frac{\partial^2 y}{\partial t^2}\\
 		\frac{\omega}{k} & = & \frac{1}{\sqrt{\alpha}}
 	\end{IEEEeqnarray}
 	
-	Recall the general solution to a traveling wave system:
-	\begin{equation}
-		y(x, t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty A(k)e^{ikx}e^{-i\omega t}dk
-	\end{equation}
-For the perfect traveling wave, $\omega(k) = v_p k$ where $v_p$ is a fixed value, so
+For the perfect traveling wave, $\omega(k) = v_p k$ where $v_p$ is a fixed value, so the general solution to the system can be expressed as
 	\begin{equation}
 		y(x, t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty A(k)e^{ik(x-v_p t)}dk
 	\end{equation}
-In this case, the shape of the original pulse, represented by the Fourier transform $A(k)$, translates across the medium while maintaining its shape because as $t$ changes, every wave number undergoes the same phase change, $v_p \Delta t$.
+In this case, the shape of the original pulse, represented by the Fourier transform $A(k)$, translates across the medium while maintaining its shape because as $t$ changes, every wave number undergoes the same phase change, $kv_p = \omega$.
 
 	For a general $\omega(k)$ for a combination of multiple traveling waves, the general form of the solution is
 	\begin{equation}
 		y(x, t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty A(k)e^{ik(x-(\omega(k)/k) t)}dk
 	\end{equation}
 	
-	The $\omega(k)$ time factor is called the \textbf{dispersion relation}. If $\omega(k)$ is directly proportional to $k$, then there is no dispersion in the wave. If $omega(k)$ is lower for higher wave numbers, then the wave undergoes \textbf{normal dispersion}. If $omega(k)$ is high for higher wave numbers, then the wave undergoes \textbf{anomalous dispersion}.
+	The $\omega(k)$ time factor is called the \textbf{dispersion relation}. Remeber that for a given wave number $k$, $v_p = \omega/k$. If $v_p$ is constant for all wave numbers, then there is no dispersion in the wave. If $v_p$ is lower for higher wave numbers, then the wave undergoes \textbf{normal dispersion}. If $v_p$ is high for higher wave numbers, then the wave undergoes \textbf{anomalous dispersion}.
+	
+\section{Information Transmission}
+	In a dispersive medium, it's possible to make a pulse propagate forever by multiplying it by a perfect, high frequency traveling wave called a \textbf{carrier wave}. The actual transmission is initiated by some pulse $f(x)$ modeled by a Fourier transform. $z(x)$, the initial pulse, is then
+	\begin{equation}
+		z(x) = f(x)e^{ik_c x}
+	\end{equation}
+	Substituting the Fourier transform in:
+	\begin{equation}
+		z(x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty F(k)e^{i(k + k_c)x}dk
+	\end{equation}
+	Let $k' = k+k_c$, then rename $k'$ to $k$ because the substitution eliminates $k$. Then evolve $z(x)$ in time:
+	\begin{equation}
+		z(x, t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty F(k - k_c) e^{ik(x - (\omega(k)/k)t)}dk
+	\end{equation}
+	
+	If we make the basic assumption that $\omega(k)$ is linear in $k$ and introduce the constant $v_g$, called \textbf{group velocity},
+	\begin{equation}
+		\omega(k) = \omega_c + (k - k_c) \left.\frac{\partial \omega}{\partial k}\right|_{k_c} = \omega_c + (k - k_c)v_g
+	\end{equation}
+	\begin{IEEEeqnarray}{rCl}
+		z(x, t) & = & \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty dk \cdot F(k-k_c)e^{\displaystyle ik \left(x - (\frac{\omega_c}{k} + v_g - \frac{k_c v_g}{k}) \right)t}\\
+		& = & \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty dk \cdot F(k-k_c) e^{ikx}e^{-i\omega_c t} e^{-ikv_g t} e^{ik_c v_g t}
+	\end{IEEEeqnarray}
+	
+	Introduce $k'' = k - k_c$ so that $k = k'' + k_c$, which gives
+	\begin{equation}
+		z(x, t) = e^{i(k_c x - \omega_c t)} \left( \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty dk'' \cdot F(k'')e^{ik''(x - v_g t)} \right)
+	\end{equation}
+	Note that the expression in parentheses is the Fourier transform of $f(x - v_g t)$, which gives the final wave expression for the initial pulse $f(x)$ multiplied by the carrier wave with frequency $\omega_c$ and wave number $k_c$:
+	\begin{equation}
+		z(x, t) = f(x - v_g t)e^{i(k_c x - \omega_c t)}
+	\end{equation}
+	
+	Because we made the assumption that $\omega(k)$ was linear, this method won't work for an arbitrary $\omega(k)$. However, if we choose the range $\Delta k$ for the initial pulse to be small, any $\omega(k)$ will be approximately linear.
 
 %	\begin{center}
 %	\begin{tikzpicture}
