@@ -1,0 +1,91 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usepackage{circuitikz}
+\usetikzlibrary{intersections}
+
+\usepackage{fancyhdr}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Equilibrium and Stability}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+	Consider the behavior of solutions $\mathbf{x} = \mathbf{x}(t)$ of autonomous systems $\dot{\mathbf{x}} = \mathbf{F}(\mathbf{x})$ near an equilibrium point $\mathbf{x_0} \mid \mathbf{F}(\mathbf{x_0}) = 0$. For the following types of behavior, in the notation $\mathbf{x}$ represents any solution to the autonomous system. $\mathbf{x_0}$ is
+	\begin{description}
+		\item[Asymptotically stable] if 
+		\begin{equation}
+			\exists d_0 > 0 \mid \forall \mathbf{x} \mid ||\mathbf{x}(0) - \mathbf{x_0}|| < d_0, \lim_{t\rightarrow \infty} \mathbf{x}(t) = \mathbf{x_0}
+		\end{equation} 
+		\item[Stable] if
+		\begin{equation}
+			\exists d_0 > 0 \mid \forall \mathbf{x}: ||\mathbf{x}(0) - \mathbf{x_0}|| = d_1 < d_0, \forall t > 0, ||\mathbf{x}(t) - \mathbf{x_0}|| \leq d_1
+		\end{equation}
+		\item[Unstable] if the equilibrium point is not stable.
+	\end{description}
+	
+	\section{Linear Systems}
+		For an autonomous linear system $\dot{\mathbf{x}} = A\mathbf{x} + \mathbf{b}$, an equilibrium solution is some constant $\mathbf{x_0}$ satisfying $A\mathbf{x_0} + \mathbf{b} = 0$. If $A^{-1}$ exists, then $\mathbf{x_0} = -A^{-1}\mathbf{b}$. Otherwise, either there is no equilibrium point or the is a line or plane consisting entirely of such points. 
+	
+	In either case, for any equilibrium solution, the general solution $\mathbf{x}(t) = \mathbf{x_h}(t) + \mathbf{x_0}$ behaves near $\mathbf{x_0}$ the same as the homogeneous solution $\mathbf{x_h}$ near $\mathbf{x} = 0$.
+	
+	Because the homogeneous solutions are given by $t^ke^{\lambda t}$, if there is at least one eigenvalue of $A$ with positive real part, in two dimensions, the equilibrium is necessarily unstable. If one eigenvalue is negative and one is positive, the equilibrium is a saddle point.
+	
+	For $A: \mathbb{R}^n \times \mathbb{R}^n$, the equilibrium solution $\mathbf{x_0} = 0$ for the homogeneous system with $A$ is asymptotically stable if every eigenvalue of $A$ has negative real part and is unstable if there is at least one eigenvalue with positive real part.
+	
+	In two dimensions, here are all the possibilities of behavior near an equilibrium point:
+	\begin{enumerate}
+		\item $0 < \lambda_1 < \lambda_2$: Unstable node
+		\item $\lambda_1 < 0 < \lambda_2$: Saddle (unstable)
+		\item $\lambda_1 < \lambda_2 < 0$: Asymptotically stable node
+		\item $\lambda = p \pm iq, p>0, q \neq 0$: Unstable spiral
+		\item $\lambda = \pm iq, q\neq 0$: Stable center
+		\item $\lambda = -p \pm iq, p > 0, q \neq 0$: Asymptotically stable spiral
+		\item $\lambda_1 = \lambda_2 > 0$: Unstable star
+		\item $\lambda_1 = \lambda_2 < 0$: Asymptotically stable star
+	\end{enumerate}
+	
+	
+	\section{Nonlinear Systems} 
+	To extend the eigenvalue analysis of equilibrium solutions to autonomous nonlinear systems, after finding the equilibrium points, introduce the \textbf{linearization} of $\dot{\mathbf{x}} = \mathbf{F}(\mathbf{x})$ using the derivative matrix:
+	\begin{equation}
+		\dot{\mathbf{x}} = \mathbf{F'}(\mathbf{x_0})(\mathbf{x} - \mathbf{x_0}) + \mathbf{F}(\mathbf{x_0})
+	\end{equation}
+	
+	The equilibrium solution is asymptotically stable if every eigenvalue of the derivative matrix $\mathbf{F}(\mathbf{x_0})$ has negative real part. The point is unstable if at least one eigenvalue has positive real part, and is a saddle point if both signs occur. If both signs occur, no conclusions can be drawn.
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
