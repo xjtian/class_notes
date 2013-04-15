@@ -1,0 +1,67 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{fancyhdr}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Nonhonomgeneous Systems}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+For a nonhonogeneous system in the form
+\begin{equation}
+	\frac{d\mathbf{x}}{dt} = A\mathbf{x} + \mathbf{b}(t)
+\end{equation}
+solutions are in the form
+\begin{equation}
+	\mathbf{x}(t) = e^{tA} \int e^{-tA} \mathbf{b}(t) dt + e^{tA}\mathbf{x_0}
+\end{equation}
+If initial conditions are based on an arbitrary $t_0$ instead of $t = 0$, then
+\begin{equation}
+	\mathbf{x}(t) = e^{tA} \int_{t_0}^t e^{-tA} \mathbf{b}(t) dt + e^{tA}\mathbf{x_0}
+\end{equation}
+
+\subparagraph{Variation of Parameters} For non-constant coefficients in $A$, if $n$ linearly independent solutions to the homogeneous system are already known, then form the \textbf{fundamental matrix} for the system
+\begin{equation}
+	X(t) = \{\mathbf{x_1}, \mathbf{x_2}, \ldots, \mathbf{x_n}\}
+\end{equation}
+and the solutions for the system are found
+\begin{IEEEeqnarray}{rCl}
+	\mathbf{x}(t) & = & \mathbf{x_p} + X(t) \cdot \mathbf{x_0}\\
+	\mathbf{x_p} & = & X(t) \cdot \mathbf{v}(t)\\
+	\mathbf{v}(t) & = & \int X^{-1}\mathbf{b}(t)dt
+\end{IEEEeqnarray}
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
