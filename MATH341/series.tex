@@ -1,0 +1,83 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{fancyhdr}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Series}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Taylor Series}
+	The $n$th degree \textbf{Taylor polynomial} of an arbitrary function $f(x)$ at $x=a$ is given by
+	\begin{equation}
+		T_n(x) = \sum_{k=0}^n \frac{1}{k!}f^{(k)}(a)(x-a)^k
+	\end{equation}
+	The difference $f(x) - T_n(x) = R_n(x)$ is the \textbf{Tayor remainder}. If $f$ has $n+1$ continuous derivatives on some interval containing $a$, then for all $x$ in the interval,
+	\begin{equation}
+		f(x) = T_n(x) + R_n(x)
+	\end{equation}
+	where for some $x < c < a$,
+	\begin{equation}
+		R_n(x) = \frac{1}{(n+1)!}f^{(n+1)}(c)(x-a)^{n+1}
+	\end{equation}
+	
+	\subparagraph{Convergence} To test convergence of an infinite Taylor series, show that $\lim_{n\rightarrow \infty} R_n(x) = 0$. for all values of $x$ in question.
+	
+\section{Convergence Criteria}
+	\subparagraph{Limit Test} If a series $\sum_{k=1}^\infty a_k$ converges, then $\lim_{k\rightarrow \infty} a_k = 0$. Otherwise, the series diverges. Note that the converse is not true.
+	
+	\subparagraph{Integral Test} If $f(k) = a_k$ for all terms of $k$, then the series and improper integral either both converge or diverge.
+	\begin{equation}
+		\sum_{k=1}^\infty a_k, \quad \int_1^\infty f(x)dx
+	\end{equation}
+	
+	\subparagraph{Comparison Test} If $0 \leq a_k \leq b_k$, if $\sum_{k=1}^\infty b_k$ converges, then so does $\sum{k=1}^\infty a_k$. If $a$ diverges, then $b$ diverges.
+	
+	\subparagraph{Absolution Convergence} If the series $\sum_{k=1}^\infty |a_k|$ converges, then the series $\sum_{k=1}^\infty a_k$ is \textbf{absolutely convergent}. If $a$ is absolutely convergent, then $a$ is also convergent.
+	
+	\subparagraph{Ratio Test} If $\lim_{k\rightarrow \infty} |a_{k+1}|/|a_k|$ exists for a series, the series converges absolutely if
+	\begin{equation}
+		\lim_{k\rightarrow \infty} \left| \frac{a_{k+1}}{a_k} \right| < 1
+	\end{equation}
+	and diverges if
+	\begin{equation}
+		\lim_{k\rightarrow \infty} \left| \frac{a_{k+1}}{a_k} \right| > 1
+	\end{equation}
+	and no conclusions can be drawn if the limit is 1 or fails to exist.
+	
+	\subparagraph{Leibniz Test} If $\sum_{k=1}^\infty a_k$ is an alternating series such that $|a_k| \geq |a_{k+1}|$ and $\lim_{k\rightarrow \infty} a_k = 0$, then the partial sums $s_n$ converge to a sum $s$, with error $|s - s_n| \leq |a_{n+1}|$.
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
