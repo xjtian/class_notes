@@ -19,7 +19,7 @@
 	\begin{equation}
 		T_n(x) = \sum_{k=0}^n \frac{1}{k!}f^{(k)}(a)(x-a)^k
 	\end{equation}
-	The difference $f(x) - T_n(x) = R_n(x)$ is the \textbf{Tayor remainder}. If $f$ has $n+1$ continuous derivatives on some interval containing $a$, then for all $x$ in the interval,
+	The difference $f(x) - T_n(x) = R_n(x)$ is the \textbf{Taylor remainder}. If $f$ has $n+1$ continuous derivatives on some interval containing $a$, then for all $x$ in the interval,
 	\begin{equation}
 		f(x) = T_n(x) + R_n(x)
 	\end{equation}
@@ -53,6 +53,58 @@
 	and no conclusions can be drawn if the limit is 1 or fails to exist.
 	
 	\subparagraph{Leibniz Test} If $\sum_{k=1}^\infty a_k$ is an alternating series such that $|a_k| \geq |a_{k+1}|$ and $\lim_{k\rightarrow \infty} a_k = 0$, then the partial sums $s_n$ converge to a sum $s$, with error $|s - s_n| \leq |a_{n+1}|$.
+	
+\section{Uniform Convergence}
+	Let $f_k(\mathbf{x})$ be a sequence of real-valued functions defined for all $\mathbf{x}$ in some set $S$. The series \textbf{converges pointwise} to $f(\mathbf{x})$ if
+	\begin{equation}
+		\forall \mathbf{x} \in S, \quad \lim_{n\rightarrow \infty} \sum_{k=1}^\infty f_k(\mathbf{x}) = f(\mathbf{x})
+	\end{equation}
+	
+	An infinite functional series that converges pointwise defines a function $f$ on $S$. The same series \textbf{converges uniformly} to a function $f$ on a set $S$, if for all points in $S$,
+	\begin{equation}
+		\exists \epsilon > 0, n_0 > 0 \mid \forall N > n_0, \left| \sum_{k=1}^N f_k(\mathbf{x}) - f(\mathbf{x}) \right| < \epsilon
+	\end{equation}
+	
+	\subparagraph{Weierstrass Test} If there exists a convergent constant series $\sum_{k=1}^\infty p_k$ such that $|f_k(\mathbf{x})| \leq p_k$, then $\sum_{k=1}^\infty f_k(\mathbf{x})$ converges uniformly.
+	
+	\subsection{Related Theorems}
+		\begin{itemize}
+			\item If $\lim_{\mathbf{x} \rightarrow \mathbf{x_0}} f_k(\mathbf{x})$ exists, then
+				\begin{equation}
+					\lim_{\mathbf{x} \rightarrow \mathbf{x_0}} \sum_{k=1}^\infty f_k(\mathbf{x}) = \sum_{k=1}^\infty \lim_{\mathbf{x} \rightarrow \mathbf{x_0}} f_k(\mathbf{x})
+				\end{equation}
+			\item If $\sum f_k$ is a uniformly convergent series of continuous functions on $S \in \mathbf{R}^n$, then the function it uniformly converges to is continuous as well.
+			\item If $\sum f_k$ converges uniformly on some interval $[a, b]$ and $f_k$ are all continuous on the same interval, then
+			\begin{equation}
+				\sum_{k=1}^\infty \int_a^b f_k(x)dx = \int_a^b \left[ \sum_{k=1}^\infty f_k(x) \right] dx
+			\end{equation}
+			\item If $\sum f_k$ converges pointwise in an interval to $f$ and $\sum f_k'$ converges uniformly on the same interval, then $f$ is continuously differentiable and
+			\begin{equation}
+				\frac{d}{dx} \sum_{k=1}^\infty f_k(x) = \sum_{k=1}^\infty \frac{df_k}{dx}(x)
+			\end{equation}
+		\end{itemize}
+		
+\section{Power Series}
+	A power series is a series of the form
+	\begin{equation}
+		\sum_{k=0}^\infty a_k (x-a)^k
+	\end{equation}
+	The \textbf{radius of convergence} of the series is half the length of the set of $x$ with midpoint at $x=a$ for which the series converges.
+	
+	In the interior of the interval of convergence for a power series, it can be integrated or differentiated term-by-term.  Additionally, if
+	\begin{equation}
+		f(x) = \sum_{k=0}^\infty a_k (x-a)^k
+	\end{equation}
+	then the series is the Taylor series of $f$ about $x=a$: that is, a function $f$ can be represented by a power series uniquely. From this, it follows that we can compute a limit of $f(x)$ as $x$ approaches $a$ by setting $x=a$ in the series to get
+	\begin{equation}
+		\lim_{x\rightarrow a} f(x) = a_0
+	\end{equation}
+	
+	Power series can be multiplied and divided like polynomials. The product of two power series about the same point gives a third series called a \textbf{Cauchy product}:
+	\begin{eqnarray}
+		(a_0 + a_1 x + a_2 x^2 + \ldots)(b_0 + b_1 x + b_2 x^2 + \ldots)\\
+		= a_0b_0 + (a_1b_0 + a_0b_1)x + (a_0b_2 + a_1b_1 + a_2b_0)x^2 + \ldots
+	\end{eqnarray}
 
 %	\begin{center}
 %	\begin{tikzpicture}
