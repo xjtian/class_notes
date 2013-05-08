@@ -2,8 +2,6 @@
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage[retainorgcmds]{IEEEtrantools}
 
-\usepackage{marginnote}
-
 \usepackage{fancyhdr}
 %Format stuff
 \pagestyle{fancy}
@@ -18,9 +16,9 @@
 \section{Gradient Fields}
 	If $f$ is a differential real-valued function, $\vec{\nabla} f$ can be thought of as a \textbf{vector field}. If $\vec{\nabla} f = \vec{F}(x, y) = (f(x, y), g(x, y))$, then to draw the gradient field, at each point $(x, y)$ in the domain is an arrow from $(0,0)$ to $\vec{F}(x, y)$. The arrow is then translated to start at $(x, y)$ and end at $\vec{F}(x, y) + (x, y)$.
 	
-	\marginnote{Direction of $\nabla$?}From the gradient field of any differentiable function $f$, it becomes apparent that at each point in the domain for which $\vec{\nabla} f \neq \vec{0}$, $\vec{\nabla} f$ points in the direction of maximum increase. The number $|\vec{\nabla} f|$ is the maximum rate of increase of $f$ at $\vec{x}$.
+	From the gradient field of any differentiable function $f$, it becomes apparent that at each point in the domain for which $\vec{\nabla} f \neq \vec{0}$, $\vec{\nabla} f$ points in the direction of maximum increase. The number $|\vec{\nabla} f|$ is the maximum rate of increase of $f$ at $\vec{x}$.
 	
-	\subparagraph{Normal Vectors} If \marginnote{Normal vector?}$\mathbb{R}^n \xrightarrow{f} \mathbb{R}$ is continuously differentiable at $\vec{x}_0$ and $S$ is a level set containing $\vec{x}_0$, then $\vec{\nabla}f$ is a normal vector to $S$ at $\vec{x}_0$ and
+	\subparagraph{Normal Vectors} If $\mathbb{R}^n \xrightarrow{f} \mathbb{R}$ is continuously differentiable at $\vec{x}_0$ and $S$ is a level set containing $\vec{x}_0$, then $\vec{\nabla}f$ is a normal vector to $S$ at $\vec{x}_0$ and
 	\begin{equation}
 		\vec{\nabla}f(\vec{x}_0) \cdot (\vec{x}-\vec{x}_0) = 0
 	\end{equation}
@@ -38,7 +36,7 @@
 	\[\Delta u(x, y) = u_{xx}(x, y) + u_{yy}(x, y)\]
 	When only transforming coordinates, especially if the domain and range are the same, use the term \textbf{coordinate transformation}, usually accomplished with $\vec{z} = A\vec{x}$ where $\vec{z}$ is the vector of the variables to change to.
 	
-	\subparagraph{Inverse Function Theorem} If \marginnote{Inverse function theorem?} $\mathbb{R}^n \xrightarrow{F} \mathbb{R}^n$ is continuously differentiable and $\vec{x}_0$ is a point with an invertible derivative matrix $F'(\vec{x}_0)$, then there is an open neighborhood such that $F$ has a continuously differentiable local inverse function $F^{-1}$.
+	\subparagraph{Inverse Function Theorem} If $\mathbb{R}^n \xrightarrow{F} \mathbb{R}^n$ is continuously differentiable and $\vec{x}_0$ is a point with an invertible derivative matrix $F'(\vec{x}_0)$, then there is an open neighborhood such that $F$ has a continuously differentiable local inverse function $F^{-1}$.
 	\begin{equation}	
 		(F^{-1})'(F(\vec{x})) = F'(\vec{x}) ^ {-1}
 	\end{equation}
@@ -46,7 +44,7 @@
 	In other words, there is a continuously differentiable \textbf{local inverse} on some neighborhood of a point where $F'(\vec{x}_0)$ is invertible. $det F'(\vec{x})$ is called the \textbf{Jacobian determinant}.
 	
 \section{Implicit Differentiation}
-	\marginnote{Implicit definition?}Given $\mathbb{R}^2 \xrightarrow{F} \mathbb{R}$ and $\mathbb{R} \xrightarrow{f} \mathbb{R}$, $F(x, y)$ defines $f$ implicitly if $F(x, f(x)) = c$ for every $x$ in the domain.
+	Given $\mathbb{R}^2 \xrightarrow{F} \mathbb{R}$ and $\mathbb{R} \xrightarrow{f} \mathbb{R}$, $F(x, y)$ defines $f$ implicitly if $F(x, f(x)) = c$ for every $x$ in the domain.
 	\begin{IEEEeqnarray}{rCl}
 		F(x, G(x)) & = & 0\\
 		F_x(x, G(x)) + F_y(x, y)G'(x) & = & 0\\
@@ -54,7 +52,7 @@
 		\frac{dy}{dx} = -\frac{F_x(x, y)}{F_y(x, y)}
 	\end{IEEEeqnarray}
 	
-	\marginnote{Implicit diff. of vector-valued functions?}When implicitly differentiating vector-valued functions, decide which variable to differentiate with respect to, then use the chain rule and solve for the differential terms to get a solution matrix that corresponds to $G'(x_i)$, where $x_i$ is the variable that the original derivative was taken in. When there multiple free (so to say) variables to account for (i.e., $x, y, z$ are functions of $u, v, w$), take the partial with respect to one of the free ones.
+	When implicitly differentiating vector-valued functions, decide which variable to differentiate with respect to, then use the chain rule and solve for the differential terms to get a solution matrix that corresponds to $G'(x_i)$, where $x_i$ is the variable that the original derivative was taken in. When there multiple free (so to say) variables to account for (i.e., $x, y, z$ are functions of $u, v, w$), take the partial with respect to one of the free ones.
 	\subparagraph{Theorem} suppose $\mathbb{R}^{n+m} \xrightarrow{F} \mathbb{R}^m$ and $\mathbb{R}^n \xrightarrow{G} \mathbb{R}^m$ are differentiable and $F(\vec{x}, \vec{y})$ implicitly defines $\vec{y} = G(\vec{x})$, then
 	\[G'(\vec{x}) = -F_y^{-1} (\vec{x}, G(\vec{x}))F_x(\vec{x}, G(\vec{x}))\]
 	provided that $F_y$ is invertible. $F_y$ is computed with $\vec{x}$ held fixed and $F_x$ is computed with $\vec{y}$ held fixed.
@@ -67,18 +65,18 @@
 	Then there is a unique continuously differentiable function $\mathbb{R}^n \xrightarrow{G} \mathbb{R}^m$ defined on an open neighborhood $N$ of $\vec{x}_0$ in $\mathbb{R}^n$ such that $F$ implicitly defines $G$ and $G(\vec{x}_0) = \vec{y}_0$.
 
 \section{Extreme Values}
-	\marginnote{Location of critical points?}Where $\vec{\nabla} f(\vec{x}) = \vec{0}$, $f$ has a critical point. Note that a point where $\vec{\nabla} f = \vec{0}$ is not necessarily an extreme point: $f$ may have an extreme point without having $\vec{\nabla} f = \vec{0}$. The second condition is why it's important to check the values at the bounds of the locale.
+	Where $\vec{\nabla} f(\vec{x}) = \vec{0}$, $f$ has a critical point. Note that a point where $\vec{\nabla} f = \vec{0}$ is not necessarily an extreme point: $f$ may have an extreme point without having $\vec{\nabla} f = \vec{0}$. The second condition is why it's important to check the values at the bounds of the locale.
 	
-	\subparagraph{Lagrange Multipliers} Given \marginnote{Lagrange method?}$\mathbb{R}^n \xrightarrow{f} \mathbb{R}$ is differentiable and there is a local extreme at $\vec{x}_0$, and that near $\vec{x}_0$, the domain of $f$ is restricted to a level set of $\mathbb{R}^n \xrightarrow{G} \mathbb{R}^m$ and coordinate functions $G_1, G_2, \ldots , G_m$. Then the following holds true for some $\vec{\lambda}$:
+	\subparagraph{Lagrange Multipliers} Given $\mathbb{R}^n \xrightarrow{f} \mathbb{R}$ is differentiable and there is a local extreme at $\vec{x}_0$, and that near $\vec{x}_0$, the domain of $f$ is restricted to a level set of $\mathbb{R}^n \xrightarrow{G} \mathbb{R}^m$ and coordinate functions $G_1, G_2, \ldots , G_m$. Then the following holds true for some $\vec{\lambda}$:
 	\begin{equation}
 		\vec{\nabla} f + \lambda_1 \vec{\nabla} G_1(\vec{x}_0) + \ldots + \lambda_m \vec{\nabla} G_m(\vec{x}_0) = \vec{0}
 	\end{equation}
 	This method is a necessary condition for extrema, but may also hold true for points that are not extrema. It is also necessary to have some grounds for believing that the desired extrema exist, and that the set $S$ to which $f$ is restricted is closed, bounded, and sufficiently smooth.
 	
-	\subparagraph{Saddle Points} A \marginnote{Saddle point?}critical point that is neither a local maximum nor a local minimum is called a \textbf{saddle point} for $f$.
+	\subparagraph{Saddle Points} A critical point that is neither a local maximum nor a local minimum is called a \textbf{saddle point} for $f$.
 	
 	\subsection{Second Derivative Test}
-		\marginnote{Second derivative test?}Given $\mathbb{R}^n \xrightarrow{f} \mathbb{R}$ is twice continuously differentiable and $c = \dfrac{\partial^2 f}{\partial \vec{u}^2} (\vec{x}_0)$:
+		Given $\mathbb{R}^n \xrightarrow{f} \mathbb{R}$ is twice continuously differentiable and $c = \dfrac{\partial^2 f}{\partial \vec{u}^2} (\vec{x}_0)$:
 		\begin{itemize}
 			\item If $c > 0$ for all unit vectors $\vec{u}$, then the point is a strict local minimum.
 			\item If $c < 0$ for all unit vectors $\vec{u}$, then the point is a strict local maximum.
@@ -99,7 +97,7 @@
 		\end{itemize}
 		
 	\subsection{Steepest Ascent/Descent Method}
-		\marginnote{Steepest ascent algorithm?}Remember that $\vec{\nabla} f$ points in the direction of maximum increase and $-\vec{\nabla} f$ points in the direction of maximum decrease for a level set of a function $f$. Then to find the local maximum (ascent) or minimum (descent) of $f$, start at point and ``march'' in the direction of the gradient.
+		Remember that $\vec{\nabla} f$ points in the direction of maximum increase and $-\vec{\nabla} f$ points in the direction of maximum decrease for a level set of a function $f$. Then to find the local maximum (ascent) or minimum (descent) of $f$, start at point and ``march'' in the direction of the gradient.
 		\begin{equation}
 			\vec{x}_{n+1} = \vec{x}_n + h_n \vec{\nabla} f(\vec{x}_n)
 		\end{equation}
@@ -130,7 +128,7 @@
 			\end{matrix}
 			\right.
 		\end{equation}
-		\marginnote{Polar coordinates?}This mapping is not one-to-one unless $\theta$ is restricted to a subset defined by $\theta_0 \leq \theta < \theta_0 + 2\pi$. Note that when mapping the origin of the $xy$-plane, there is no appropriate polar coordinate because the function is not one-to-one. 
+		This mapping is not one-to-one unless $\theta$ is restricted to a subset defined by $\theta_0 \leq \theta < \theta_0 + 2\pi$. Note that when mapping the origin of the $xy$-plane, there is no appropriate polar coordinate because the function is not one-to-one. 
 		
 	\subparagraph{Spherical Coordinates}
 		\begin{equation}
@@ -150,9 +148,9 @@
 			\end{matrix}
 			\right.
 		\end{equation}
-		\marginnote{Spherical coordinates?}Spherical coordinates a rotation of $\theta$ around the equator counter-clockwise followed by a rotation of $\phi$ up along the meridian with the positive direction towards the north pole.
+		Spherical coordinates a rotation of $\theta$ around the equator counter-clockwise followed by a rotation of $\phi$ up along the meridian with the positive direction towards the north pole.
 		
-	\subparagraph{Cylindrical Coordinates} These \marginnote{Cylindrical coordinates?}are the 3-dimensional analog of polar coordinates.
+	\subparagraph{Cylindrical Coordinates} These are the 3-dimensional analog of polar coordinates.
 		\begin{equation}
 			\begin{pmatrix}
 				x\\y\\z
@@ -186,7 +184,7 @@
 			\end{pmatrix}
 		\end{equation}
 		
-		\marginnote{Jacobian matrix?}The derivative matrix of any differentiable coordinate transformation is called a \textbf{Jacobian matrix}. Each column of a Jacobian matrix is the $j\textsuperscript{th}$ partial of $T$, also the tangent vector to the curvilinear coordinate curve formed by only varying the $j\textsuperscript{th}$ coordinate. 
+		The derivative matrix of any differentiable coordinate transformation is called a \textbf{Jacobian matrix}. Each column of a Jacobian matrix is the $j\textsuperscript{th}$ partial of $T$, also the tangent vector to the curvilinear coordinate curve formed by only varying the $j\textsuperscript{th}$ coordinate. 
 		
 \section*{Important Concepts}
 	\begin{itemize}

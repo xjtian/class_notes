@@ -4,8 +4,6 @@
 
 \usepackage[pdftex]{graphicx}
 
-\usepackage{marginnote}
-
 \usepackage{fancyhdr}
 
 %Format stuff
@@ -20,19 +18,19 @@
 \begin{document}
 \section{Line Integrals}
 	Picture a function $\mathbb{R}^3 \xrightarrow{\vec{F}} \mathbb{R}^3$ defined in a region $D$ as a \textbf{vector field}, an assignment of the vector $\vec{F}(\vec{x})$ to each point in $D$. If there is a curve $\gamma$ in $D$ parametrized by $g(t)$ continuously differentiable for $a \leq t \leq b$, then the \textbf{line integral} of $\vec{F}$ over $\gamma$ is
-	\begin{equation}\marginnote{Line integral?}
+	\begin{equation}
 		\int_a^b \vec{F}(g(t)) \cdot g'(t)dt
 	\end{equation}
 	
 	The \textbf{circulation} of $\vec{F}$ over $\gamma$ is defined as the value of the integral of $\vec{F}$ over a curve $\gamma$. 
 	
-	\subparagraph{Work} Work \marginnote{Work equation?}is the amount of force applied in the direction of movement. Given $\vec{F}$ describes a force field and $\gamma$ is a continuously differentiable curve, 
+	\subparagraph{Work} Work is the amount of force applied in the direction of movement. Given $\vec{F}$ describes a force field and $\gamma$ is a continuously differentiable curve, 
 	\begin{equation}
 		W = \int_a^b \vec{F}(g(t)) \cdot g'(t)dt = \int_\gamma \vec{F} \cdot \vec{t} ds
 	\end{equation}
 	where $ds = |g'(t)|dt$ is called the \textbf{arc-length differential}.
 	
-	\subparagraph{Equivalent Parametrizations} When \marginnote{Equivalent parametization?}different parametrizations describe the same image curve, they are equivalent if each segment of the image curve is traced the same number of times and tangent vectors point in the same direction. In general, the parametrizations
+	\subparagraph{Equivalent Parametrizations} When different parametrizations describe the same image curve, they are equivalent if each segment of the image curve is traced the same number of times and tangent vectors point in the same direction. In general, the parametrizations
 	\begin{equation}
 		\vec{x} = f(t), \quad a \leq t \leq b \quad \text{and} \quad \vec{x} = g(u), \quad \alpha \leq u \leq \beta
 	\end{equation}
@@ -42,7 +40,7 @@
 	\end{equation*}
 	
 
-	\subparagraph{Fundamental Theorem of Calculus} If \marginnote{FToC?}$f$ is a continuously differentiable real-valued function and $\gamma$ is smooth in $D$,
+	\subparagraph{Fundamental Theorem of Calculus} If $f$ is a continuously differentiable real-valued function and $\gamma$ is smooth in $D$,
 		\begin{equation}
 			\int_\gamma \nabla f \cdot d\vec{x} = \int_{\vec{a}}^{\vec{b}} \nabla f \cdot d\vec{x} = f(\vec{b}) - f(\vec{a})
 		\end{equation}
@@ -56,9 +54,9 @@
 	\begin{equation}
 		s(t) = \int_{t_0}^t |\vec{x}'(u)| du
 	\end{equation}
-	\marginnote{Parametrize by arc length?}Because a path can be traced at any speed, it is useful to parametrize a curve by arc length. If the points in the image are one-to-one with arc length from an origin point on the curve, then it is \textbf{parametrized by arc length} if $|g'(t)| = 1$. In this case, the expression $|\vec{x}'(t)|dt = |g'(t)|dt$ is called the \textbf{arc length element}.
+	Because a path can be traced at any speed, it is useful to parametrize a curve by arc length. If the points in the image are one-to-one with arc length from an origin point on the curve, then it is \textbf{parametrized by arc length} if $|g'(t)| = 1$. In this case, the expression $|\vec{x}'(t)|dt = |g'(t)|dt$ is called the \textbf{arc length element}.
 	
-	\subparagraph{Weighted Curves} Imaging \marginnote{Mass of a curve?}a weight function $\mu$ that assigns a weight $\mu(h(s))$ to each point $h(s)$ at distance $s$ along a curve parametrized by its arc length. Then the total mass of the curve is
+	\subparagraph{Weighted Curves} Imaging a weight function $\mu$ that assigns a weight $\mu(h(s))$ to each point $h(s)$ at distance $s$ along a curve parametrized by its arc length. Then the total mass of the curve is
 	\begin{equation}
 		M = \int_{s_0}^{s_1} \mu(h(s))ds
 	\end{equation}
@@ -87,11 +85,11 @@
 	\end{equation}
 	The vector of length 1 in the direction of the velocity vector is usually denoted $\vec{t}(t)$.  Thus, $\vec{x}'(t) = s'(t)\vec{t}(t)$ or $\vec{t} = \vec{x}' / s'$.
 	
-	\marginnote{Accel. along curve?}The acceleration vector along the curve is
+	The acceleration vector along the curve is
 	\begin{equation}
 		\vec{x}'' = s''\vec{t} + s'\vec{t}'
 	\end{equation}
-	\marginnote{Principal normal?}The vector $\vec{t}'(t)$ is orthogonal to $\vec{t}(t)$, and when $\vec{t}'(t) \neq 0$, we define a unit vector $\vec{n}(t)$ called the \textbf{principal normal} such that $\vec{t}' = |\vec{t}'|\vec{n}$. Thus, the acceleration vector can also be expressed as
+	The vector $\vec{t}'(t)$ is orthogonal to $\vec{t}(t)$, and when $\vec{t}'(t) \neq 0$, we define a unit vector $\vec{n}(t)$ called the \textbf{principal normal} such that $\vec{t}' = |\vec{t}'|\vec{n}$. Thus, the acceleration vector can also be expressed as
 	\begin{equation}
 		\vec{x}'' = s''\vec{t} + s'|\vec{t}'|\vec{n}
 	\end{equation}
@@ -105,7 +103,7 @@
 		\label{fig:normal}
 	\end{figure}
 	
-	\marginnote{Curvature?}The \textbf{curvature} at $\vec{x}(t)$ is the scalar
+	The \textbf{curvature} at $\vec{x}(t)$ is the scalar
 	\begin{equation}
 		\kappa(t) = \left| \frac{d\vec{t}}{ds} \right|
 	\end{equation}
@@ -128,7 +126,7 @@
 \section{Flow Lines, Divergence, and Curl}
 	\subparagraph{Flow Lines} A differentiable curve $\vec{x} = \vec{x}(t)$ is called a flow line of the vector field $\vec{F}(x)$ if $\vec{x}'(t) = \vec{F}(\vec{x}(t))$ in some interval and represents the path a particle takes in a fluid. If $\vec{F}$ is a gradient field such that $\vec{x}' = \vec{F} = \nabla f(\vec{x})$, then the flow lines are perpendicular to the level sets of $f$.
 	
-	\subparagraph{Divergence} Divergence \marginnote{div?}of a vector field div$\vec{F}(x)$ is the sum of the main diagonal elements of the matrix $\vec{F}'$ and represents the expansion rate of fluid per unit of area and volume. div can also be expressed as
+	\subparagraph{Divergence} Divergence of a vector field div$\vec{F}(x)$ is the sum of the main diagonal elements of the matrix $\vec{F}'$ and represents the expansion rate of fluid per unit of area and volume. div can also be expressed as
 	\begin{equation}
 		\text{div} \vec{F} = \nabla \cdot \vec{F}
 	\end{equation}
@@ -138,7 +136,7 @@
 	\end{equation}
 	
 	\subsection{Curl} 
-		In \marginnote{Curl?}3 dimensions, the curl of a differentiable vector field $\vec{F} = F_1 \vec{i} + F_2 \vec{j} + F_3 \vec{k}$ is
+		In 3 dimensions, the curl of a differentiable vector field $\vec{F} = F_1 \vec{i} + F_2 \vec{j} + F_3 \vec{k}$ is
 		\begin{equation}
 			\text{curl}\vec{F} = \left(\frac{\partial F_3}{\partial y} - \frac{\partial F_2}{\partial z} \right) \vec{i} + \left(\frac{\partial F_1}{\partial z} - \frac{\partial F_3}{\partial x} \right) \vec{j} + \left(\frac{\partial F_2}{\partial x} - \frac{\partial F_1}{\partial y} \right) \vec{k}
 		\end{equation}
@@ -147,7 +145,7 @@
 			\text{curl}\vec{F} = \nabla \times \vec{F}
 		\end{equation}
 		
-		\subparagraph{Scalar curl} The \marginnote{Scalar curl?}curl of a 2-dimensional vector field, taken as a slice of a 3-dimensional field where $\vec{k}$ is identically 0 and $F_1$ and $F_2$ are independent of $z$ is
+		\subparagraph{Scalar curl} The curl of a 2-dimensional vector field, taken as a slice of a 3-dimensional field where $\vec{k}$ is identically 0 and $F_1$ and $F_2$ are independent of $z$ is
 		\begin{equation}
 			\text{curl} \vec{F}(x, y) = \left(\frac{\partial F_2}{\partial x} - \frac{\partial F_1}{\partial y} \right)\vec{k}
 		\end{equation}
@@ -158,38 +156,6 @@
 			\item $|\text{curl} \vec{F}(\vec{x})|^2 = |\text{curl}\vec{F}_n(\vec{x})|^2 + (\vec{n} \cdot \text{curl}\vec{F}(\vec{x}))^2$
 			\item Choosing $\vec{n}$ perpendicular to curl$\vec{F}(\vec{x})$, meaning the vector curl$\vec{F}(\vec{x}))$ is parallel to $P$, maximizes the absolute value of the scalar curl.
 			\item If curl$\vec{F}_n(\vec{x}) > 0$ in a neighborhood of a point, then the circulation of $\vec{F}_n$ around nearby circular paths centered at the same point in $P$ is positive following the right hand rule.
-		\end{itemize}
-		
-\section*{Important Concepts}
-	\subsection*{Line Integrals and Normals}
-		\begin{itemize}
-			\item Line integrals are defined for vector fields as
-				\[\int_a^b \vec{F}(g(t)) \cdot g'(t)dt\]
-			\item Work is measured by a line integral
-				\[W = \int_a^b \vec{F}(g(t)) \cdot g'(t)dt = \int_\gamma \vec{F} \cdot \vec{t} ds\]
-			\item Can parametrize a curve by arc length and integrate across a segment bounded by arc lengths.
-			\item Unit velocity vector of curve is $\vec{t} = \vec{x}' / s'$
-			\item Principal normal vector is a unit vector orthogonal to the curve.
-			\item Acceleration along curve is
-				\[\vec{x}'' = s''\vec{t} + s'\vec{t}'\]
-			\item Curvature measures turning rate of $\vec{t}$ as a function of arc length.
-				\[\kappa = \left|\frac{d\vec{t}}{ds}\right| = \frac{|\vec{t}|}{s'}\]
-			\item Using curvature, acceleration can be expressed as
-				\[\vec{x}'' = s''\vec{t} + (s')^2\kappa \vec{n}\]
-		\end{itemize}
-		
-	\subsection*{div and curl}
-		\begin{itemize}
-			\item div of a field is the sum of the main diagonal elements of derivative matrix, represents expansion rate of fluid per unit of area/volume.
-				\[\text{div}\vec{F} = \nabla \cdot \vec{F}\]
-			\item With a density equation, div is also the continuity equation
-				\[\text{div}\vec{F}(\vec{x}) = - \frac{\partial p}{\partial t}(\vec{x})\]
-			\item In 3 dimensions, curl is
-				\[\text{curl}\vec{F} = \left(\frac{\partial F_3}{\partial y} - \frac{\partial F_2}{\partial z} \right) \vec{i} + \left(\frac{\partial F_1}{\partial z} - \frac{\partial F_3}{\partial x} \right) \vec{j} + \left(\frac{\partial F_2}{\partial x} - \frac{\partial F_1}{\partial y} \right) \vec{k}\]
-				
-				\[\text{curl} \vec{F} = \nabla \times \vec{F}\]
-			\item Scalar curl for a 2-dimensional vector field measures likelihood of a vector field to form a vortex.
-				\[\text{curl} \vec{F}(x, y) = \left(\frac{\partial F_2}{\partial x} - \frac{\partial F_1}{\partial y} \right)\vec{k}\]
 		\end{itemize}
 %	\begin{center}
 %	\begin{tikzpicture}

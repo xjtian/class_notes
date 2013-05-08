@@ -2,8 +2,6 @@
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage[retainorgcmds]{IEEEtrantools}
 
-\usepackage{marginnote}
-
 \usepackage{fancyhdr}
 
 %Format stuff
@@ -35,40 +33,40 @@
 		\end{itemize}
 		
 \section{Real-Valued Functions}
-	\marginnote{Differentiability of real-valued function?}A function $\mathbb{R}^n \xrightarrow{f} \mathbb{R}$ is differentiable at $\vec{x}_0$ if $\vec{x}_0$ is in the domain of $f$ and there exists a vector $\vec{a}$ such that
+	A function $\mathbb{R}^n \xrightarrow{f} \mathbb{R}$ is differentiable at $\vec{x}_0$ if $\vec{x}_0$ is in the domain of $f$ and there exists a vector $\vec{a}$ such that
 	\begin{equation}
 		\lim_{\vec{x} \rightarrow \vec{x}_0} \frac{f(\vec{x}) - f(\vec{x}_0) - \vec{a}\cdot (\vec{x} - \vec{x}_0)}{|\vec{x} - \vec{x}_0|} = 0
 	\end{equation}
-	\marginnote{Gradient?}$\vec{\nabla}f(\vec{x}_0)$ is the only vector that satisfies the second condition, called the \textbf{gradient vector}, where the $k$th component of $\vec{\nabla}f$ is the $k$th partial of $f$. defined as If any component of $\vec{\nabla}f$ is not defined at $\vec{x}_0$, then $f$ is not differentiable at that point.
+	$\vec{\nabla}f(\vec{x}_0)$ is the only vector that satisfies the second condition, called the \textbf{gradient vector}, where the $k$th component of $\vec{\nabla}f$ is the $k$th partial of $f$. defined as If any component of $\vec{\nabla}f$ is not defined at $\vec{x}_0$, then $f$ is not differentiable at that point.
 	
 	If all of the partials of $f$ are continuous on some open subset of the domain, then $f$ is differentiable at every point in that subset as well. $f$ is \textbf{continuously differentiable} on an open set $D$ if all entries in $\vec{\nabla}f$ are continuous on $D$. Thus, \textit{differentiability of $f$ implies continuity.}
 	
-	\subparagraph{Tangent Approximations} The \marginnote{Tangent approximation of real-valued function?}tangent approximation of a function $\mathbb{R} \rightarrow \mathbb{R}$ is $T(x) = f(x_0) + f'(x_0)(x - x_0)$. Generalizing to multidimensional real-value functions, it takes the form
+	\subparagraph{Tangent Approximations} The tangent approximation of a function $\mathbb{R} \rightarrow \mathbb{R}$ is $T(x) = f(x_0) + f'(x_0)(x - x_0)$. Generalizing to multidimensional real-value functions, it takes the form
 	\begin{equation}
 		T(\vec{x}) = f(\vec{x}_0) + \nabla f(\vec{x}_0) \cdot (\vec{x}-\vec{x}_0)
 	\end{equation}
 	
 \section{Directional Derivatives}
-	\marginnote{Directional derivative?}The directional derivative of a function measures the rate of change in an arbitrary direction $\vec{v}$.
+	The directional derivative of a function measures the rate of change in an arbitrary direction $\vec{v}$.
 	\begin{equation}
 		\frac{\partial f}{\partial \vec{v}} (\vec{x}) = \lim_{t \rightarrow 0} \frac{f(\vec{x} + t\vec{v}) - f(\vec{x})}{t}
 	\end{equation}
-	\marginnote{Rel. b/w directional and gradient?}If $f$ is differentiable at $\vec{x}$ and $\vec{v} \neq \vec{0}$,
+	If $f$ is differentiable at $\vec{x}$ and $\vec{v} \neq \vec{0}$,
 	\begin{equation}
 		\frac{\partial f}{\partial v} (\vec{x}) = \nabla f(\vec{x}) \cdot \vec{v}
 	\end{equation}
 	It's best to choose $|\vec{v}| = 1$ to have a standardized rate of change, in which case the derivative is notated as $\partial f / \partial \vec{u}$. 
 	
-	\subparagraph{Mean Value Theorem} In \marginnote{MVT for real-valued functions?}one variable, $\exists x_0 \in (x, y) \mid f(x) - f(y) = f'(x_0)(x - y)$. In multiple variables, given $\mathbb{R}^n \xrightarrow{f} \mathbb{R}$ is differentiable on an open set containing the line segment $S$ joining $\vec{x}$ and $\vec{y}$,
+	\subparagraph{Mean Value Theorem} In one variable, $\exists x_0 \in (x, y) \mid f(x) - f(y) = f'(x_0)(x - y)$. In multiple variables, given $\mathbb{R}^n \xrightarrow{f} \mathbb{R}$ is differentiable on an open set containing the line segment $S$ joining $\vec{x}$ and $\vec{y}$,
 	\begin{equation}
 		\exists \vec{x_0} \in S \mid f(\vec{y}) - f(\vec{x}) = \nabla f(\vec{x}_0) \cdot (\vec{y} - \vec{x})
 	\end{equation}
 	The domain of $\mathbb{R}^n \xrightarrow{f} \mathbb{R}$ is \textbf{polygonally connected} if any given pair of points in it can be joined by a polygonal path. If $f$ is differentiable on a polygonally connected domain and $\forall \vec{x} \in D, \nabla f(\vec{x}) = 0$, $f$ is constant.
 	
 \section{Vector-Valued Functions}
-	\marginnote{Differentiability of $\mathbb{R}^n \xrightarrow{f} \mathbb{R}^m$?}$\mathbb{R}^n \xrightarrow{f} \mathbb{R}^m$ is differentiable on its domain if each of its $m$ real-valued functions $f_1, f_2, \ldots f_m$ is differentiable. If all $n$ first-order partials of each of the $m$ coordinate functions are continuous, then $f$ is continuously differentiable. 
+	$\mathbb{R}^n \xrightarrow{f} \mathbb{R}^m$ is differentiable on its domain if each of its $m$ real-valued functions $f_1, f_2, \ldots f_m$ is differentiable. If all $n$ first-order partials of each of the $m$ coordinate functions are continuous, then $f$ is continuously differentiable. 
 	
-	\subparagraph{Derivative Matrix} The \marginnote{Derivative matrix?}derivative matrix of a differentiable function at $\vec{x}$ is defined by 
+	\subparagraph{Derivative Matrix} The derivative matrix of a differentiable function at $\vec{x}$ is defined by 
 		\begin{equation}
 			f'(\vec{x}) = 
 			\begin{pmatrix}
@@ -80,7 +78,7 @@
 		\end{equation}
 		This matrix can be regarded as having tangent vectors for columns and gradient vectors for rows.
 		
-	\subparagraph{Tangent Approximations} The \marginnote{Tangent approx. of $\mathbb{R}^n \xrightarrow{f} \mathbb{R}^m$?}first-degree Taylor approximation to $f: \mathbb{R}^n \rightarrow \mathbb{R}^m$ at $\vec{x}_0$ is
+	\subparagraph{Tangent Approximations} The first-degree Taylor approximation to $f: \mathbb{R}^n \rightarrow \mathbb{R}^m$ at $\vec{x}_0$ is
 		\begin{equation}
 			T(\vec{x}) = f(\vec{x}_0) + f'(\vec{x}_0)(\vec{x}-\vec{x}_0)
 		\end{equation}
@@ -95,7 +93,7 @@
 		From this theorem follows the corollary that if $A$ is a constant $m$-by-$n$ matrix, then $\mathbb{R}^n \xrightarrow{f} \mathbb{R}^m$ defined by $f(\vec{x}) = A\vec{x}$ has $A$ for its derivative matrix ($f'(\vec{x}) = A$).
 		
 \section{Newton's Method}
-	\marginnote{Newton's method?}Newton's method is used to approximate the solution of an equation $f(\vec{x}) = 0$, where $\mathbb{R}^n \xrightarrow{f} \mathbb{R}^m$ is a nonlinear function. This treats $f$ as an infinite series and gives an equation to compute the next term.
+	Newton's method is used to approximate the solution of an equation $f(\vec{x}) = 0$, where $\mathbb{R}^n \xrightarrow{f} \mathbb{R}^m$ is a nonlinear function. This treats $f$ as an infinite series and gives an equation to compute the next term.
 	\begin{equation}
 		\vec{x}_{k+1} = \vec{x}_k - [f'(\vec{x}_k)]^{-1} f(\vec{x}_k)
 	\end{equation}
@@ -105,25 +103,7 @@
 		\vec{x}_{k+1} = \vec{x}_k - [f'(\vec{x}_0)]^{-1} f(\vec{x}_k)
 	\end{equation}
 	
-	\marginnote{Altered Newton's method?}To use Newton's method, simply apply the method until the sequence converges, at which point the resulting vector will be an approximation of the answer. The first method will converge faster, although is computationally expensive, and the second method will take more terms to converge.
-	
-\section*{Important Concepts}
-	\begin{itemize}
-		\item Gradient vector is $\vec{a}$ such that \[\lim_{\vec{x} \rightarrow \vec{x}_0} \frac{f(\vec{x}) - f(\vec{x}_0) - \vec{a}\cdot (\vec{x} - \vec{x}_0)}{|\vec{x} - \vec{x}_0|} = 0\]
-		\item If all partials of a function are continuous, so is the function.
-		\item The tangent approximation for a real-valued function is \[T(\vec{x}) = f(\vec{x}_0) + \nabla f(\vec{x}_0) \cdot (\vec{x}-\vec{x}_0)\]
-		\item Directional derivative is derivative in an arbitrary (usually length 1) direction:
-			\[\frac{\partial f}{\partial \vec{v}} (\vec{x}) = \lim_{t \rightarrow 0} \frac{f(\vec{x} + t\vec{v}) - f(\vec{x})}{t}\]
-		\item Gradient and directional derivative are related as follows: \[\frac{\partial f}{\partial v} (\vec{x}) = \nabla f(\vec{x}) \cdot \vec{v}\]
-		\item The derivative matrix of a vector-valued function has gradients for rows and tangents for columns.
-		\item For Taylor approximations of vector-valued functions:
-			\[T(\vec{x}) = f(\vec{x}_0) + f'(\vec{x}_0)(\vec{x}-\vec{x}_0)\]
-		\item $f(\vec{x}) = A\vec{x}$ has $A$ for its derivative matrix.
-		\item Apply Newton's method until convergence:
-			\[\vec{x}_{k+1} = \vec{x}_k - [f'(\vec{x}_k)]^{-1} f(\vec{x}_k)\]
-		\item For large vector spaces, use the alternate form:
-			\[\vec{x}_{k+1} = \vec{x}_k - [f'(\vec{x}_0)]^{-1} f(\vec{x}_k)\]
-	\end{itemize}
+	To use Newton's method, simply apply the method until the sequence converges, at which point the resulting vector will be an approximation of the answer. The first method will converge faster, although is computationally expensive, and the second method will take more terms to converge.
 %	\begin{center}
 %	\begin{tikzpicture}
 %		[scale=3,line cap=round,

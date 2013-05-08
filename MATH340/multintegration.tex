@@ -2,8 +2,6 @@
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage[retainorgcmds]{IEEEtrantools}
 
-\usepackage{marginnote}
-
 \usepackage{fancyhdr}
 
 %Format stuff
@@ -65,7 +63,7 @@
 		\end{IEEEeqnarray}
 		
 \section{Change of Variable}
-	\subparagraph{Polar Coordinates} Transform the coordinates into polar form if the area of integration is a circle. \marginnote{Changing variables in polar, spherical, and cylindrical?}
+	\subparagraph{Polar Coordinates} Transform the coordinates into polar form if the area of integration is a circle.
 		\begin{equation}
 			\int_D f(x, y)dA = \int_{\theta_0}^{\theta_1} d\theta \int_{r_0}^{r_1} f(r\cos \theta, r \sin \theta)r\ dr
 		\end{equation}
@@ -81,12 +79,12 @@
 		\end{equation}
 		
 		\subsection{Jacobi's Theorem}
-			\marginnote{Jacobi's Theorem?}Let $T$ be a continuously differentiable coordinate transformation and the set that it maps to have a boundary consisting of finitely many smooth sets. Suppose that $R$ and its boundary are contained in the domain of $T$ and that
+			Let $T$ be a continuously differentiable coordinate transformation and the set that it maps to have a boundary consisting of finitely many smooth sets. Suppose that $R$ and its boundary are contained in the domain of $T$ and that
 			\begin{itemize}
 				\item $T$ is one-to-one on the interior of $R$.
 				\item $det T'$, the Jacobian determinant of $T$, is not zero on the interior of $R$.
 			\end{itemize}
-			\marginnote{One-dimensional Jacobi?}If $f$ is bounded and continuous on the image of $R$ under $T$, denoted by $T(R)$, then
+			If $f$ is bounded and continuous on the image of $R$ under $T$, denoted by $T(R)$, then
 			\begin{equation}
 				\int_{T(R)} f(\vec{x})dV_{\vec{x}} = \int_R f(T(\vec{u}))\cdot|\text{det}T'(\vec{u})|dV_{\vec{u}}
 			\end{equation}
@@ -96,11 +94,11 @@
 	\begin{equation}
 		\bar{\vec{x}} = \frac{1}{M}\sum_{k=1}^N m_k\vec{x}_k, \qquad \text{where} \qquad M=\sum_{k=1}^N m_k
 	\end{equation}
-	\marginnote{Moment about a plane?}The \textbf{moment} $M_P$ of the mass system about a plane $P$, defined by the equation $\vec{n} \cdot (\vec{x} - \vec{x}_0) = 0$ normalized so $|\vec{n}| = 1$.
+	The \textbf{moment} $M_P$ of the mass system about a plane $P$, defined by the equation $\vec{n} \cdot (\vec{x} - \vec{x}_0) = 0$ normalized so $|\vec{n}| = 1$.
 	\begin{equation}
 		M_P = \sum_{k=1}^N m_k\vec{n} \cdot (\vec{x}_k - \vec{x}_0)
 	\end{equation}
-	\marginnote{Total mass and integral CoM?}Note that if $P$ contains the center of mass of the system, then the moment is 0. If the \textbf{total mass}, given by the following expression involving $\mu$, the density distribution,
+	Note that if $P$ contains the center of mass of the system, then the moment is 0. If the \textbf{total mass}, given by the following expression involving $\mu$, the density distribution,
 	\begin{equation}
 		M(b) = \int_B \mu(\vec{x})dV
 	\end{equation}
@@ -124,7 +122,7 @@
 	\subparagraph{Pappus's Theorem} The volume of a solid of revolution $B$ about a line $L$ is proportional to the circumference of the centroid: $V(B) = 2\pi \int_a^b rh(r)dr$.
 	
 \section{Improper Integrals}
-	\marginnote{When is an integral improper?}Standard integrals must be taken on a closed integral, and assume that the function is bounded. However, if either of these conditions is violated, for example if the interval is unbounded or $f$ tends to $\infty$ at a limit of integration, then 
+	Standard integrals must be taken on a closed integral, and assume that the function is bounded. However, if either of these conditions is violated, for example if the interval is unbounded or $f$ tends to $\infty$ at a limit of integration, then 
 	\begin{equation}
 		\int_B f(\vec{x})dV = \lim_{\delta \rightarrow B} \int_{\delta} f(\vec{x})dV
 	\end{equation}
@@ -149,13 +147,13 @@
 		\begin{equation}
 			(x_j, y_k) = (a + j(b - a)/p, c + k(d - c)/q)
 		\end{equation}
-		\marginnote{Midpoint approximation?}With $p$ and $q$ being the number of lines in the grid in the $x$ and $y$ directions and $j$ and $k$ both start at 1. Then the midpoint approximation of the integral is
+		With $p$ and $q$ being the number of lines in the grid in the $x$ and $y$ directions and $j$ and $k$ both start at 1. Then the midpoint approximation of the integral is
 		\begin{equation}
 			\int_R f(x, y)dxdy \approx \frac{(b - a)(d - c)}{pq} \sum_{j=0}^{p-1} \sum_{k=0}^{q-1} f(\bar{x}_j, \bar{y}_k)
 		\end{equation}
 		
 	\subsection{Simpson Approximations}
-		\marginnote{Simpson approximation?}If $f$ is fairly smooth then it is possible to approximate a multiple integral by iterated Simpson approximations over an \textit{even} number of intervals.
+		If $f$ is fairly smooth then it is possible to approximate a multiple integral by iterated Simpson approximations over an \textit{even} number of intervals.
 		\begin{equation}
 			\int_a^b f(x)dx \approx \frac{b-a}{3p}\sum_{j=0}^p S_j^{(p)} f(x_j)
 		\end{equation}
@@ -165,18 +163,6 @@
 			S_p^{(p)} & = & 1\\
 			S_j^{(p)} & = & 3 - (-1)^j
 		\end{IEEEeqnarray}
-\pagebreak
-\section*{Important Concepts}
-	\begin{itemize}
-		\item Multiple integral is the same as an iterated integral if it exists.
-		\item When changing variables, remember the Jacobian determinant
-			\begin{equation}
-				\int_{T(R)} f(\vec{x})dV_{\vec{x}} = \int_R f(T(\vec{u}))\cdot|\text{det}T'(\vec{u})|dV_{\vec{u}}
-			\end{equation}
-			where $T$ is the coordinate transformation.
-		\item Area/volume integration over density function to calculate total mass and center of mass.
-		\item Integrals become improper if the integrand is ever unbounded on the limits of integration or the limits are unbounded.
-	\end{itemize}
 %	\begin{center}
 %	\begin{tikzpicture}
 %		[scale=3,line cap=round,
