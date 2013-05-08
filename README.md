@@ -8,3 +8,5 @@ LaTex notes I've taken for my classes at school and MOOC's on the Coursera platf
 * Dynamic connectivity notes
 
 Note the 'algorithms' folder contains notes from 351, the Algorithms 1 Stanford class on Coursera, parts of the Algorithms 1 Princeton class on Coursera, and a bit of the Algorithms 2 Stanford class on Coursera.
+
+If you don't have LaTeX or don't feel like compiling all the sources, the pdf's for all the notes can be found at http://xjtian.com/assets/notes/. As of 5/8/2013 they are totally up-to-date.
