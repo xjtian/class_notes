@@ -1,0 +1,72 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{fancyhdr}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Dimensional Analysis}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+
+There are three fundamental physical dimensions: length, denoted from now on by $L$, mass, denoted by $M$, and time, denoted by $T$. Note that these are not units of measurement. If a value $x$ has a physical dimension described by $P$, then we denote this relationship as
+\[ x \sim [P]\]
+
+\subparagraph{Inferring Physical Relationships} To infer relationships in physical systems via dimensional analysis, there is only one rule to keep in mind: when adding, subtracting, or setting variables equal to each other, they must have the same physical dimension. Knowing this, it is possible to infer the relationships between physical parameters from dimensional arguments.
+
+\subparagraph{Buckingham Pi Theorem} If a problem contains $N$ variables that depend on $P$ physical dimensions, then there are $N - P$ dimensionless numbers that describe the physics of the system.
+
+For example, a swinging pendulum can be described by 3 variables - length of the string ($l$), mass of the bob ($m$), and force of gravity ($g$). To express the period of motion in terms of these variables, use the following dimensional equation:
+
+\begin{eqnarray}
+	T & \sim & f(l, m, g)\\
+	T & \sim & l^a m^b g^c\\
+	T & \sim & L^{a+c} M^b T^{-2c}
+\end{eqnarray}
+
+Since the period is expressed by time, $T \sim [T]$. The dimensions on the left and right hand side must be identical, which yields the following system of three equations in three unknowns:
+
+\begin{eqnarray}
+	a + c & = & 0\\
+	b & = & 0\\
+	-2c & = & 1
+\end{eqnarray}
+
+Thus, we get the correct answer that
+\begin{equation}
+	T \propto \sqrt{\frac{l}{g}}
+\end{equation}
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
