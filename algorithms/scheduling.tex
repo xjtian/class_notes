@@ -138,6 +138,54 @@ boxpos=t
 			
 			Because the algorithm by design never assigns conflicting requests to the same color and only uses $d$ colors total, it produces the optimal coloring of requests.
 		
+\section{Minimizing Lateness}
+	\begin{description}
+		\item[Input:] A set of tasks $T(t_i, d_i)$ where $t_i$ is the duration of a task and $d_i$ is the deadline.
+		\item[Output:] A schedule of tasks that minimizes the maximum amount of time that a task overshoots its deadline.
+	\end{description}	
+	
+	\subsection{Greedy Criterion}
+		Counterintuitively, we get the best result by sorting by earliest deadlines first. Even though half of the input is ignored, this scheme still produces an optimal schedule.
+		
+	\subsection{Proof}
+		\subparagraph{Claim:} The greedy algorithm does not have any \textit{idle time} - when there are jobs left but the machine is not working - and there exists an optimal schedule with no idle time. Both these points are obvious.
+		
+		Now define an \textit{inversion} in a schedule as a job $i$ with deadline $d_i$ is scheduled before a job $j$ with deadline $d_j < d_i$. By definition, the greedy schedule has no inversions. 
+		
+		\subparagraph{Claim:} All schedules with no inversions and no idle time have the same maximum lateness.
+		
+		\subparagraph{Proof:} If 2 schedules have no inversions or idle time, then they can only differ in the order in which jobs with identical deadlines are scheduled. Consider some deadline $d$ such that in both schedules, the jobs with deadline $d$ are all scheduled consecutively. Among the jobs with this deadline, the last one has the greatest lateness, the sum of all durations of these jobs, which does not depend on the order.
+		
+		Now suppose there exists some optimal schedule $O$ with no idle time but with inversions - that is, there is a pair of jobs $i, j$ such that $j = i + 1$ and $d_j < d_i$. The greedy schedule $G$ is identical to $O$ up to the first task in this pair, but $G$ has no inversions.
+		
+		Let $l_i^O, l_j^O$ be the lateness of $O_i, O_j$, and $l_i^G, l_j^G$ be lateness of $G_i, G_j$. Let $t$ be the common start time between the two schedules for tasks $i$ and $j$. It's easy to see that, given a non-negative lateness,
+		
+		\begin{IEEEeqnarray}{rCl}
+			l_i^O & = & t + t_i - d_i\\
+			l_j^O & = & t + (t_i + t_j) - d_j
+		\end{IEEEeqnarray}
+		
+		and similarly for $G$,
+		
+		\begin{IEEEeqnarray}{rCl}
+			l_i^G & = & t + (t_i + t_j) - d_i\\
+			l_j^G & = & t + t_j - d_j
+		\end{IEEEeqnarray}
+		
+		By definition of an inversion, we know that $d_j < d_i$, and because a task must have non-negative duration,
+		
+		\begin{equation}
+			l_j^O = t + (t_i + t_j) - d_j > t + t_i - d_i = l_i^O
+		\end{equation}
+		Therefore, the maximum lateness of $O$ for this inversion is $L^O = l_j^O$.
+		
+		A similar analysis for lateness in $G$ shows that
+		\begin{IEEEeqnarray}{rCl}
+			l_i^G & = & t + (t_i + t_j) - d_i < t + (t_i + t_j) - d_j = L^O\\
+			l_j^G & = & t + t_j - d_j \leq t + t_i + t_j - d_j = L^O
+		\end{IEEEeqnarray}
+		
+		Therefore, no matter if $L^G = l_i^G$ or $L^G = l_j^G$, $L^G \leq L^O$, so tasks $i$ and $j$ in $O$ can be exchanged without increasing the maximum lateness. By induction then we can turn any optimal schedule $O$ with inversions into a greedy schedule $G$ without inversions by flipping all inversions in $O$, so therefore the algorithm produces an optimal schedule.
 
 \section{Cache Scheduling}
 	\begin{description}
