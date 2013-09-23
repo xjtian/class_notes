@@ -1,0 +1,123 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{fancyhdr}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Dimensional Analysis}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+
+There are three fundamental physical dimensions: length, denoted from now on by $L$, mass, denoted by $M$, and time, denoted by $T$. Note that these are not units of measurement. If a value $x$ has a physical dimension described by $P$, then we denote this relationship as
+\[ x \sim [P]\]
+
+\section{Inferring Physical Relationships}
+
+To infer relationships in physical systems via dimensional analysis, there is only one rule to keep in mind: when adding, subtracting, or setting variables equal to each other, they must have the same physical dimension. Knowing this, it is possible to infer the relationships between physical parameters from dimensional arguments.
+
+\subparagraph{Buckingham Pi Theorem} If a problem contains $N$ variables that depend on $P$ physical dimensions, then there are $N - P$ dimensionless numbers that describe the physics of the system.
+
+For example, a swinging pendulum can be described by 3 variables - length of the string ($l$), mass of the bob ($m$), and force of gravity ($g$). To express the period of motion in terms of these variables, use the following dimensional equation:
+
+\begin{eqnarray}
+	T & \sim & f(l, m, g)\\
+	T & \sim & l^a m^b g^c\\
+	T & \sim & L^{a+c} M^b T^{-2c}
+\end{eqnarray}
+
+Since the period is expressed by time, $T \sim [T]$. The dimensions on the left and right hand side must be identical, which yields the following system of three equations in three unknowns:
+
+\begin{eqnarray}
+	a + c & = & 0\\
+	b & = & 0\\
+	-2c & = & 1
+\end{eqnarray}
+
+Thus, we get the correct answer that
+\begin{equation}
+	T \propto \sqrt{\frac{l}{g}}
+\end{equation}
+
+\section{Choosing Convenient Units}
+	It is always possible to set any 3 constants that have no dimensionless linear combination to 1 by choosing arbitrary units of length, mass, and time (physical dimensions). For example, take Newton's equation for a falling sphere with drag.
+	
+	\begin{equation}
+		m\frac{dv}{dt} = mg - bv^2
+	\end{equation}
+	
+	We choose fundamental units of length $l_0$, mass $m_0$ and time $t_0$ in terms of the constants $m, g, b$ such that $m = g = b = 1$ in their respective units. This makes the equation easier to solve.
+	
+	Using dimensional analysis for $l_0$:
+	
+	\begin{IEEEeqnarray}{rCl}
+		l_0 & = & m^a g^b b^c\\
+		T & \sim & M^a \cdot \left( \frac{ML}{T^2} \right)^b \cdot \left( \frac{M}{L} \right)^c\\
+		T & \sim & M^{a + b + c} \cdot L^{b - c} \cdot T^{-2b}
+	\end{IEEEeqnarray}
+	
+	Applying this method to $m_0$ and $t_0$ yields the following physical units of length, mass, and time:
+	\begin{IEEEeqnarray}{rCl}
+		l_0 & = & \frac{m}{b}\\
+		m_0 & = & m\\
+		t_0 & = & \sqrt{\frac{m}{bg}}
+	\end{IEEEeqnarray}
+	
+	Now the differential equation is easier to solve, given initial conditions $v(0) = 0, y(0) = 0$:
+	\begin{IEEEeqnarray}{rCl}
+		v' & = & 1 - v^2\\
+		\ln \left( \frac{1 + v}{1 - v} \right) & = & 2t
+	\end{IEEEeqnarray}
+The answer, in terms of our arbitrary units, is
+	\begin{IEEEeqnarray}{rCl}
+		v & = & \tanh t\\
+		y & = & \ln ( \cosh t )
+	\end{IEEEeqnarray}
+	
+	To express the answer in arbitrary units, we need to do some more dimensional analysis because $m_0 = t_0 = l_0 = 1$, so the factors are hidden. 
+	
+	First note that due to the constant term at the head of the Taylor expansion of $\cosh t = 1 + t^2/2 + t^4/4! + \ldots$, the inside expression must be dimensionless. Currently, our $t$ term has dimension $T$, so we must divide inside by $t_0$. This analysis is repeated for $\tanh$.
+	
+	Next, note that $y \sim [L]$, but $\ln\cosh$ is dimensionless. Therefore, we must multiply the right hand side of the y-equation by $l_0$. Similarly, we multiply the right hand side of the v-equation by $l_0 / t_0$ to balance the dimensions to $L/T$. This then gives us our final answer in arbitrary units:
+	
+	\begin{IEEEeqnarray}{rCl}
+		v & = & \frac{l_0}{t_0} \tanh \left( \frac{t}{t_0} \right)\\
+		y & = & l_0 \ln ( \cosh \left( \frac{t}{t_0} \right) )
+	\end{IEEEeqnarray}
+	
+	\subparagraph{Natural Units} In relativistic physics, Planck units $c, G, \hbar$ are often fixed at 1 in this manner to make dealing with the quantities involved much easier.
+	
+	
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
