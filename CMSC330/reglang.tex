@@ -85,7 +85,7 @@ boxpos=t
 	\subparagraph{NFA-$\epsilon$} An NFA-$\epsilon$ has one or more paths encoded as an empty character, meaning that when reading through string it is possible to take a path without actually advancing a character.
 	
 \section{NFA - DFA Reduction}
-	An NFA may be reduced to a DFA by explicitly tracking the set of NFA states. Intuitively, build a DFA where each DFA state represents a set of NFA states.
+	An NFA may be reduced to a DFA by explicitly tracking the set of NFA states that a transition leads to. Intuitively, build a DFA where each DFA state represents a set of NFA states.
 	\begin{center}
 	\begin{tabular}{cc}
 		NFA & DFA\\\hline
@@ -145,7 +145,7 @@ boxpos=t
 			while unvisited state r in R:
 				visit(r)
 				for a in $\Sigma$:
-					new_state = {s for s in (move(q, a) for q in r)}
+					S = {s for s in (move(q, a) for q in r)}
 					if S not in R:
 						R += {S}
 					$\delta$ += {<r, a, S>}
