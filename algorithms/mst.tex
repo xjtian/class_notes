@@ -1,6 +1,8 @@
 \documentclass[11pt]{article}
 \usepackage{amsmath, amssymb, amsthm}
 
+\usepackage[pdftex]{graphicx}
+
 \usepackage{fancyhdr}
 %Format stuff
 \pagestyle{fancy}
@@ -12,19 +14,28 @@
 \rhead{}
 
 \begin{document}
-\begin{description}
-	\item[Informal goal:] connect a set of points as cheaply as possible
-	\item[Applications:] clustering, networks
-\end{description}
+	A minimum spanning tree (MST) for a connected graph $G = (V, E)$ is an acyclic subset of edges that spans all vertices with minimum total edge weight.
+	
+	In general, MST's have the following properties:
+	\begin{itemize}
+		\item $n$ nodes on $n - 1$ edges
+		\item Adding an edge introduces a cycle
+		\item Removing any edge in such a cycle restores the spanning tree
+	\end{itemize}
 
-The are multiple greedy algorithms for computing the MST of a given graph, most notably Prim's (1957) and Kruskal's algorithm (1956), both of which achieve $O(m\log n)$ time using suitable data structures.
+Given a cut $(S, V - S)$, it respects a subset of edges if none of those edges crosses the cut.
 
-\section{Problem Definition}
-	\begin{description}
-		\item[Input:] undirected graph $G=(V,E)$ and a cost $c_e$ for each $e\in E$. (An ``optimal branching problem'' exists as an analog to the MST problem for directed graphs).
-		\item[Assume:] adjacency list, all edge costs are distinct (algorithms remain correct if ties exist, but proof is trickier), $G$ is connected (check in preprocessing).
-		\item[Output:] minimum cost tree $T\in E$ that spans all vertices such that $T$ has no cycles and is a fully connected subgraph (path exists to/from all vertices).
-	\end{description}
+\subparagraph{Claim} If $(S, V - S)$ is any cut that respects some viable MST solution denoted as a set of edges $A$, then the lightest edge that crosses this cut is always "safe" to add.
+
+\subparagraph{Proof} By contradiction, imagine 2 cuts of a part of a viable solution that we add a non-minimum crossing edge to:
+
+	\begin{figure}[htb]
+		\centering
+		\includegraphics{mst-safe-cut.eps}
+		\label{fig:figure}
+	\end{figure}
+	However, we can swap out the expensive edge for a cheaper crossing edge and still maintain a spanning tree with lower weight, so therefore the lightest crossing edge is always a safe edge to add. Call this the \textbf{safe edge lemma}
+
 
 %	\begin{center}
 %	\begin{tikzpicture}
@@ -43,12 +54,6 @@ The are multiple greedy algorithms for computing the MST of a given graph, most 
 %	\end{tikzpicture}
 %	\end{center}
 
-%	\begin{figure}[htb]
-%		\centering
-%		\includegraphics[width=0.8\textwidth]{filename.eps}
-%		\caption{Caption.}
-%		\label{fig:figure}
-%	\end{figure}
 
 %		\def\enotesize{\normalsize}
 %		\theendnotes
