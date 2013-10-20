@@ -1,0 +1,81 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true,
+boxpos=t
+}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Baruka's Algorithm}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Algorithm}
+	Baruka's algorithm will only work under the assumption that either all edge weights are distinct, or that there is some uniform tiebreaking rule.
+	
+	In Kruskal's algorithm, we add edges to the MST by adding the cheapest edge that connects two trees together. On closer inspection, it becomes apparent that the lightest edge exiting \textit{any} component is always safe, because it is guaranteed not to induce any cycles and always spans some cut of a viable solution.
+	
+	\begin{lstlisting}[autogobble=true]
+		initialize each vertex to be its own component
+		A = {}
+		while (there are 2 or more components):
+			for each component C:
+				find lightest (u, v) with u in C, v not in C
+				add (u, v) to A (unless already there)
+				
+			DFS on (V, A) to compute the new components
+	\end{lstlisting}
+	
+\section{Runtime}
+	Each iteration of the loop is $\Theta(n + m)$ from the DFS. There are never more than $O(\log n)$ iterations needed. Take $x$ to be the number of components at some stage. Each of the $x$ components will merge with at least one other component. Afterwards, the worst case number of resulting components is $x / 2$, if all components merge in pairs. Thus, the number of components decreases by at least half every iteration, so the algorithm is $\Theta(m \log n)$.
+	
+	Note however that Baruka's algorithm is easily parallelizeable (given the uniform tiebreaking rule), unlike Prim's and Kruskal's algorithms.
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
