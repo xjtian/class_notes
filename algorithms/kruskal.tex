@@ -52,7 +52,7 @@ boxpos=t
 	\end{lstlisting}
 
 \section{Proof}
-	Consider at any point in the algorithm, with the partial solution $A'$, that we are considering the edge $(u, v) \mid u \in A' \subset A, v \notin A'$ and $(u, v)$ does not induce any cycles in $A'$. Consider the cut $(A', V - A')$:
+	Consider at any point in the algorithm, with the partial solution $A'$, that we are considering the edge $(u, v) \mid u \in A' \subset A, v \notin A'$ and $(u, v)$ does not induce any cycles in $A'$. Take the cut $(A', V - A')$:
 	\begin{itemize}
 		\item Every crossing edge is not in $A'$ by definition of the cut
 		\item $(u, v)$ must cross the cut by definition of the edge being considered. Because edges are considered by weight order, $(u, v)$ must be the cheapest such crossing edge.
@@ -60,7 +60,7 @@ boxpos=t
 	By the safe spanning edge lemma, $(u, v)$ is a safe edge. Therefore, Kruskal's algorithm correctly generates an MST.
 	
 \section{Runtime}
-	With an efficient union-find data structure to back the algorithm, it runs in $O(m\log n)$. The initial sorting is $O(m \log m)$. Given an efficient Union Find structure, there are $\Theta(n)$ operations on a total input size of $n$ elements to give $\Theta(m \log n)$ for the loop. Therefore, the algorithm is $\Theta(m \log n)$.
+	The initial sorting of edges is $O(m \log m)$. Given an efficient Union Find structure, there are $\Theta(n)$ operations on a total input size of $n$ elements to give $\Theta(m \log n)$ for the loop (theoretical lower bound of $\Theta(m \cdot \alpha(n))$. Therefore, the algorithm is $\Theta(m \log n)$.
 
 %	\begin{center}
 %	\begin{tikzpicture}
