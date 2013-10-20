@@ -1,0 +1,91 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usepackage{circuitikz}
+\usetikzlibrary{intersections}
+
+\usepackage{fancyhdr}
+
+%Listings stuff
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+basicstyle={\small\ttfamily},
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+stepnumber=2,
+breaklines=true,
+boxpos=t
+}
+
+%Format stuff
+\pagestyle{fancy}
+\headheight 35pt
+
+%Header info
+\chead{\Large \textbf{Kruskal's Algorithm}}
+\lhead{}
+\rhead{}
+
+\begin{document}
+\section{Algorithm}
+	Basically, add edges to a subset of the viable solution by increasing weight, given that no cycles are induced by the addition. Merges disjoint forests into a single MST.
+	
+	\begin{lstlisting}[autogobble=true]
+		def kruskalMST(G = (V, E)):
+			A = {}
+			Place each vertex in its own set
+			Sort E by increasing order by weight
+			
+			for (u, v) in sorted(E):
+				if find(u) != find(v):	# different trees
+					A += (u, v)
+					union(u, v)		# merge trees
+	\end{lstlisting}
+
+\section{Proof}
+	Consider at any point in the algorithm, with the partial solution $A'$, that we are considering the edge $(u, v) \mid u \in A' \subset A, v \notin A'$ and $(u, v)$ does not induce any cycles in $A'$. Consider the cut $(A', V - A')$:
+	\begin{itemize}
+		\item Every crossing edge is not in $A'$ by definition of the cut
+		\item $(u, v)$ must cross the cut by definition of the edge being considered. Because edges are considered by weight order, $(u, v)$ must be the cheapest such crossing edge.
+	\end{itemize}
+	By the safe spanning edge lemma, $(u, v)$ is a safe edge. Therefore, Kruskal's algorithm correctly generates an MST.
+	
+\section{Runtime}
+	With an efficient union-find data structure to back the algorithm, it runs in $O(m\log n)$. The initial sorting is $O(m \log m)$. Given an efficient Union Find structure, there are $\Theta(n)$ operations on a total input size of $n$ elements to give $\Theta(m \log n)$ for the loop. Therefore, the algorithm is $\Theta(m \log n)$.
+
+%	\begin{center}
+%	\begin{tikzpicture}
+%		[scale=3,line cap=round,
+%		%Styles
+%		axes/.style=,
+%		important line/.style={very thick},
+%		information text/.style={rounded corners,fill=red!10,inner sep=1ex},
+%		dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1}			
+%		]
+%		
+%		%Colors
+%		\colorlet{anglecolor}{green!50!black}	%angle arcs/lines
+%		
+%		%The graphic
+%	\end{tikzpicture}
+%	\end{center}
+
+%	\begin{figure}[htb]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{filename.eps}
+%		\caption{Caption.}
+%		\label{fig:figure}
+%	\end{figure}
+
+%		\def\enotesize{\normalsize}
+%		\theendnotes
+\end{document}
